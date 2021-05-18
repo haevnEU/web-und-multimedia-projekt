@@ -20,7 +20,7 @@ class Board{
      * State of the walls (Default 9)
      */
     #WALL_STATE = 9;
-
+    #GROUND_STATE = 10;
     /**
      * This class defines the game board.
      * The board contains 
@@ -54,9 +54,12 @@ class Board{
         
         for(var x = 0; x <= this.#width; x++){
             for(var y = 0; y <= this.#height; y++){
-                if(x == 0 || x == this.#width || y == this.#height){
+                if(x == 0 || x == this.#width){
                     this.#field[y * this.#width + x] = this.#WALL_STATE; 
-                }else{
+                }else if(y == this.#height){
+                    this.#field[y * this.#width + x] = this.#GROUND_STATE;
+                }
+                else{
                     this.#field[y * this.#width + x] = 0;
                 }
             }
@@ -91,7 +94,7 @@ class Board{
      * @returns True if the state is valid.
      */
     #isValidState(state){
-        return state >= 0 && state < this.#WALL_STATE;
+        return state == 0;
     }
 
 // Public methods
@@ -108,6 +111,14 @@ class Board{
             return -1;
         }
         return this.#field[y  * this.#width + x];
+
+        /*
+            900009
+            900009
+            900009
+            888888
+
+        */
     }
 
     /**

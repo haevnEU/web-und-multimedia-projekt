@@ -21,7 +21,7 @@ function printPage($message){
 }
 
 // Create connection
-$connection = new mysqli($servername, $username, $password, $dbname);   
+    $connection = new mysqli($servername, $username, $password, $dbname);   
     if ($connection->connect_error) {
         echo "Connection failed: " . $conn->connect_error; 
         die("Connection failed: " . $conn->connect_error);
@@ -43,9 +43,7 @@ $connection = new mysqli($servername, $username, $password, $dbname);
         }   
         $correctPass = has
     
-        printPage("<h2>Note</h2><br>
-        <p>Cannot login</p><br>
-        <a href=\"./login.html\">click here to retry</a></p>");
+        printPage("<h2>Note</h2><br><p>Cannot login</p><br><a href=\"./login.html\">click here to retry</a></p>");
     }elseif($password != $password_verify){
         printPage("<h2>Note</h2><br><p>Entered password are not equal <a href=\"./login.html\">click here to return</a></p>");
     }else{

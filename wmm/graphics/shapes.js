@@ -236,16 +236,18 @@ class Shape{
 }
 
 class ShapeHandler{
+
+    #amountShapes = 8;
     
     #blueRicky = new Shape(   [1, 0, 0, 0,  1, 1, 1, 0,  0, 0, 0, 0,  0, 0, 0, 0], 1);
-    #orangeRIcky = new Shape( [0, 0, 0, 2,  0, 2, 2, 2,  0, 0, 0, 0,  0, 0, 0, 0], 2);
+    #orangeRIcky = new Shape( [0, 0, 2, 0,  2, 2, 2, 0,  0, 0, 0, 0,  0, 0, 0, 0], 2);
     #cleaveLandZ = new Shape( [3, 3, 0, 0,  0, 3, 3, 0,  0, 0, 0, 0,  0, 0, 0, 0], 3);
-    #rhodeIslandZ = new Shape([0, 0, 4, 4,  0, 4, 4, 0,  0, 0, 0, 0,  0, 0, 0, 0], 4);
-    #hero = new Shape(        [0, 0, 0, 5,  0, 0, 0, 5,  0, 0, 0, 5,  0, 0, 0, 5], 5);
+    #rhodeIslandZ = new Shape([0, 4, 4, 0,  4, 4, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0], 4);
+    #hero = new Shape(        [5, 0, 0, 0,  5, 0, 0, 0,  5, 0, 0, 0,  5, 0, 0, 0], 5);
     #smashboy = new Shape(    [0, 0, 0, 0,  0, 6, 6, 0,  0, 6, 6, 0,  0, 0, 0, 0], 6);
     #teewee = new Shape(      [0, 7, 0, 0,  7, 7, 7, 0,  0, 0, 0, 0,  0, 0, 0, 0], 7);
-    #baum = new Shape(      [8, 8, 8, 8,  0, 0, 8, 0,  0, 0, 8, 0,  8, 8, 8, 8], 8);
-    
+    #baum = new Shape(      [1, 2, 5, 0,  8, 6, 5, 3,  3, 3, 8, 0,  0, 0, 1, 0], 8);
+ 
     /**
      * Simple access to shapes via IDs
      */
@@ -259,7 +261,7 @@ class ShapeHandler{
     /**
      * This attribute represents the next shape of the game
      */
-    #nextShape = this.#shapes[Math.floor(Math.random() * 1000) % 8];
+    #nextShape = this.#shapes[Math.floor(Math.random() * 1000) % this.#amountShapes];
 
     /**
      * Tracks if the shape was switched
@@ -288,6 +290,7 @@ class ShapeHandler{
         this.#hero.setBoardDimensions(boardWidth, boardHeight);  
         this.#smashboy.setBoardDimensions(boardWidth, boardHeight);  
         this.#teewee.setBoardDimensions(boardWidth, boardHeight);  
+        this.#baum.setBoardDimensions(boardWidth, boardHeight);  
     }
 
     /**
@@ -313,8 +316,13 @@ class ShapeHandler{
      *  - Create new shape as next one
      */
     createNewShape(){
+        alert("DEBUG");
         this.#currentShape = this.#nextShape.copy();
-        let id = (Math.floor(Math.random() + 43159) ^ Date.now()) % 8;
+        let id = (Math.floor(Math.random() + 43159) ^ Date.now()) % this.#amountShapes;
+        if(id < 0){
+            id *= -1;
+            id %= this.#amountShapes;
+        }
         this.#nextShape = this.#shapes[id].copy();
     }
 

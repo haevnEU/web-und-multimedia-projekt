@@ -1,0 +1,51 @@
+.font_{
+    background-color: 'black';   
+}
+
+.board{
+    background-color: '#CCC8BE';
+}
+
+.background_{
+    background-color: '#CCC8BE';
+}
+
+.blockID0{
+    background-color: '#transparent';
+}
+
+.blockID1{
+    background-color: '#21353D';
+}
+
+.blockID2{
+    background-color: '#8C6A19';
+}
+
+.blockID3{
+    background-color: '#AC4B1E';
+}
+
+.blockID4{
+    background-color: '#733214';
+}
+
+.blockID5{
+    background-color: '#7DE449';
+}
+
+.blockID6{
+    background-color: '#7A1F78';
+}
+
+.blockID7{
+    background-color: '#7A4776';
+}
+
+.blockID8{
+    background-color: '#FF00FF';
+}
+
+.blockID9{
+    background-color: '#black';
+}

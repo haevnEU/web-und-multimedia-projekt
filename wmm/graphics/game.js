@@ -43,6 +43,8 @@ class Game{
             this.#shapeHandler.createNewShape();
         }else if(key == "2"){
             this.#shapeHandler.switchShapes();
+        }else if(key == "3"){
+            this.#shapeHandler.DEBUG_setShape(8);
         }
     }
 
@@ -56,15 +58,30 @@ class Game{
         this.#paused = true;
     }
 
+    #lastTime = 10;
     handleLogic(){
         if(this.#paused){
             return;
         }
         let copyBoard = this.#board.copyBoard();
         let execute = false;
-        
-        
-        
+        if(this.#lastTime <= 0){
+            this.#shapeHandler.getCurrentShape().moveDown();
+            this.#lastTime = 10;
+        }
+        this.#lastTime--;
+        // TODO 
+
+        let shapeY = this.#shapeHandler.getCurrentShape().getY();
+        let shapeX = this.#shapeHandler.getCurrentShape().getX();
+            for(let y = 0;y < 4; y++){
+                console.log(copyBoard.getBoardElementAt(shapeX, shapeY + y + 1));
+                if(copyBoard.getBoardElementAt(shapeX, shapeY + y + 1) != 0){
+                    console.log("COLLISION");
+                }
+        }
+
+
         if(execute){
             this.#board = copyBoard.copyBoard();
         }        

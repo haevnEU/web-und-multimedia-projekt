@@ -1,5 +1,5 @@
 class Theme{
-    #blockColors = ["transparent", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "", "black"];
+    #blockColors = ["transparent", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "", "black", "black"];
     #backgroundColor = "magenta";
     #boardColor = "blue";
     #fontColor = "black";
@@ -58,7 +58,8 @@ class Theme{
      * @returns Color of the block
      */
     getBlockColorByID(id){
-        return this.#blockColors[id];
+
+     return this.#blockColors[id];
     }
 
     /**
@@ -66,7 +67,7 @@ class Theme{
      * @returns Color of the background
      */
     getBackgroundColor(){
-        return this.#backgroundColor;
+    return this.#backgroundColor;
     }
     
     /**
@@ -74,7 +75,7 @@ class Theme{
      * @returns Color of the board
      */
     getBoardColor(){
-        return this.#boardColor;
+      return this.#boardColor;
     }
 
     /**
@@ -102,9 +103,24 @@ class ThemeHandler{
                                           .addBlockColor("#C09553", 6)
                                           .addBlockColor("#C56A77", 7)
                                           .addBlockColor("brown", 8)
-                                          .addBlockColor("#4EC990", 9));
+                                          .addBlockColor("#4EC990", 9)
+                                          .addBlockColor("magenta", 10));
                                           
-        this.addTheme("light", new Theme().addBackground("#CCC8BE").addBoardBackground("#CCC8BE").addFontColor("black").addBlockColor("transparent", 0).addBlockColor("#21353D", 1).addBlockColor("#8C6A19", 2).addBlockColor("#AC4B1E", 3).addBlockColor("#733214", 4).addBlockColor("#7DE449", 5).addBlockColor("#7A1F78", 6).addBlockColor("#7A4776", 7).addBlockColor("transparent", 8).addBlockColor("black", 9));
+        this.addTheme("light", new Theme()
+        .addBackground("#CCC8BE")
+        .addBoardBackground("#CCC8BE")
+        .addFontColor("black")
+        .addBlockColor("transparent", 0)
+        .addBlockColor("#21353D", 1)
+        .addBlockColor("#8C6A19", 2)
+        .addBlockColor("#AC4B1E", 3)
+        .addBlockColor("#733214", 4)
+        .addBlockColor("#7DE449", 5)
+        .addBlockColor("#7A1F78", 6)
+        .addBlockColor("#7A4776", 7)
+        .addBlockColor("transparent", 8)
+        .addBlockColor("black", 9)
+        .addBlockColor("black", 10));
 
         this.addTheme("DEBUG_INTERNAL", new Theme());
         this.addTheme("RGBA_TEST", new Theme().addBackground("rgba(0,0,0,1)")
@@ -124,7 +140,6 @@ class ThemeHandler{
 
     #getSelectedThemeName(){
         let select = document.getElementById('themes');
-
         let d = select.options[select.selectedIndex].text;
         return d;
     }

@@ -3,7 +3,7 @@ import {Game} from "./game.js";
 console.log("ADD LISTENER");
 
 let game = new Game();
-setInterval(loop, 100);
+setInterval(loop, 30);
 
 document.onkeydown = function(event){
     let key = event.key;
