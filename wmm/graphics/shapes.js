@@ -316,7 +316,6 @@ class ShapeHandler{
      *  - Create new shape as next one
      */
     createNewShape(){
-        alert("DEBUG");
         this.#currentShape = this.#nextShape.copy();
         let id = (Math.floor(Math.random() + 43159) ^ Date.now()) % this.#amountShapes;
         if(id < 0){
