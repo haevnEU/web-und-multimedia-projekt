@@ -132,7 +132,7 @@ class Game{
                 this.#context.fillStyle = this.#theme.getTheme().getBlockColorByID(color);
                
                 this.#context.fillRect(this.#blockSize * (this.#board.getBoardWidth() + 5)  + (x * previewDimension),
-                 y * previewDimension,
+                 (2*this.#blockSize) + y * previewDimension,
                  previewDimension, previewDimension);
          
             }
