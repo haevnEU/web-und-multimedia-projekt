@@ -19,5 +19,34 @@ function redirectToError($message){
     //  TEST HEADER
         header("Location: http://localhost/scratch/accounting/error.php?error=" . urlencode($message));
 }
+class DataBaseAccess{
+    const $SERVER_NAME = "localhost";
+    const $USER_NAME = "register";
+    const $PASSWORD = "1234";
+    const $TABLE_NAME = "game";
 
+    public createUser(...){
+
+    }
+
+    public deleteUser(...){
+
+    }
+
+    public changeUserPassword(...){
+        
+    }
+    
+    public changeUserMotto(...){
+        
+    }
+    
+    public changeUserState(...){
+        
+    }
+    
+    public changeUserScore(...){
+        
+    }
+}
 ?>
