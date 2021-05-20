@@ -41,13 +41,16 @@ function printPage($message){
         foreach ($pdo->query($sql) as $row) {
             $correctPass = $row['pass'];
         }   
-        $correctPass = has
     
         printPage("<h2>Note</h2><br><p>Cannot login</p><br><a href=\"./login.html\">click here to retry</a></p>");
-    }elseif($password != $password_verify){
+    }/*elseif($password != $password_verify){
         printPage("<h2>Note</h2><br><p>Entered password are not equal <a href=\"./login.html\">click here to return</a></p>");
-    }else{
-      printPage("<h2>You're logged in</h2>");
+    }*/else{
+      session_start();
+      $_SESSION['username'] = $email;
+      $name = $_SESSION['username'];
+
+      printPage("<h2>You're logged in as " . $name . "</h2>");
     }
     
   

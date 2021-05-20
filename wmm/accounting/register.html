@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">        
+    <title>Register</title>
+    <link rel="stylesheet" href="http://localhost/styles/centered.css">
+  </head>
+    <body">
+      <div class="mitte">
+        <div class="mittig">
+          <h2>Register</h2>
+        <form class="center_box" method="POST" action="./register.php">
+          <div class="container">
+            <label>Name *</label><br> <input class="input_color" type="text" name="first_name" placeholder="First name" required="required">
+          </div>
+          <div class="container">
+            <label>Surname *</label><br> <input class="input_color" type="text" name="sur_name" placeholder="Surname" required="required">
+          </div>
+          <div class="container">
+            <label>EMail *</label><br> <input class="input_color" type="email" name="email" placeholder="EMail">
+          </div>
+          <div class="container">
+            <label>Gametag *</label><br> <input class="input_color" type="text" name="gametag" placeholder="WildCow" required="required">
+          </div>
+          <div class="container">
+            <label>Password *</label><br> <input class="input_color" type="password" name="password" placeholder="" required="required">
+          </div>
+          <div class="container">
+            <label>Reenter password *</label><br> <input class="input_color" type="password" name="password_verify" placeholder="" required="required">
+          </div>
+          <br>
+          <div class="container">
+            <input type="submit" class="btn btn-primary" name="button_name" value="Register">
+          </div>
+          <br>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
