@@ -19,9 +19,41 @@ for(let x=0;x<4;x++){
         }
     }
 }
-
-
 }
+
+doesCollideSlideLeft(shape,board){
+    let shapeX = shape.getX();
+    let shapeY = shape.getY();
+
+        for(let y=0;y<4;y++){
+            for(let x=0;x<4;x++){
+                if(shape.getElement(x,y)!=0){
+                    if(board.getBoardElementAt(shapeX+x-1,shapeY+y)){
+                return true;
+                    }
+                }
+            }
+        }
+    }
+
+doesCollideSlideRight(shape,board){
+    let shapeX = shape.getX();
+    let shapeY = shape.getY();
+
+        for(let y=0;y<4;y++){
+            for(let x=0;x<4;x++){
+                if(shape.getElement(x,y)!=0){
+                    if(board.getBoardElementAt(shapeX+x+1,shapeY+y)){
+                return true;
+                    }
+                }
+            }
+        }
+}
+
+doesCollideRotate
+
+
 
 }
 export{Physics};

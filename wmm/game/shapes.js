@@ -155,7 +155,7 @@ class Shape{
      * The coordinates specified by x and y must be inside the shapes boundaries
      * @param {Number} x X coordinate of the shape
      * @param {Number} y Y coordinate of the shape
-     * @returns State of the element
+     * @returns State of the element range 1-7
      */
     getElement(x, y){
         if(!this.#checkBoundary(x, y)){
@@ -243,7 +243,7 @@ class ShapeHandler{
     #orangeRIcky = new Shape( [0, 0, 2, 0,  2, 2, 2, 0,  0, 0, 0, 0,  0, 0, 0, 0], 2);
     #cleaveLandZ = new Shape( [3, 3, 0, 0,  0, 3, 3, 0,  0, 0, 0, 0,  0, 0, 0, 0], 3);
     #rhodeIslandZ = new Shape([0, 4, 4, 0,  4, 4, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0], 4);
-    #hero = new Shape(        [5, 0, 0, 0,  5, 0, 0, 0,  5, 0, 0, 0,  5, 0, 0, 0], 5);
+    #hero = new Shape(        [0, 5, 0, 0,  0, 5, 0, 0,  0, 5, 0, 0,  0, 5, 0, 0], 5);
     #smashboy = new Shape(    [0, 0, 0, 0,  0, 6, 6, 0,  0, 6, 6, 0,  0, 0, 0, 0], 6);
     #teewee = new Shape(      [0, 7, 0, 0,  7, 7, 7, 0,  0, 0, 0, 0,  0, 0, 0, 0], 7);
     #baum = new Shape(      [1, 2, 5, 0,  8, 6, 5, 3,  3, 3, 8, 0,  0, 0, 1, 0], 8);
@@ -333,6 +333,7 @@ class ShapeHandler{
         this.#nextShape = this.#currentShape.copy();
         this.#currentShape = tmp.copy();
     }
+
 
 }
 export{Shape, ShapeHandler}

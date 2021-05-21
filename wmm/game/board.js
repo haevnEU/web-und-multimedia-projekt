@@ -49,7 +49,7 @@ class Board{
      * @param {Number} height Height of the board
      */
     #init(width, height){
-        this.#width = width + 2;
+        this.#width = width + 2 ;
         this.#height = height + 1;
         
         for(var x = 0; x <= this.#width; x++){
