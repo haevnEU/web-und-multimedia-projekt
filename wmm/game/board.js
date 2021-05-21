@@ -158,7 +158,7 @@ class Board{
      * @param {Number} y Y coordinate mapped to the field
      * @param {Number} state State of the field in range 0 to 8
      */
-    setFieldElement(x, y, state){
+     setFieldElement(x, y, state){
         // 1. Map provided x and y coordinates to the board coordination system
         let mappedX = x + 1;
         let mappedY = y + 1;
@@ -169,6 +169,8 @@ class Board{
             this.#field[mappedY * this.#width + mappedX] = state;
         }
     }
+
+ 
 
     /**
      * Creates a copy of this board
