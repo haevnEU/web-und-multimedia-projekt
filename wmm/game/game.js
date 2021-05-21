@@ -1,6 +1,7 @@
 import {Shape, ShapeHandler} from "./shapes.js"
 import {Board} from "./board.js"
 import {Theme, ThemeHandler} from "./theme.js"
+import {Physics} from "./physics.js"
 
 import {DebugTools} from "./debug_tools.js"
 
@@ -9,6 +10,7 @@ class Game{
     #board = new Board(20, 30);
     #theme = new ThemeHandler();
     #shapeHandler = new ShapeHandler(20, 30); 
+    #physics = new Physics();
 
     #blockSize = 25;
     #paused = false;
@@ -59,6 +61,7 @@ class Game{
     }
 
     #lastTime = 10;
+
     handleLogic(){
         if(this.#paused){
             return;
@@ -66,20 +69,28 @@ class Game{
         let copyBoard = this.#board.copyBoard();
         let execute = false;
         if(this.#lastTime <= 0){
-            this.#shapeHandler.getCurrentShape().moveDown();
+            if(this.#physics.doesCollideDrop(this.#shapeHandler.getCurrentShape(),this.#board)){
+                let shapeX = this.#shapeHandler.getCurrentShape().getX();
+                let shapeY = this.#shapeHandler.getCurrentShape().getY()+1;
+
+                for(let x=0;x<4;x++){
+                    for(let y=0;y<4;y++){
+                        if(this.#shapeHandler.getCurrentShape().getElement(y,x)!=0){
+                            this.#board.setBoardElement(shapeX+y,shapeY+x,this.#shapeHandler.getCurrentShape().getShapeID());
+                            
+                        }
+                    }
+                }
+                this.#shapeHandler.createNewShape();
+            }
+            else{
+                this.#shapeHandler.getCurrentShape().moveDown();
+            }
             this.#lastTime = 10;
         }
+        
         this.#lastTime--;
-        // TODO 
-
-        let shapeY = this.#shapeHandler.getCurrentShape().getY();
-        let shapeX = this.#shapeHandler.getCurrentShape().getX();
-            for(let y = 0;y < 4; y++){
-                console.log(copyBoard.getBoardElementAt(shapeX, shapeY + y + 1));
-                if(copyBoard.getBoardElementAt(shapeX, shapeY + y + 1) != 0){
-                    console.log("COLLISION");
-                }
-        }
+        // TODO
 
 
         if(execute){
@@ -144,7 +155,6 @@ class Game{
 export {Game}
 
 /*
-
 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 
 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 9 
 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 9 
@@ -168,6 +178,4 @@ export {Game}
 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 9 
 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 9 
 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 
-
-
 */

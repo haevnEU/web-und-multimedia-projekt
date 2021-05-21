@@ -111,14 +111,6 @@ class Board{
             return -1;
         }
         return this.#field[y  * this.#width + x];
-
-        /*
-            900009
-            900009
-            900009
-            888888
-
-        */
     }
 
     /**
@@ -163,11 +155,11 @@ class Board{
         let mappedX = x + 1;
         let mappedY = y + 1;
         // 2. Verify mapped coordinates, state and execute the operation
-        if(this.#isValidState(state) 
+        /*if(this.#isValidState(state) 
           && this.#checkBoundary(mappedX, mappedY) 
           && this.#field[mappedY * this.#width + mappedX] != this.#WALL_STATE){
-            this.#field[mappedY * this.#width + mappedX] = state;
-        }
+        }*/ 
+          this.#field[mappedY * this.#width + mappedX] = state;
     }
 
     /**
@@ -186,6 +178,12 @@ class Board{
 
         return outBoard;
     }
+    setBoardElement(x, y, state){
+        // 1. Map provided x and y coordinates to the board coordination system
+        let mappedX = x ;
+        let mappedY = y ;
+        // 2. Verify mapped coordinates, state and execute the operation
+            this.#field[mappedY * this.#width + mappedX] = state;    }
 }
 
 export {Board}
