@@ -1,5 +1,5 @@
 class Theme{
-    #blockColors = ["transparent", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "", "black", "black"];
+    #blockColors = ["magenta", "blue", "blue", "blue", "blue", "blue", "blue", "blue", "", "black", "black"];
     #backgroundColor = "magenta";
     #boardColor = "blue";
     #fontColor = "black";
@@ -52,14 +52,31 @@ class Theme{
         return this;
     }
 
+
+
+
+
+
+    #getColorByID(id){
+        let element = document.querySelector(id);
+        let style = getComputedStyle(element);
+        return style.color;
+    }
+
+
     /**
      * Access the color information about a block
      * @param {Number} id Block ID
      * @returns Color of the block
      */
     getBlockColorByID(id){
-
-     return this.#blockColors[id];
+        try{
+            
+            let block = ".blockID" + id;
+            return this.#getColorByID(block);
+        }catch(e){
+            return "magenta";
+        }
     }
 
     /**
@@ -67,7 +84,7 @@ class Theme{
      * @returns Color of the background
      */
     getBackgroundColor(){
-    return this.#backgroundColor;
+        return this.#backgroundColor;
     }
     
     /**
@@ -101,9 +118,15 @@ class ThemeHandler{
                                           .addBlockColor("#68CDFE", 4)
                                           .addBlockColor("#E44F26", 5)
                                           .addBlockColor("#C09553", 6)
-                                          .addBlockColor("#C56A77", 7)
-                                          .addBlockColor("brown", 8)
-                                          .addBlockColor("#4EC990", 9)
+                                          .addBlockColor("magenta", 8)
+                                          .addBlockColor("magenta", 9)
+                                          .addBlockColor("#063970", 10)
+                                          .addBlockColor("#873e23", 11)
+                                          .addBlockColor("#21130d", 12)
+                                          .addBlockColor("#e28743", 13)
+                                          .addBlockColor("#1e81b0", 14)
+                                          .addBlockColor("brown", -1)
+                                          .addBlockColor("#4EC990", -2)
                                           .addBlockColor("magenta", 10));
                                           
         this.addTheme("light", new Theme()

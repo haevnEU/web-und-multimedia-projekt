@@ -1,14 +1,6 @@
-class Shape{
-    /**
-     * Width of the shape
-     */
-    #shapeWidth = 4;
-    
-    /**
-     * Height of the shape
-     */
-    #shapeHeight = 4;
-    
+import meta from "./constants.js"
+
+class Shape{    
     /**
      * Current orientation of the shape
      */
@@ -33,12 +25,12 @@ class Shape{
     /**
      * Width of the game board
      */
-    #boardWidth;
+    #boardWidth = meta.BOARD_WIDTH;
 
     /**
      * Height of the game board 
      */
-    #boardHeight;
+    #boardHeight = meta.BOARD_HEIGHT;
     
     /**
      * This class provides a complex shape based on an 1D array definition
@@ -47,8 +39,7 @@ class Shape{
      * - Moving to the left/right/down
      * - Access to the orientation and position
      * 
-     * @author haevn
-     * @version 1.0
+     * @version 1.1
      * @date Mai 01 2020
      * 
      * @param {Number[]} shape 1D Array of the shape
@@ -56,12 +47,12 @@ class Shape{
      * @param {Number} boardWidth Width of the underlying board
      * @param {Number} boardHeight Height of the underlying board
      */
-    constructor(shape, id, boardWidth, boardHeight){
+    constructor(shape, id){
         this.#shape = shape;
         this.#shapeID = id;
-        this.#boardWidth = boardWidth;
-        this.#boardHeight = boardHeight;
-        this.#position_x = Math.floor(boardWidth * 0.5);
+        this.#position_x = Math.floor(this.#boardWidth * 0.5);
+        this.#position_y = 0;
+
     }
 
 // Internal methods
@@ -100,14 +91,50 @@ class Shape{
     #checkBoundary(x, y){
         return x >= 0 && x < 4 && y >= 0 && x < 4;
     }
+    
 
-// Public methods
+    /**
+     * Access the element of the shape
+     * The coordinates specified by x and y must be inside the shapes boundaries
+     * @param {Number} x X coordinate of the shape
+     * @param {Number} y Y coordinate of the shape
+     * @returns State of the element
+     */
+    getElementAt(x, y){
+        return this.#shape[this.#rotate(x, y)];
+    }
 
+    getOrientation(){
+        return this.#orientation;
+    }
+
+    getShapeID(){
+        return this.#shapeID;
+    }
+
+    getShapeWidth(){
+        return meta.SHAPE_SIZE;
+    }
+
+    getShapeHeight(){
+        return meta.SHAPE_SIZE;
+    }
+    
+    getX(){
+        return this.#position_x;
+    }
+
+    getY(){
+        return this.#position_y;
+    }
+
+
+    
     /**
      * Moves the shape to the left side
      * If the position will be less than 0 the operation will abort
      */
-    moveLeft(){
+     moveLeft(){
         if(this.#position_x >= 0){
             this.#position_x--;
         }
@@ -151,108 +178,37 @@ class Shape{
     }
 
     /**
-     * Access the element of the shape
-     * The coordinates specified by x and y must be inside the shapes boundaries
-     * @param {Number} x X coordinate of the shape
-     * @param {Number} y Y coordinate of the shape
-     * @returns State of the element
-     */
-    getElement(x, y){
-        if(!this.#checkBoundary(x, y)){
-           return; 
-        }
-        return this.#shape[this.#rotate(x, y)];
-    }
-
-    /**
-     * Access the orientation
-     * @returns Orientation of the shape
-     */
-    getOrientation(){
-        return this.#orientation;
-    }
-
-    /**
-     * Access the shape ID
-     * @returns ID of the shape
-     */
-    getShapeID(){
-        return this.#shapeID;
-    }
-
-    /**
-     * Access the width 
-     * @returns Width of the shape
-     */
-    getShapeWidth(){
-        return this.#shapeWidth;
-    }
-
-    /**
-     * Access the height
-     * @returns Height of the shape
-     */
-    getShapeHeight(){
-        return this.#shapeHeight;
-    }
-
-    
-
-    /**
-     * Access the x position
-     * @returns X coordinate of the shape
-     */
-    getX(){
-        return this.#position_x;
-    }
-
-    /**
-     * Access the y position
-     * @returns Y coordinate of the shape
-     */
-    getY(){
-        return this.#position_y;
-    }
-
-    /**
-     * Copies a shape
-     * @returns Copied shape
+     * Make a deep copy of the shape
+     * @returns A exact copy of the shape
      */
     copy(){
-        let tmpShape = new Shape(this.#shape, this.#shapeID, this.#boardWidth, this.#boardHeight);
+        let tmpShape = new Shape(this.#shape, this.#shapeID);
+        // disable for switching
+        //tmpShape.#position_x = this.#position_x;
+        //tmpShape.#position_y = this.#position_y;
         tmpShape.#orientation = this.#orientation;
         return tmpShape;
     }
 
-    /**
-     * Sets the board dimension
-     * @param {Number} width Width of the board
-     * @param {Number} height Height of the board
-     */
-    setBoardDimensions(width, height){
-        this.#boardWidth = width;
-        this.#boardHeight = height;
-    }
 }
 
 class ShapeHandler{
+    #shapes = [
+        new Shape([1, 0, 0, 0,  1, 1, 1, 0,  0, 0, 0, 0,  0, 0, 0, 0], 1),  // blue ricky
+        new Shape([0, 0, 2, 0,  2, 2, 2, 0,  0, 0, 0, 0,  0, 0, 0, 0], 2),  // orange ricky
+        new Shape([3, 3, 0, 0,  0, 3, 3, 0,  0, 0, 0, 0,  0, 0, 0, 0], 3),  // cleaveland Z
+        new Shape([0, 4, 4, 0,  4, 4, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0], 4),  // rhodeisland z
+        new Shape([5, 0, 0, 0,  5, 0, 0, 0,  5, 0, 0, 0,  5, 0, 0, 0], 5),  // hero
+        new Shape([0, 0, 0, 0,  0, 6, 6, 0,  0, 6, 6, 0,  0, 0, 0, 0], 6),  // smashboy
+        new Shape([0, 7, 0, 0,  7, 7, 7, 0,  0, 0, 0, 0,  0, 0, 0, 0], 7)   // teewee
+        ,
+        
+        new Shape([10, 10, 10, 10,  10,  0, 10,  0,   0, 10, 0, 10,  10, 10,  0,  0], 10),   
+        new Shape([ 0,  0,  0,  0,   0, 11,  0, 11,  11, 0, 11,  0,   0,  0, 11, 11], 11),      
+        
+    ]
 
-    #amountShapes = 8;
-    
-    #blueRicky = new Shape(   [1, 0, 0, 0,  1, 1, 1, 0,  0, 0, 0, 0,  0, 0, 0, 0], 1);
-    #orangeRIcky = new Shape( [0, 0, 2, 0,  2, 2, 2, 0,  0, 0, 0, 0,  0, 0, 0, 0], 2);
-    #cleaveLandZ = new Shape( [3, 3, 0, 0,  0, 3, 3, 0,  0, 0, 0, 0,  0, 0, 0, 0], 3);
-    #rhodeIslandZ = new Shape([0, 4, 4, 0,  4, 4, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0], 4);
-    #hero = new Shape(        [5, 0, 0, 0,  5, 0, 0, 0,  5, 0, 0, 0,  5, 0, 0, 0], 5);
-    #smashboy = new Shape(    [0, 0, 0, 0,  0, 6, 6, 0,  0, 6, 6, 0,  0, 0, 0, 0], 6);
-    #teewee = new Shape(      [0, 7, 0, 0,  7, 7, 7, 0,  0, 0, 0, 0,  0, 0, 0, 0], 7);
-    #baum = new Shape(      [1, 2, 5, 0,  8, 6, 5, 3,  3, 3, 8, 0,  0, 0, 1, 0], 8);
- 
-    /**
-     * Simple access to shapes via IDs
-     */
-    #shapes = [this.#blueRicky, this.#orangeRIcky, this.#cleaveLandZ, this.#rhodeIslandZ, this.#hero, this.#smashboy, this.#teewee, this.#baum];
-    
+   
     /**
      * This attribute represents the current shape of the game
      */
@@ -261,7 +217,7 @@ class ShapeHandler{
     /**
      * This attribute represents the next shape of the game
      */
-    #nextShape = this.#shapes[Math.floor(Math.random() * 1000) % this.#amountShapes];
+    #nextShape = this.#shapes[Math.floor(Math.random() * 1000) % this.#shapes.length];
 
     /**
      * Tracks if the shape was switched
@@ -274,7 +230,6 @@ class ShapeHandler{
      * - Access to current and next shape
      * - New shape generation
      * 
-     * @author haevn
      * @version 1.0
      * @date Mai 01 2020
      * @param {Number[]} shape 1D Array of the shape
@@ -283,14 +238,7 @@ class ShapeHandler{
      * @param {Number} boardHeight Height of the underlying board
      */
     constructor(boardWidth, boardHeight){
-        this.#blueRicky.setBoardDimensions(boardWidth, boardHeight);  
-        this.#orangeRIcky.setBoardDimensions(boardWidth, boardHeight);  
-        this.#cleaveLandZ.setBoardDimensions(boardWidth, boardHeight);  
-        this.#rhodeIslandZ.setBoardDimensions(boardWidth, boardHeight);  
-        this.#hero.setBoardDimensions(boardWidth, boardHeight);  
-        this.#smashboy.setBoardDimensions(boardWidth, boardHeight);  
-        this.#teewee.setBoardDimensions(boardWidth, boardHeight);  
-        this.#baum.setBoardDimensions(boardWidth, boardHeight);  
+       
     }
 
     /**
@@ -317,21 +265,26 @@ class ShapeHandler{
      */
     createNewShape(){
         this.#currentShape = this.#nextShape.copy();
-        let id = (Math.floor(Math.random() + 43159) ^ Date.now()) % this.#amountShapes;
+        let id = (Math.floor(Math.random() + 43159) ^ Date.now()) % this.#shapes.length;
         if(id < 0){
             id *= -1;
-            id %= this.#amountShapes;
+            id %= this.#shapes.length;
         }
         this.#nextShape = this.#shapes[id].copy();
+        this.#switched = false;
     }
 
     /**
      * Switches the current shape with the next one
      */
     switchShapes(){
+        if(this.#switched){
+            return;
+        }
         let tmp = this.#nextShape.copy();
         this.#nextShape = this.#currentShape.copy();
         this.#currentShape = tmp.copy();
+        this.#switched = true;
     }
 
 }

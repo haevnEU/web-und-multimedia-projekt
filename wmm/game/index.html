@@ -3,33 +3,48 @@
     <head>
         <meta charset="UTF-8">        
         <title>Canvas testing</title>
-        <link rel="stylesheet" href="./darkmode.css">
+        <link rel="stylesheet" href="http://localhost/styles/darkmode.css">
+        <link rel="stylesheet" href="http://localhost/styles/game.css">
     </head>
-    <body style="background-color:grey;width: 100%; height: 100%; margin: 0; font-family: Arial, Helvetica, sans-serif;">
-        <div style="width:100%">
-            <div style="height:100%;width:10%;float:left;">
-                <div>
-                    <b>DEBUG TOOLS</b>
-                </div>
-                <p id="DEBUG_state">Page loaded</p>
-                <p>Theme: <select id='themes'></select></p>
-                <input type="text" id="CONSOLE_INPUT"></input>
-            </div>
-            <div id="canvasDiv" style="background-color:#eee; height:100%;width:70%;float:left;">
-                <canvas id="fieldCanvas"></canvas>
-                <script type="module" src="./main.js"></script>
-                <script type="module" src="./board.js"></script>
-                <script type="module" src="./shapes.js"></script>
-                <script type="module" src="./theme.js"></script>   
-                <script type="module" src="./game.js"></script>   
-
-                <script type="module" src="./debug_tools.js"></script>
-            </div>
-            <div style="background-color:#aaa; height:100%;width:20%;float:right;">
-                <div>
-                    <b>Chat</b>
-                </div>
-            </div>
-        </div>  
+    <body>
+        <div class="menu">
+            <h2>Menu</h2>
+            <p id="DEBUG_state">Page loaded</p>
+            <p>Theme: <select id='themes'></select></p>
+            <input type="text" id="CONSOLE_INPUT"></input>
+        </div>
+        <div id="canvasDiv" class="game">
+            <canvas id="fieldCanvas"></canvas>
+            <script type="module" src="./constants.js"></script>   
+            <script type="module" src="./main.js"></script>
+            <script type="module" src="./board.js"></script>
+            <script type="module" src="./shapes.js"></script>
+            <script type="module" src="./theme.js"></script>   
+            <script type="module" src="./game.js"></script>    
+            <script type="module" src="./render.js"></script>    
+        </div>
+        <div class="chat">
+            <h2>Chat</h2>
+        </div>
     </body>
+    
+
+    <footer>
+        <span class="background_"></span>
+        <span class="board"></span>
+        <span class="font_"></span>
+        <span class="blockID2"></span>
+        <span class="blockID3"></span>
+        <span class="blockID4"></span>
+        <span class="blockID5"></span>
+        <span class="blockID6"></span>
+        <span class="blockID7"></span>
+        <span class="blockID8"></span>
+        <span class="blockID9"></span>
+        <span class="blockID10"></span>
+        <span class="blockID11"></span>
+        <span class="blockID254"></span>
+        <span class="blockID254"></span>
+        <span class="blockID255"></span>
+    </footer>
 </html>
