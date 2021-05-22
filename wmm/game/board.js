@@ -66,73 +66,6 @@ class Board{
         if(!this.#checkBoundary(x, y)){
             return -1;
         }
-<<<<<<< Updated upstream
-        return this.#field[y  * this.#width + x];
-
-        /*
-            900009
-            900009
-            900009
-            888888
-
-        */
-    }
-
-    /**
-     * Request the width of the board, include the walls
-     * @returns Width of the board.
-     */
-    getBoardWidth(){
-        return this.#width;
-    }
-
-    /**
-     * Request the height of the board, include the walls
-     * @returns Height of the board.
-     */
-    getBoardHeight(){
-        return this.#height;
-    }
-
-    /**
-     * Access the element specified by the x and y coordinate.
-     * This method operates on the field without the walls.
-     * If the point (x/y) is out of boundary -1 will be returned
-     * @param {Number} x X coordinate mapped to the field
-     * @param {Number} y Y coordinate mapped to the field
-     * @returns State of the element a position (x/y) in range 0 to 9
-     */
-    getFieldElement(x, y){
-
-    }
-
-    /**
-     * Sets an element based 
-     * The operation will abort if one of the following condition cannot satisfied.
-     * 1. The x and y coordinate are not inside the board boundaries.
-     * 2. The state is in an invalid range, allowed 0 to 8
-     * @param {Number} x X coordinate mapped to the field
-     * @param {Number} y Y coordinate mapped to the field
-     * @param {Number} state State of the field in range 0 to 8
-     */
-     setFieldElement(x, y, state){
-        // 1. Map provided x and y coordinates to the board coordination system
-        let mappedX = x + 1;
-        let mappedY = y + 1;
-        // 2. Verify mapped coordinates, state and execute the operation
-        if(this.#isValidState(state) 
-          && this.#checkBoundary(mappedX, mappedY) 
-          && this.#field[mappedY * this.#width + mappedX] != this.#WALL_STATE){
-            this.#field[mappedY * this.#width + mappedX] = state;
-        }
-    }
-
- 
-
-    /**
-     * Creates a copy of this board
-     * @returns Copy of the board
-=======
         return this.#field[y * meta.BOARD_WIDTH + x];
     }
 
@@ -143,7 +76,6 @@ class Board{
      * @param {Number} y Y Coordinate of the element
      * @param {Number} state Value which should be set to the field 
      * @returns True iff the field could be set
->>>>>>> Stashed changes
      */
     setElementAt(x, y, state){
         if(this.#field[y * meta.BOARD_WIDTH + x] != 0){

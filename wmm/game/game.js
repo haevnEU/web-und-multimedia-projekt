@@ -72,27 +72,6 @@ class Game{
        
         let shape = this.#shapeHandler.getCurrentShape();
         if(this.#lastTime <= 0){
-<<<<<<< Updated upstream
-            this.#shapeHandler.getCurrentShape().moveDown();
-            this.#lastTime = 10;
-        }
-        this.#lastTime--;
-        // TODO 
-
-        let shapeY = this.#shapeHandler.getCurrentShape().getY();
-        let shapeX = this.#shapeHandler.getCurrentShape().getX();
-            for(let y = 0;y < 4; y++){
-                console.log(copyBoard.getBoardElementAt(shapeX, shapeY + y + 1));
-                if(copyBoard.getBoardElementAt(shapeX, shapeY + y + 1) != 0){
-                    console.log("COLLISION");
-                }
-        }
-
-
-        if(execute){
-            this.#board = copyBoard.copyBoard();
-        }        
-=======
             if(this.#physics.canShapeMoveDown(this.#shapeHandler.getCurrentShape(), this.#board)){
                 shape.moveDown();
             }else{
@@ -111,7 +90,6 @@ class Game{
             this.#lastTime = 10;
         }
         this.#lastTime--;
->>>>>>> Stashed changes
     }
 
     render(){          
