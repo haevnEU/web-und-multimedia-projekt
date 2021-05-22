@@ -58,9 +58,13 @@ class Theme{
 
 
     #getColorByID(id){
-        let element = document.querySelector(id);
-        let style = getComputedStyle(element);
-        return style.color;
+        try{
+            let element = document.querySelector(id);
+            let style = getComputedStyle(element);
+            return style.color; 
+        }catch(e){
+            return "magenta";
+        }
     }
 
 
@@ -70,13 +74,8 @@ class Theme{
      * @returns Color of the block
      */
     getBlockColorByID(id){
-        try{
-            
-            let block = ".blockID" + id;
-            return this.#getColorByID(block);
-        }catch(e){
-            return "magenta";
-        }
+        let block = ".blockID" + id;
+        return this.#getColorByID(block);     
     }
 
     /**
