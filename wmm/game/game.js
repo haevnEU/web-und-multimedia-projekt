@@ -1,173 +1,148 @@
 import {Shape, ShapeHandler} from "./shapes.js"
 import {Board} from "./board.js"
-import {Theme, ThemeHandler} from "./theme.js"
+import {Physics} from "./physics.js"
+import {Renderer} from "./render.js"
+import meta from "./constants.js"
 
-import {DebugTools} from "./debug_tools.js"
 
 class Game{
-    
-    #board = new Board(20, 30);
-    #theme = new ThemeHandler();
-    #shapeHandler = new ShapeHandler(20, 30); 
 
-    #blockSize = 25;
-    #paused = false;
-    
-    #fieldCanvas = document.getElementById('fieldCanvas');  
-    #context = fieldCanvas.getContext('2d');
-
+    #showShapes = false;
+    #score = 0;
+    #level = 1;
+    #removedLines = 0;
+    #paused = false; 
+    #lastTime = 30;
+    #physics = new Physics();
+    #renderer = new Renderer();
+    #board = new Board(20, 30);    
+    #shapeHandler = new ShapeHandler(); 
+    #nextLevel = Math.floor(new Date() / 1000) + 10;
+    #gameOver = false;
     constructor(){    
-        this.#fieldCanvas.width = window.innerWidth * 0.7;
-        this.#fieldCanvas.height = window.innerHeight * 0.9;
-    
+        meta.fieldCanvas.width = window.innerWidth * 0.7;
+        meta.fieldCanvas.height = window.innerHeight * 0.9;    
         this.#shapeHandler.createNewShape();
-        this.#theme.setTheme("default");
+    }
+
+    #currentSeconds(){
+        return Math.floor(new Date() / 1000);
+    }
+
+    #nextLevelIn(seconds){
+        return this.#currentSeconds() + seconds;
     }
 
     onKey(key){
-        if(key == "Escape"){
+        key = key.toLowerCase();
+        if(key == "escape" && !this.#gameOver){
             this.#paused ? this.start() : this.pause();
-        }else if(key == "a" || key == "A"){
-            this.#shapeHandler.getCurrentShape().moveLeft();
-        }else if(key == "d" || key == "D"){
+        }else if(key == "a" && this.#physics.canShapeMoveLeft(this.#shapeHandler.getCurrentShape(), this.#board)){
+            this.#shapeHandler.getCurrentShape().moveLeft();   
+        }else if(key == "d" && this.#physics.canShapeMoveRight(this.#shapeHandler.getCurrentShape(), this.#board)){
             this.#shapeHandler.getCurrentShape().moveRight();
-        }else if(key == "s" || key == "S"){
-            this.#shapeHandler.getCurrentShape().moveDown();
-        }else if(key == "q" || key == "Q"){
+        }else if(key == "s" && this.#physics.canShapeMoveDown(this.#shapeHandler.getCurrentShape(), this.#board)){
+            this.#moveShapeDown(this.#shapeHandler.getCurrentShape());
+        }else if(key == "q" && this.#physics.canShapeRotatedLeft(this.#shapeHandler.getCurrentShape(), this.#board)){
             this.#shapeHandler.getCurrentShape().rotateLeft();
-        }else if(key == "e" || key == "E"){
+        }else if(key == "e" && this.#physics.canShapeRotatedRight(this.#shapeHandler.getCurrentShape(), this.#board)){
             this.#shapeHandler.getCurrentShape().rotateRight();
         }else if(key == " "){
-            
-        }else if(key == "1"){
-            this.#shapeHandler.createNewShape();
-        }else if(key == "2"){
             this.#shapeHandler.switchShapes();
-        }else if(key == "3"){
-            this.#shapeHandler.DEBUG_setShape(8);
+        }else if(key == "g"){
+            this.#showShapes = !this.#showShapes;
+        }else if(key == "n"){
+            this.#board = new Board();
+            this.#shapeHandler.createNewShape();
+            this.#gameOver = false;  
+            this.#score = 0;
+            this.#level = 1;
+            this.#removedLines = 0;
         }
     }
 
     start(){
-        DebugTools.updateState("Running");
         this.#paused = false;
     }
 
     pause(){
-        DebugTools.updateState("Paused");
         this.#paused = true;
     }
 
-    #lastTime = 10;
-    handleLogic(){
-        if(this.#paused){
-            return;
-        }
-        let copyBoard = this.#board.copyBoard();
-        let execute = false;
-        if(this.#lastTime <= 0){
-            this.#shapeHandler.getCurrentShape().moveDown();
-            this.#lastTime = 10;
-        }
-        this.#lastTime--;
-        // TODO 
-
-        let shapeY = this.#shapeHandler.getCurrentShape().getY();
-        let shapeX = this.#shapeHandler.getCurrentShape().getX();
-            for(let y = 0;y < 4; y++){
-                console.log(copyBoard.getBoardElementAt(shapeX, shapeY + y + 1));
-                if(copyBoard.getBoardElementAt(shapeX, shapeY + y + 1) != 0){
-                    console.log("COLLISION");
-                }
-        }
-
-
-        if(execute){
-            this.#board = copyBoard.copyBoard();
-        }        
+    #convertClearedLinesToScore(lines){
+        if(lines == 1){
+            return 40 * this.#level;
+        }else if(lines == 2){
+            return 100 * this.#level;
+        }else if(lines == 3){
+            return 300 * this.#level;
+        }else if(lines == 4){
+            return 1200 * this.#level;
+        }else return 0;
     }
 
-    render(){
+    #moveShapeDown(shape){
+        if(this.#physics.canShapeMoveDown(this.#shapeHandler.getCurrentShape(), this.#board)){
+            shape.moveDown();
+        }else{ 
+            this.#score += shape.getAmountOccupiedBlocks();
+            for (let x = 0; x < 4; x++){
+                for (let y = 0; y < 4; y++){
+                    if (shape.getElementAt(x, y) != 0){
+                        this.#board.setElementAt(shape.getX() + x, shape.getY() + y, shape.getElementAt(x, y));
+                    }
+                }
+            }
+            this.#shapeHandler.createNewShape();   
+            this.#gameOver = !this.#physics.canShapeMoveDown(this.#shapeHandler.getCurrentShape(), this.#board);
+            let lines = this.#physics.canLinesBeRemoved(this.#board);
+            if(lines > 0){
+                this.#removedLines += lines;
+                this.#score += this.#convertClearedLinesToScore(lines);
+            }
+        }
+    }
+    
+    handleLogic(){
+        if(this.#paused || this.#gameOver){
+            return;
+        }
+       
+        let shape = this.#shapeHandler.getCurrentShape();
+        if(this.#lastTime <= 0){
+            this.#moveShapeDown(shape);
+            this.#lastTime = 30 - this.#level;
+        }
+        this.#lastTime--;
+    }
+
+    render(){          
+        // This is used to resize the canvas, maybe theres a better solution like an event which is fires if the windows is resized
+        meta.fieldCanvas.width = window.innerWidth * 0.7;
+        meta.fieldCanvas.height = window.innerHeight * 0.9;
         
-        this.#context.clearRect(0,0, this.#fieldCanvas.width, this.#fieldCanvas.height);
-        this.#fieldCanvas.width = window.innerWidth * 0.7;
-        this.#fieldCanvas.height = window.innerHeight * 0.9;
-        this.#context.fillStyle = this.#theme.getTheme().getBackgroundColor();
-        this.#context.fillRect(0, 0, this.#fieldCanvas.width, this.#fieldCanvas.height);
+        this.#renderer.clear();
         if(this.#paused){
-            this.#context.fillStyle = this.#theme.getTheme().getFontColor();
-            this.#context.font = '62px arial';
-            this.#context.textAlign = 'center';
-            this.#context.textBaseline = 'middle';
-            this.#context.fillText('PAUSE', this.#fieldCanvas.width * 0.5, this.#fieldCanvas.height * 0.3);
-            this.#context.font = '26px arial';
-            this.#context.fillText('HIT ESC TO CONTINUE', this.#fieldCanvas.width * 0.5, this.#fieldCanvas.height * 0.3 + 80);
+            this.#renderer.renderPauseMenu();
             return;
         }
 
-        for(let x = 0; x <= this.#board.getBoardWidth(); x++){
-            for(let y = 0; y <= this.#board.getBoardHeight(); y++){
-                let color = this.#board.getBoardElementAt(x, y);
-                this.#context.fillStyle = this.#theme.getTheme().getBlockColorByID(color);
-                this.#context.fillRect(this.#blockSize + (x * this.#blockSize), this.#blockSize + (y * this.#blockSize), this.#blockSize, this.#blockSize);
-            }
+        if(this.#gameOver){
+            this.#renderer.renderGameOverScreen(this.#score, this.#removedLines, this.#level);
+            return;
         }
 
-        for(let x = 0; x < this.#shapeHandler.getCurrentShape().getShapeWidth(); x++){
-            for(let y = 0; y < this.#shapeHandler.getCurrentShape().getShapeHeight(); y++){
-                let color = this.#shapeHandler.getCurrentShape().getElement(x, y);
-                this.#context.fillStyle = this.#theme.getTheme().getBlockColorByID(color);
-               
-                this.#context.fillRect((this.#shapeHandler.getCurrentShape().getX() * this.#blockSize) + (x * this.#blockSize),
-                 (this.#shapeHandler.getCurrentShape().getY() * this.#blockSize)+ (y * this.#blockSize),
-                 this.#blockSize, this.#blockSize);
-         
-            }
+        if(this.#showShapes){
+            this.#renderer.renderAllShapes(this.#shapeHandler.getShapes());
+            return;
         }
 
-        let previewDimension = Math.floor(this.#blockSize * 0.7);
-        for(let x = 0; x < this.#shapeHandler.getNextShape().getShapeWidth(); x++){
-            for(let y = 0; y < this.#shapeHandler.getNextShape().getShapeHeight(); y++){
-                let color = this.#shapeHandler.getNextShape().getElement(x, y);
-                this.#context.fillStyle = this.#theme.getTheme().getBlockColorByID(color);
-               
-                this.#context.fillRect(this.#blockSize * (this.#board.getBoardWidth() + 5)  + (x * previewDimension),
-                 (2*this.#blockSize) + y * previewDimension,
-                 previewDimension, previewDimension);
-         
-            }
-        }
+        this.#renderer.renderBoard(this.#board);
+        this.#renderer.renderShape(this.#shapeHandler.getCurrentShape());
+        this.#renderer.renderShapePreview(this.#shapeHandler.getNextShape(), this.#board);  
+        this.#renderer.renderText("Score: " + this.#score + "\n\nLevel: " + this.#level + "\n\nLines: " + this.#removedLines);          
     }
 
 }
 
 export {Game}
-
-/*
-
-9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 9 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 9 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 9 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 9 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 9 
-0 0 0 0 4 0 3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 9 
-0 0 0 0 4 0 3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 9 
-0 0 0 0 4 0 3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 9 
-0 0 0 0 4 0 3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 9 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 9 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 9 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 9 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 9 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 9 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 9 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 9 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 9 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 9 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 9 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 9 
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 9 
-9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 
-
-
-*/
