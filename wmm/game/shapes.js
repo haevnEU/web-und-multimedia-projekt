@@ -198,14 +198,13 @@ class ShapeHandler{
         new Shape([0, 0, 2, 0,  2, 2, 2, 0,  0, 0, 0, 0,  0, 0, 0, 0], 2),  // orange ricky
         new Shape([3, 3, 0, 0,  0, 3, 3, 0,  0, 0, 0, 0,  0, 0, 0, 0], 3),  // cleaveland Z
         new Shape([0, 4, 4, 0,  4, 4, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0], 4),  // rhodeisland z
-        new Shape([5, 0, 0, 0,  5, 0, 0, 0,  5, 0, 0, 0,  5, 0, 0, 0], 5),  // hero
+        new Shape([0, 5, 0, 0,  0, 5, 0, 0,  0, 5, 0, 0,  0, 5, 0, 0], 5),  // hero
         new Shape([0, 0, 0, 0,  0, 6, 6, 0,  0, 6, 6, 0,  0, 0, 0, 0], 6),  // smashboy
         new Shape([0, 7, 0, 0,  7, 7, 7, 0,  0, 0, 0, 0,  0, 0, 0, 0], 7)   // teewee
         ,
         
-        new Shape([10, 10, 10, 10,  10,  0, 10,  0,   0, 10, 0, 10,  10, 10,  0,  0], 10),   
-        new Shape([ 0,  0,  0,  0,   0, 11,  0, 11,  11, 0, 11,  0,   0,  0, 11, 11], 11),      
-        
+        new Shape([10, 10, 10, 10,  10,  0, 0,  10,   10, 0, 0, 10,  10, 10,  10,  10], 8),   
+        new Shape([11, 11, 0, 11,  11, 11, 0, 11,  11, 11, 11, 11,  11, 0, 11, 0], 9)
     ]
 
    
@@ -231,28 +230,14 @@ class ShapeHandler{
      * - New shape generation
      * 
      * @version 1.0
-     * @date Mai 01 2020
-     * @param {Number[]} shape 1D Array of the shape
-     * 
-     * @param {Number} boardWidth Width of the underlying board
-     * @param {Number} boardHeight Height of the underlying board
+     * @date Mai 01 2020 
      */
-    constructor(boardWidth, boardHeight){
-       
-    }
+    constructor(){}
 
-    /**
-     * This method returns the current shape
-     * @returns Returns the current shape
-     */
     getCurrentShape(){
         return this.#currentShape;
     }
 
-    /**
-     * This method returns the next shape
-     * @returns Returns the next shape
-     */
     getNextShape(){
         return this.#nextShape;
     }
@@ -285,6 +270,10 @@ class ShapeHandler{
         this.#nextShape = this.#currentShape.copy();
         this.#currentShape = tmp.copy();
         this.#switched = true;
+    }
+
+    getShapes(){
+        return this.#shapes;
     }
 
 }

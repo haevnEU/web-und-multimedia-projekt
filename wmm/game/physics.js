@@ -83,25 +83,15 @@ class Physics{
         let position_y = shape.getY() + offset_y;
 
         // To validate the shape every single block must be checked for collision
-        // There a 3 steps for each block.
-        // 1.
-        // 2.
-        // 3.
-
+        // A collision occurs if neither board not the block are empty
         for(let x = 0; x < meta.SHAPE_SIZE; x++){
-            for(let y = 0; y < meta.SHAPE_SIZE; y++){
-                // Step 1
-                if ((position_x + x) >= 0 && (position_x + x) < board.getWidth()){
-                    // Step 2
-                    if ((position_y + y) >= 0 && (position_y + y) < board.getHeight()){                   
-                        let stateAtField = board.getElementAt(position_x + x, position_y + y);
-                        let stateAtShape = shape.getElementAt(x, y);
-                        // Step 3
-                        if(stateAtShape != 0 && stateAtField != 0){
-                            return false;
-                        }
-                    }
+            for(let y = 0; y < meta.SHAPE_SIZE; y++){  
+                let stateAtField = board.getElementAt(position_x + x, position_y + y);
+                let stateAtShape = shape.getElementAt(x, y);
+                if(stateAtShape != 0 && stateAtField != 0){
+                    return false;
                 }
+                 
             }
         }
         return true;

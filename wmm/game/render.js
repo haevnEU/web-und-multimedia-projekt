@@ -4,9 +4,7 @@ import {ThemeHandler, Theme} from "./theme.js"
 class Renderer{
     #theme = new ThemeHandler();
     
-    constructor(){  
-        this.#theme.setTheme("default");
-    }
+    constructor(){ }
 
     /**
      * This method renders a border around a rectangle
@@ -119,6 +117,63 @@ class Renderer{
         meta.context.fillStyle = this.#theme.getTheme().getBackgroundColor();
         meta.context.fillRect(0, 0, meta.fieldCanvas.width, meta.fieldCanvas.height);
 
+    }
+
+
+
+
+
+
+
+    renderAllShapes(shapes){
+        let offsetX = 25;
+        let offsetY = 25;
+        for(let i = 0; i < 7; i++){
+            let shape = shapes[i];
+            for(let x = 0; x < shape.getShapeWidth(); x++){
+                for(let y = 0; y < shape.getShapeHeight(); y++){
+                    let color = shape.getElementAt(x, y);
+                    if(color == 0){
+                        continue;
+                    }
+                    this.drawRectangle(offsetX + (x * meta.BLOCK_SIZE),
+                                        offsetY + (y * meta.BLOCK_SIZE),
+                                        meta.BLOCK_SIZE, meta.BLOCK_SIZE, this.#theme.getTheme().getBlockColorByID(color));
+    
+             
+                }
+            }
+            offsetX += 5*25;
+            if(i % 2){
+                offsetX = 25;
+                offsetY += 5*25;
+            }
+        }
+
+        offsetY = 25;
+        offsetX = 50 + 2*5 * 25
+        for(let i = 7; i < shapes.length; i++){
+            let shape = shapes[i];
+            for(let x = 0; x < shape.getShapeWidth(); x++){
+                for(let y = 0; y < shape.getShapeHeight(); y++){
+                    let color = shape.getElementAt(x, y);
+                    if(color == 0){
+                        continue;
+                    }
+                    this.drawRectangle(offsetX + (x * meta.BLOCK_SIZE),
+                                        offsetY + (y * meta.BLOCK_SIZE),
+                                        meta.BLOCK_SIZE, meta.BLOCK_SIZE, this.#theme.getTheme().getBlockColorByID(color));
+    
+             
+                }
+            }
+            offsetX += 5*25;
+            if(i % 2){
+                offsetX = 50 + 2*5 * 25
+                offsetX = 50 + 2*5 * 25
+                offsetY += 5*25;
+            }
+        }
     }
 }
 

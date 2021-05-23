@@ -6,6 +6,9 @@ import meta from "./constants.js"
 
 
 class Game{
+
+    #showShapes = false;
+
     #paused = false; 
     #lastTime = 10;
     #physics = new Physics();
@@ -35,6 +38,8 @@ class Game{
             this.#shapeHandler.getCurrentShape().rotateRight();
         }else if(key == " "){
             this.#shapeHandler.switchShapes();
+        }else if(key == "g"){
+            this.#showShapes = !this.#showShapes;
         }
     }
 
@@ -82,6 +87,11 @@ class Game{
         this.#renderer.clear();
         if(this.#paused){
             this.#renderer.renderPauseMenu();
+            return;
+        }
+
+        if(this.#showShapes){
+            this.#renderer.renderAllShapes(this.#shapeHandler.getShapes());
             return;
         }
 
