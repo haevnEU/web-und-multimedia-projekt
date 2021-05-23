@@ -10,7 +10,7 @@ class Theme{
             let style = getComputedStyle(element);
             return style.color; 
         }catch(e){
-            return "magenta";
+            return "blue";
         }
     }
 
@@ -31,7 +31,14 @@ class Theme{
     getBackgroundColor(){
         return this.#getColorByID(".background_");
     }
+
     
+    getPreviewBackgroundColor(){
+        return this.#getColorByID(".background_preview");
+    }
+    
+
+
     /**
      * Access the color information about the board
      * @returns Color of the board
@@ -46,6 +53,26 @@ class Theme{
      */
     getFontColor(){
         return this.#getColorByID(".font_");
+    }
+    
+    getFontFamily(){
+        try{
+            let element = document.querySelector(".font_");
+            let style = getComputedStyle(element);
+            return style.fontFamily; 
+        }catch(e){
+            return "Arial";
+        }
+    }
+    
+    getFontSize(){
+        try{
+            let element = document.querySelector(".font_");
+            let style = getComputedStyle(element);
+            return style.fontSize; 
+        }catch(e){
+            return 26;
+        }
     }
 }
 

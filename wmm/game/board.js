@@ -64,7 +64,7 @@ class Board{
      */
      getElementAt(x, y){
         if(!this.#checkBoundary(x, y)){
-            return -1;
+         //   return -1;
         }
         return this.#field[y * meta.BOARD_WIDTH + x];
     }
@@ -79,10 +79,33 @@ class Board{
      */
     setElementAt(x, y, state){
         if(this.#field[y * meta.BOARD_WIDTH + x] != 0){
-            return false;
+          //  return false;
         }
         this.#field[y * meta.BOARD_WIDTH + x] = state;    
         return true;
+    }
+
+    removeLine(line){
+        if(line == meta.BOARD_HEIGHT){
+            return;
+        }
+        let start = line * meta.BOARD_WIDTH;
+        let end = line * meta.BOARD_WIDTH + meta.BOARD_WIDTH;
+        console.log("remove from " + start + " to " + end + " TOTAL " + (end - start));
+        for(let x = start + 1; x < end - 1; x++){
+            if(this.#field[line * meta.BOARD_WIDTH + x] == 0){
+                return;
+            }
+        }
+        let res = this.#field.splice(start, end - start);
+        console.log(res);
+        for(let x = 0; x < meta.BOARD_WIDTH; x++){
+            if(x == 0 || x == (meta.BOARD_WIDTH - 1)){   
+                this.#field.unshift(254);
+    	    }else{
+                this.#field.unshift(0);
+            }
+        }
     }
 }
 

@@ -1,35 +1,14 @@
 import meta from "./constants.js"
 
 class Shape{    
-    /**
-     * Current orientation of the shape
-     */
     #orientation = 0;
-
-    /**
-     * 
-     */
     #position_x = 0;
-    #position_y = 0;
-    
-    /**
-     * ID of the shape, should be in range from 0 to 8
-     */
+    #position_y = -1;
     #shapeID = 0;
-
-    /**
-     * Actual shape array
-     */
     #shape = [];
-
-    /**
-     * Width of the game board
-     */
+    #amountOccupiedBlocks = 0;
     #boardWidth = meta.BOARD_WIDTH;
 
-    /**
-     * Height of the game board 
-     */
     #boardHeight = meta.BOARD_HEIGHT;
     
     /**
@@ -51,8 +30,12 @@ class Shape{
         this.#shape = shape;
         this.#shapeID = id;
         this.#position_x = Math.floor(this.#boardWidth * 0.5);
-        this.#position_y = 0;
-
+        this.#position_y = -2;
+        for(let i = 0; i < shape.length; i++){
+            if(shape[i] != 0){
+                this.#amountOccupiedBlocks++;
+            }
+        }
     }
 
 // Internal methods
@@ -128,7 +111,9 @@ class Shape{
         return this.#position_y;
     }
 
-
+    getAmountOccupiedBlocks(){
+        return this.#amountOccupiedBlocks;
+    }   
     
     /**
      * Moves the shape to the left side
@@ -194,17 +179,25 @@ class Shape{
 
 class ShapeHandler{
     #shapes = [
-        new Shape([1, 0, 0, 0,  1, 1, 1, 0,  0, 0, 0, 0,  0, 0, 0, 0], 1),  // blue ricky
-        new Shape([0, 0, 2, 0,  2, 2, 2, 0,  0, 0, 0, 0,  0, 0, 0, 0], 2),  // orange ricky
-        new Shape([3, 3, 0, 0,  0, 3, 3, 0,  0, 0, 0, 0,  0, 0, 0, 0], 3),  // cleaveland Z
-        new Shape([0, 4, 4, 0,  4, 4, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0], 4),  // rhodeisland z
-        new Shape([0, 5, 0, 0,  0, 5, 0, 0,  0, 5, 0, 0,  0, 5, 0, 0], 5),  // hero
+        new Shape([0, 0, 0, 0,  1, 0, 0, 0,  1, 1, 1, 0,  0, 0, 0, 0], 1),  // blue ricky
+        new Shape([0, 0, 0, 0,  0, 0, 2, 0,  2, 2, 2, 0,  0, 0, 0, 0], 2),  // orange ricky
+        new Shape([0, 0, 0, 0,  3, 3, 0, 0,  0, 3, 3, 0,  0, 0, 0, 0], 3),  // cleaveland Z
+        new Shape([0, 0, 0, 0,  0, 4, 4, 0,  4, 4, 0, 0,  0, 0, 0, 0], 4),  // rhodeisland z
+        new Shape([0, 0, 0, 0,  5, 5, 5, 5,  0, 0, 0, 0,  0, 0, 0, 0], 5),  // hero
         new Shape([0, 0, 0, 0,  0, 6, 6, 0,  0, 6, 6, 0,  0, 0, 0, 0], 6),  // smashboy
-        new Shape([0, 7, 0, 0,  7, 7, 7, 0,  0, 0, 0, 0,  0, 0, 0, 0], 7)   // teewee
-        ,
+        new Shape([0, 0, 0, 0,  7, 7, 7, 0,  0, 7, 0, 0,  0, 0, 0, 0], 7)   // teewee
+
+//        new Shape([1, 0, 0, 0,  1, 1, 1, 0,  0, 0, 0, 0,  0, 0, 0, 0], 1),  // blue ricky
+//        new Shape([0, 0, 2, 0,  2, 2, 2, 0,  0, 0, 0, 0,  0, 0, 0, 0], 2),  // orange ricky
+//        new Shape([3, 3, 0, 0,  0, 3, 3, 0,  0, 0, 0, 0,  0, 0, 0, 0], 3),  // cleaveland Z
+//        new Shape([0, 4, 4, 0,  4, 4, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0], 4),  // rhodeisland z
+//        new Shape([0, 5, 0, 0,  0, 5, 0, 0,  0, 5, 0, 0,  0, 5, 0, 0], 5),  // hero
+//        new Shape([0, 0, 0, 0,  0, 6, 6, 0,  0, 6, 6, 0,  0, 0, 0, 0], 6),  // smashboy
+//        new Shape([0, 7, 0, 0,  7, 7, 7, 0,  0, 0, 0, 0,  0, 0, 0, 0], 7)   // teewee
         
-        new Shape([10, 10, 10, 10,  10,  0, 0,  10,   10, 0, 0, 10,  10, 10,  10,  10], 8),   
-        new Shape([11, 11, 0, 11,  11, 11, 0, 11,  11, 11, 11, 11,  11, 0, 11, 0], 9)
+        //,
+        //new Shape([10, 10, 10, 10,  10,  0, 0,  10,   10, 0, 0, 10,  10, 10,  10,  10], 8),   
+        //new Shape([11, 11, 0, 11,  11, 11, 0, 11,  11, 11, 11, 11,  11, 0, 11, 0], 9)
     ]
 
    

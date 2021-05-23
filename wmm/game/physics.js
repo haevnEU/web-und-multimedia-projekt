@@ -67,6 +67,30 @@ class Physics{
         return this.#INTERNAL_detectCollision(shape, board, 1, 0);
     }
 
+    canLinesBeRemoved(board){ 
+        let lineFound = false;
+        let lines = new Array();
+        let y = 0;
+        for(; y < meta.BOARD_HEIGHT - 1; y++){
+            for(let x = 1; x < meta.BOARD_WIDTH - 1; x++){
+                // The line has one free spot we can skip the remaining checks for this line
+                
+                if(board.getElementAt(x, y) == 0){
+                    lineFound = false;
+                    break;
+                }
+                lineFound = true;
+                
+            }
+            if(lineFound)lines.push(y);                
+        }
+        
+        for(let i = 0; i < lines.length; i++){
+            let y = lines[i];
+            board.removeLine(y);             
+        }
+        return lines.length;
+    }
 
     /**
      * This internal method is used to validate if a shape can move into a certain direction.
