@@ -1,11 +1,27 @@
 <?php
+    require "links.php";
 
-if(isset($_GET['error'])){
-    $message = $_GET['error'];
-    echo "<html><head><link rel=\"stylesheet\" href=\"http://localhost/styles/centered.css\"></head><body><div class=\"mitte\"><div class=\"container\"><h2>Error</h2><p>$message</p><br><button onclick=\"location.href = 'http://localhost/scratch/accounting/register.html';\">Register</button><button onclick=\"location.href = './login.html';\">Login</button></div></div></body></html>";
-}else{
-    header("Location: http://localhost");
-}
+    if(isset($_GET['error'])){
+        $message = $_GET['error'];
+        echo "<html>
+            <head>
+            <link rel=\"stylesheet\" href=\"http://localhost/styles/darkmode/centered.css\">
+            <link rel=\"stylesheet\" href=\"http://localhost/styles/basic_style.css\">
+            </head>
+            <body>
+                <div class=\"root_div root_div_color\">
+                    <div class=\"container\">
+                    <h2 class=\"heading_color\">Error</h2>
+                    <p class=\"error horizontal_centered\">$message</p><br>
+                    <div class=\"horizontal_centered\">
+                        <button class=\"custom_button custom_button_color\" onclick=\"location.href = '$page_register';\">Register</button>
+                        <button class=\"custom_button custom_button_color\" onclick=\"location.href = '$page_login';\">Login</button>
+                    </div>
+                    </div></div>
+            </body></html>";
+    }else{
+        header("Location: $page_home");
+    }
 ?>
 
 

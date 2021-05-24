@@ -3,6 +3,8 @@
 */
 .font_{
     color: white;   
+    font-size: 26;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .board{
@@ -11,6 +13,10 @@
 
 .background_{
     color: #1E1E1F;
+}
+
+.background_preview{
+    color: #38383a;
 }
 
 /*
@@ -41,7 +47,7 @@
 }
 
 .blockID4{
-    color: #68CDFE;
+    color: #25309b;
 }
 
 .blockID5{
@@ -53,7 +59,7 @@
 }
 
 .blockID7{
-    color: #C56A77;
+    color: #69135e;
 }
 
 /*

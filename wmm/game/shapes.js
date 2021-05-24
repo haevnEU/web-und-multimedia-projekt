@@ -3,14 +3,14 @@ import meta from "./constants.js"
 class Shape{    
     #orientation = 0;
     #position_x = 0;
-    #position_y = -1;
+    #position_y = 0;
     #shapeID = 0;
     #shape = [];
     #amountOccupiedBlocks = 0;
     #boardWidth = meta.BOARD_WIDTH;
 
     #boardHeight = meta.BOARD_HEIGHT;
-    
+    #w = 0;
     /**
      * This class provides a complex shape based on an 1D array definition
      * Basic operation are provided by this class
@@ -26,11 +26,12 @@ class Shape{
      * @param {Number} boardWidth Width of the underlying board
      * @param {Number} boardHeight Height of the underlying board
      */
-    constructor(shape, id){
+    constructor(shape, id, w = 12){
         this.#shape = shape;
         this.#shapeID = id;
-        this.#position_x = Math.floor(this.#boardWidth * 0.5);
-        this.#position_y = -2;
+        this.w = w;
+        this.#position_x = Math.floor(this.#boardWidth * 0.5) - 2;
+        this.#position_y = 0;
         for(let i = 0; i < shape.length; i++){
             if(shape[i] != 0){
                 this.#amountOccupiedBlocks++;
@@ -175,18 +176,22 @@ class Shape{
         return tmpShape;
     }
 
+    weight(){
+        return this.w;
+    }
+
 }
 
 class ShapeHandler{
-    #shapes = [
-        new Shape([0, 0, 0, 0,  1, 0, 0, 0,  1, 1, 1, 0,  0, 0, 0, 0], 1),  // blue ricky
-        new Shape([0, 0, 0, 0,  0, 0, 2, 0,  2, 2, 2, 0,  0, 0, 0, 0], 2),  // orange ricky
-        new Shape([0, 0, 0, 0,  3, 3, 0, 0,  0, 3, 3, 0,  0, 0, 0, 0], 3),  // cleaveland Z
-        new Shape([0, 0, 0, 0,  0, 4, 4, 0,  4, 4, 0, 0,  0, 0, 0, 0], 4),  // rhodeisland z
-        new Shape([0, 0, 0, 0,  5, 5, 5, 5,  0, 0, 0, 0,  0, 0, 0, 0], 5),  // hero
-        new Shape([0, 0, 0, 0,  0, 6, 6, 0,  0, 6, 6, 0,  0, 0, 0, 0], 6),  // smashboy
-        new Shape([0, 0, 0, 0,  7, 7, 7, 0,  0, 7, 0, 0,  0, 0, 0, 0], 7)   // teewee
-
+    #shapes = [   
+        new Shape([1, 0, 0, 0,  1, 1, 1, 0,  0, 0, 0, 0,  0, 0, 0, 0], 1, 10),  // blue ricky
+        new Shape([0, 0, 2, 0,  2, 2, 2, 0,  0, 0, 0, 0,  0, 0, 0, 0], 2, 11),  // orange ricky
+        new Shape([3, 3, 0, 0,  0, 3, 3, 0,  0, 0, 0, 0,  0, 0, 0, 0], 3, 20),  // cleaveland Z
+        new Shape([0, 4, 4, 0,  4, 4, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0], 4, 30),  // rhodeisland z
+        new Shape([0, 5, 0, 0,  0, 5, 0, 0,  0, 5, 0, 0,  0, 5, 0, 0], 5, 50),  // hero
+        new Shape([0, 0, 0, 0,  0, 6, 6, 0,  0, 6, 6, 0,  0, 0, 0, 0], 6, 10),  // smashboy
+        new Shape([0, 7, 0, 0,  7, 7, 7, 0,  0, 0, 0, 0,  0, 0, 0, 0], 7, 5)   // teewee
+    ];        
 //        new Shape([1, 0, 0, 0,  1, 1, 1, 0,  0, 0, 0, 0,  0, 0, 0, 0], 1),  // blue ricky
 //        new Shape([0, 0, 2, 0,  2, 2, 2, 0,  0, 0, 0, 0,  0, 0, 0, 0], 2),  // orange ricky
 //        new Shape([3, 3, 0, 0,  0, 3, 3, 0,  0, 0, 0, 0,  0, 0, 0, 0], 3),  // cleaveland Z
@@ -198,8 +203,11 @@ class ShapeHandler{
         //,
         //new Shape([10, 10, 10, 10,  10,  0, 0,  10,   10, 0, 0, 10,  10, 10,  10,  10], 8),   
         //new Shape([11, 11, 0, 11,  11, 11, 0, 11,  11, 11, 11, 11,  11, 0, 11, 0], 9)
-    ]
 
+    addNewShape(shape, id){
+        this.#shapes.push(new Shape(shape, id));
+        this.#refreshWeights();
+    }
    
     /**
      * This attribute represents the current shape of the game
@@ -209,7 +217,7 @@ class ShapeHandler{
     /**
      * This attribute represents the next shape of the game
      */
-    #nextShape = this.#shapes[Math.floor(Math.random() * 1000) % this.#shapes.length];
+    #nextShape;
 
     /**
      * Tracks if the shape was switched
@@ -225,7 +233,10 @@ class ShapeHandler{
      * @version 1.0
      * @date Mai 01 2020 
      */
-    constructor(){}
+    constructor(){
+        this.#refreshWeights();
+        this.#nextShape = this.#shapes[this.#nextID()];
+    }
 
     getCurrentShape(){
         return this.#currentShape;
@@ -242,12 +253,16 @@ class ShapeHandler{
      *  - Create new shape as next one
      */
     createNewShape(){
+        if(null == this.#nextShape || undefined == this.#nextShape){
+            this.#nextShape = this.#shapes[this.#nextID()];
+        }
         this.#currentShape = this.#nextShape.copy();
-        let id = (Math.floor(Math.random() + 43159) ^ Date.now()) % this.#shapes.length;
+        let id = this.#nextID();
         if(id < 0){
             id *= -1;
             id %= this.#shapes.length;
         }
+
         this.#nextShape = this.#shapes[id].copy();
         this.#switched = false;
     }
@@ -267,6 +282,28 @@ class ShapeHandler{
 
     getShapes(){
         return this.#shapes;
+    }
+
+
+
+    sum_of_weight = 0;
+    #refreshWeights(){
+        this.sum_of_weight = 0;
+        for(let i = 0; i < this.#shapes.length; i++) {
+           this.sum_of_weight += this.#shapes[i].weight();
+        }
+    }
+
+    #nextID(){        
+        let rnd =  (Math.floor(Math.random() * this.sum_of_weight));
+        for(let i = 0; i < this.#shapes.length; i++){
+            if(rnd < this.#shapes[i].weight()){
+                return i;
+            }
+            rnd -= this.#shapes[i].weight();
+        }
+        let rng = (Math.floor(Math.random() * 41368) ^ Date.now()) % this.#shapes.length;
+        return rnd;
     }
 
 }

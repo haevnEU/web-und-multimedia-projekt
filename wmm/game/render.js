@@ -100,7 +100,7 @@ class Renderer{
      * This methods renders a board on screen
      * @param {Board} board board which shall be rendered on screen
      */
-    renderBoard(board){
+    renderBoard(board, paused = false){
         for(let x = 0; x < board.getWidth(); x++){
             for(let y = 0; y < board.getHeight(); y++){
                 let color = board.getElementAt(x, y);   
@@ -169,8 +169,8 @@ class Renderer{
                     if(color == 0){  
                         this.drawRectangle(offsetX + (x * meta.BLOCK_SIZE),
                                         offsetY + (y * meta.BLOCK_SIZE),
-                                        meta.BLOCK_SIZE, meta.BLOCK_SIZE, this.#theme.getTheme().getBlockColorByID(color), false);
-                        continue;
+                                        meta.BLOCK_SIZE, meta.BLOCK_SIZE, this.#theme.getTheme().getPreviewBackgroundColor(), false);
+                        
                     }
                     this.drawRectangle(offsetX + (x * meta.BLOCK_SIZE),
                                         offsetY + (y * meta.BLOCK_SIZE),
@@ -194,7 +194,9 @@ class Renderer{
                 for(let y = 0; y < shape.getShapeHeight(); y++){
                     let color = shape.getElementAt(x, y);
                     if(color == 0){
-                        continue;
+                        this.drawRectangle(offsetX + (x * meta.BLOCK_SIZE),
+                                        offsetY + (y * meta.BLOCK_SIZE),
+                                        meta.BLOCK_SIZE, meta.BLOCK_SIZE, this.#theme.getTheme().getPreviewBackgroundColor(), false);
                     }
                     this.drawRectangle(offsetX + (x * meta.BLOCK_SIZE),
                                         offsetY + (y * meta.BLOCK_SIZE),

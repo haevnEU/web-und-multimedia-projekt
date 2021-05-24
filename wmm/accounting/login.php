@@ -1,5 +1,6 @@
 <?php
     require "utility.php";
+    require "links.php";
     session_start();
    
     function checkCredentials($email, $password){
@@ -53,6 +54,6 @@
     $password = $_POST['password'];
     
     if(checkCredentials($mail, $password)){
-        header("Location: ./test.php");
+        echo "<h2>HELLO USER " . $_SESSION["user_id"] . "</h2><br><a href=\"$script_logout\">Logout</a>";
     }
 ?>

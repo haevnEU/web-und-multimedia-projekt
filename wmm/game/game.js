@@ -19,10 +19,12 @@ class Game{
     #shapeHandler = new ShapeHandler(); 
     #nextLevel = Math.floor(new Date() / 1000) + 10;
     #gameOver = false;
+    
     constructor(){    
-        meta.fieldCanvas.width = window.innerWidth * 0.7;
+        meta.fieldCanvas.width = window.innerWidth * 0.69;
         meta.fieldCanvas.height = window.innerHeight * 0.9;    
         this.#shapeHandler.createNewShape();
+        this.#shapeHandler.addNewShape([8, 8, 8, 8,  8, 8, 8, 8,  8, 8, 8, 0,  0, 8, 0, 0], 8);
     }
 
     #currentSeconds(){
@@ -69,6 +71,10 @@ class Game{
         this.#paused = true;
     }
 
+    writeToDataBase(){
+        window.location.href = "http://localhost/accounting/usermod.php?score=" + this.#score;
+    }
+
     #convertClearedLinesToScore(lines){
         if(lines == 1){
             return 40 * this.#level;
@@ -112,25 +118,18 @@ class Game{
         if(this.#lastTime <= 0){
             this.#moveShapeDown(shape);
             this.#lastTime = 30 - this.#level;
+            this.#level = 25;
         }
         this.#lastTime--;
     }
 
     render(){          
         // This is used to resize the canvas, maybe theres a better solution like an event which is fires if the windows is resized
-        meta.fieldCanvas.width = window.innerWidth * 0.7;
+        meta.fieldCanvas.width = window.innerWidth * 0.69;
         meta.fieldCanvas.height = window.innerHeight * 0.9;
         
         this.#renderer.clear();
-        if(this.#paused){
-            this.#renderer.renderPauseMenu();
-            return;
-        }
-
-        if(this.#gameOver){
-            this.#renderer.renderGameOverScreen(this.#score, this.#removedLines, this.#level);
-            return;
-        }
+   
 
         if(this.#showShapes){
             this.#renderer.renderAllShapes(this.#shapeHandler.getShapes());
@@ -141,7 +140,15 @@ class Game{
         this.#renderer.renderShape(this.#shapeHandler.getCurrentShape());
         this.#renderer.renderShapePreview(this.#shapeHandler.getNextShape(), this.#board);  
         this.#renderer.renderText("Score: " + this.#score + "\n\nLevel: " + this.#level + "\n\nLines: " + this.#removedLines);          
-    }
+         if(this.#paused){
+            this.#renderer.renderPauseMenu();
+            return;
+        }
+
+        if(this.#gameOver){
+            this.#renderer.renderGameOverScreen(this.#score, this.#removedLines, this.#level);
+            return;
+        }}
 
 }
 

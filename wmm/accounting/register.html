@@ -3,38 +3,50 @@
   <head>
     <meta charset="UTF-8">        
     <title>Register</title>
-    <link rel="stylesheet" href="http://localhost/styles/centered.css">
+    <link rel="stylesheet" href="http://localhost/styles/darkmode/centered.css">
+    <link rel="stylesheet" href="http://localhost/styles/basic_style.css">
   </head>
     <body>
-      <div class="mitte">
-        <div class="mittig">
-          <h2>Register</h2>
-        <form class="center_box" method="POST" action="./register.php">
+      <div class="root_div root_div_color" style="width: 30%;">
+        <div class="sub_div sub_div_color">
+          <h2 class="heading_color">Register</h2>
+          <form method="POST" action="./register.php">
           <div class="container">
-            <label>Name *</label><br> <input class="input_color" type="text" name="first_name" placeholder="First name" required="required">
-          </div>
-          <div class="container">
-            <label>Surname *</label><br> <input class="input_color" type="text" name="sur_name" placeholder="Surname" required="required">
-          </div>
-          <div class="container">
-            <label>EMail *</label><br> <input class="input_color" type="email" name="email" placeholder="EMail">
-          </div>
-          <div class="container">
-            <label>Gametag *</label><br> <input class="input_color" type="text" name="gametag" placeholder="WildCow" required="required">
-          </div>
-          <div class="container">
-            <label>Password *</label><br> <input class="input_color" type="password" name="password" placeholder="" required="required">
-          </div>
-          <div class="container">
-            <label>Reenter password *</label><br> <input class="input_color" type="password" name="password_verify" placeholder="" required="required">
+            <label class="custom_input_heading custom_input_heading_color">Name *</label><br> 
+            <input class="custom_input custom_input_color" type="text" name="first_name" placeholder="First name" required="required">
           </div>
           <br>
           <div class="container">
-            <input type="submit" class="btn btn-primary" name="button_name" value="Register">
+            <label class="custom_input_heading custom_input_heading_color">Surname *</label><br> 
+            <input class="custom_input custom_input_color" type="text" name="sur_name" placeholder="Surname" required="required">
+          </div>
+          <br>
+          <div class="container">
+            <label class="custom_input_heading custom_input_heading_color">EMail *</label><br> 
+            <input class="custom_input custom_input_color" type="email" name="email" placeholder="EMail">
+          </div>
+          <br>
+          <div class="container">
+            <label class="custom_input_heading custom_input_heading_color">Gametag *</label><br> 
+            <input class="custom_input custom_input_color" type="text" name="gametag" placeholder="WildCow" required="required">
+          </div>
+          <br>
+          <div class="container">
+            <label class="custom_input_heading custom_input_heading_color">Password *</label><br> 
+            <input class="custom_input custom_input_color" type="password" name="password" placeholder="" required="required">
+          </div>
+          <br>
+          <div class="container">
+            <label class="custom_input_heading custom_input_heading_color">Reenter password *</label><br> 
+            <input class="custom_input custom_input_color" type="password" name="password_verify" placeholder="" required="required">
+          </div>
+          <br>
+          <div class="container">
+            <input type="submit" class="custom_button custom_button_color" name="button_name" value="Register">
           </div>
           <br>
         </form>
       </div>
     </div>
   </body>
-</html>
+  </html>

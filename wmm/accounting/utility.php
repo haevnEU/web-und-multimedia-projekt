@@ -1,5 +1,5 @@
 <?php
-define("USE_CUSTOM_ENCRYPTION", false);
+    define("USE_CUSTOM_ENCRYPTION", false);
     
     
     function redirectToError($message){
