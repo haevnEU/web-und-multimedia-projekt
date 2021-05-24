@@ -40,7 +40,7 @@ require "links.php";
 
         // All fields are entered, valid and the user does not exists so create a new user
         $sql = "INSERT INTO player (first_name,surname,email,gametag,pass,salt) VALUES ('$first_name', '$family_name', '$email', '$gametag', '$password_encrypt', '$salt')";
-        if ($connection->query($sql) === TRUE) {    
+        if($connection->query($sql) === TRUE) {    
             header("Location: $page_login");
         } else {
             redirectToError("database error: " . $connection.error);
