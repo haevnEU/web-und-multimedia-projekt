@@ -126,7 +126,7 @@ class Game{
     render(){          
         // This is used to resize the canvas, maybe theres a better solution like an event which is fires if the windows is resized
         meta.fieldCanvas.width = window.innerWidth * 0.69;
-        meta.fieldCanvas.height = window.innerHeight * 0.9;
+        meta.fieldCanvas.height = window.innerHeight;
         
         this.#renderer.clear();
    

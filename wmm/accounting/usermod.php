@@ -1,5 +1,5 @@
 <?php
-    require "links.php";
+    require "../scripts/links.php";
 
     session_start();
     

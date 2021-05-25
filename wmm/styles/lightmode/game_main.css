@@ -9,8 +9,17 @@ body{
 .game{
     height:100%;
     width:69%;
+    overflow: hidden;
     float:left;
     background-color:#eee;
+}
+
+.game_canvas{
+    height:100%;
+    width:69%;
+    overflow: hidden;
+    float:left;
+    display: block;
 }
 
 .chat{

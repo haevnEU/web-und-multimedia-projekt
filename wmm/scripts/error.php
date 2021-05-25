@@ -1,6 +1,7 @@
 <?php
-    require "links.php";
-
+    require "../scripts/links.php";
+    require "../scripts/floating_menu.php";
+    
     if(isset($_GET['error'])){
         $message = $_GET['error'];
         echo "<html>
@@ -18,7 +19,11 @@
                         <button class=\"custom_button custom_button_color\" onclick=\"location.href = '$page_login';\">Login</button>
                     </div>
                     </div></div>
-            </body></html>";
+            </body>
+            <footer class=\"footer\">
+                $floating_menu
+            </footer>
+        </html>";
     }else{
         header("Location: $page_home");
     }

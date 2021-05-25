@@ -1,6 +1,7 @@
 <?php
-    require "utility.php";
-    require "links.php";
+    require "../scripts/utility.php";
+    require "../scripts/links.php";
+    require "../scripts/floating_menu.php";
     
     session_start();
     

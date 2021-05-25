@@ -1,6 +1,6 @@
 <?php
-require "./accounting/links.php";
-
+require "./scripts/floating_menu.php";
+require "./scripts/links.php";
 echo "<!DOCTYPE html>
 <html lang=\"en\">
   <head>
@@ -23,13 +23,15 @@ echo "<!DOCTYPE html>
             <input class=\"custom_button custom_button_color\" type=\"button\" onclick=\"location.href='$page_game';\" value=\"Play\" />
             </div>
             <br>
-            <div class=\"horizontal_centered\"><a href=\"http://localhost/support/helpme.html\">Help</a>  <a href=\"./credits.html\">Credits</a> <a href=\"./license.html\">Licenses</a></div>
+            <div class=\"horizontal_centered\"><a href=\"./credits.html\">Credits</a> <a href=\"./license.html\">Licenses</a></div>
         </div>
         
       </div>
-    </body>
-    <foot>
-    </footer>
+      <div class=\"floating_button_corner-div\">Test</div>
+  </body>
+  <footer class=\"footer\">
+    $floating_menu
+  </footer>
 </html>";
 
 ?>

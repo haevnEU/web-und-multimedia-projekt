@@ -71,3 +71,27 @@ h1,h2{
     height: 300px;
     resize: none; 
 }
+
+
+
+
+
+.floating_button {
+    border-radius:50%;
+    cursor:pointer;
+	font-size:16px;
+	padding:10px 15px;
+    border: none;
+    text-align: center
+}
+
+.floating_button:active {
+	position:relative;
+	top:1px;
+}
+
+.footer {
+    position:fixed;
+    right:5%;
+    bottom:5%;
+}
