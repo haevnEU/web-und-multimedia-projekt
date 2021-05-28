@@ -24,6 +24,8 @@
 
 
 .custom_button {
+    align-items: center;
+    justify-content: center;
     border-radius:10px;
     border-width: 0px;
     cursor:pointer;

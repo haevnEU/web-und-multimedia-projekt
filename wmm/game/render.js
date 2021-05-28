@@ -6,35 +6,7 @@ class Renderer{
     
     constructor(){ }
 
-    /**
-     * This method renders a border around a rectangle
-     * @param {Number} xPos X position where the border shall start
-     * @param {Number} yPos Y position where the border shall start
-     * @param {Number} width Width of the rectangle
-     * @param {Number} height Height of the rectangle
-     * @param {Number} thickness Thickness of the border, default is 1
-     */
-    drawBorder(xPos, yPos, width, height, thickness = 1){
-        meta.context.fillStyle='#000';
-        meta.context.fillRect(xPos - (thickness), yPos - (thickness), width + (thickness * 2), height + (thickness * 2));
-    }
-
-    /**
-     * This method renders a rectangle with a border on the screen
-     * @param {Number} x X coordinate where the rectangle shall start
-     * @param {Number} y Y coordiante where the rectangle shall start
-     * @param {Number} w Width of the rectangle
-     * @param {Number} h Height of the rectangle
-     * @param {String} color Color of the Rectangle
-     */
-    drawRectangle(x, y, w, h, color, border = true){
-        if(border){
-            this.drawBorder(x, y, w, h);
-        }
-        meta.context.fillStyle = color;
-        meta.context.fillRect(x, y, w, h);
-    }
-
+    
     /**
      * This method renders a pause text on screen
      */
@@ -59,7 +31,7 @@ class Renderer{
                 if(color == 0){
                     continue;
                 }
-                this.drawRectangle(meta.RENDER_OFFSET + (shape.getX() * meta.BLOCK_SIZE) + (x * meta.BLOCK_SIZE),
+                this.#INTERNAL_drawRectangle(meta.RENDER_OFFSET + (shape.getX() * meta.BLOCK_SIZE) + (x * meta.BLOCK_SIZE),
                                     meta.UI_OFFSET_Y + (shape.getY() * meta.BLOCK_SIZE) + (y * meta.BLOCK_SIZE),
                                     meta.BLOCK_SIZE, meta.BLOCK_SIZE, this.#theme.getTheme().getBlockColorByID(color));
 
@@ -82,13 +54,13 @@ class Renderer{
             for(let y = 0; y < shape.getShapeHeight(); y++){
                 let color = shape.getElementAt(x, y);
                 if(color == 0){
-                    this.drawRectangle(offset_x +  (x * previewDimension),
+                    this.#INTERNAL_drawRectangle(offset_x +  (x * previewDimension),
                     offset_y + y * previewDimension,
                     previewDimension, previewDimension, this.#theme.getTheme().getPreviewBackgroundColor(), false);         
                     continue;
                 }
 
-                this.drawRectangle(offset_x  + (x * previewDimension),
+                this.#INTERNAL_drawRectangle(offset_x  + (x * previewDimension),
                                     offset_y + y * previewDimension,
                                     previewDimension, previewDimension, this.#theme.getTheme().getBlockColorByID(color));         
             }
@@ -108,7 +80,7 @@ class Renderer{
                     continue;
                 }
                 let color2 = this.#theme.getTheme().getBlockColorByID(color);
-                this.drawRectangle(meta.RENDER_OFFSET +(x * meta.BLOCK_SIZE),meta.UI_OFFSET_Y + meta.BLOCK_SIZE + (y * meta.BLOCK_SIZE), meta.BLOCK_SIZE, meta.BLOCK_SIZE, color2);
+                this.#INTERNAL_drawRectangle(meta.RENDER_OFFSET +(x * meta.BLOCK_SIZE),meta.UI_OFFSET_Y + meta.BLOCK_SIZE + (y * meta.BLOCK_SIZE), meta.BLOCK_SIZE, meta.BLOCK_SIZE, color2);
             }
         }
     }
@@ -126,7 +98,10 @@ class Renderer{
 
     }
 
-
+    /**
+     * Renders a text on screen
+     * @param {String} text Text which should be rendered
+     */
     renderText(text){
         meta.context.fillStyle = this.#theme.getTheme().getFontColor();
         let fontFamily = this.#theme.getTheme().getFontFamily();
@@ -143,7 +118,12 @@ class Renderer{
         });
     }
 
-
+    /**
+     * This method renders the game over screen
+     * @param {Number} score Score which the user achieved
+     * @param {Number} removedLines Lines which the user removed 
+     * @param {Level} level Level which the user was playing 
+     */
     renderGameOverScreen(score, removedLines, level){
         meta.context.fillStyle = this.#theme.getTheme().getFontColor();
         meta.context.font = '62px arial';
@@ -158,6 +138,40 @@ class Renderer{
         
     }
 
+
+    /**
+         * This method renders a border around a rectangle
+         * @param {Number} xPos X position where the border shall start
+         * @param {Number} yPos Y position where the border shall start
+         * @param {Number} width Width of the rectangle
+         * @param {Number} height Height of the rectangle
+         * @param {Number} thickness Thickness of the border, default is 1
+         */
+    #INTERNAL_drawBorder(xPos, yPos, width, height, thickness = 1){
+        meta.context.fillStyle='#000';
+        meta.context.fillRect(xPos - (thickness), yPos - (thickness), width + (thickness * 2), height + (thickness * 2));
+    }
+
+    /**
+     * This method renders a rectangle with a border on the screen
+     * @param {Number} x X coordinate where the rectangle shall start
+     * @param {Number} y Y coordiante where the rectangle shall start
+     * @param {Number} w Width of the rectangle
+     * @param {Number} h Height of the rectangle
+     * @param {String} color Color of the Rectangle
+     */
+    #INTERNAL_drawRectangle(x, y, w, h, color, border = true){
+        if(border){
+            this.#INTERNAL_drawBorder(x, y, w, h);
+        }
+        meta.context.fillStyle = color;
+        meta.context.fillRect(x, y, w, h);
+    }
+
+    /**
+     * INTERNAL DEBUG VIEW DO NOT USE IN PRODUCTION
+     * @param {*} shapes 
+     */
     renderAllShapes(shapes){
         let offsetX = 25;
         let offsetY = 25;
@@ -167,12 +181,12 @@ class Renderer{
                 for(let y = 0; y < shape.getShapeHeight(); y++){
                     let color = shape.getElementAt(x, y);
                     if(color == 0){  
-                        this.drawRectangle(offsetX + (x * meta.BLOCK_SIZE),
+                        this.#INTERNAL_drawRectangle(offsetX + (x * meta.BLOCK_SIZE),
                                         offsetY + (y * meta.BLOCK_SIZE),
                                         meta.BLOCK_SIZE, meta.BLOCK_SIZE, this.#theme.getTheme().getPreviewBackgroundColor(), false);
                         
                     }
-                    this.drawRectangle(offsetX + (x * meta.BLOCK_SIZE),
+                    this.#INTERNAL_drawRectangle(offsetX + (x * meta.BLOCK_SIZE),
                                         offsetY + (y * meta.BLOCK_SIZE),
                                         meta.BLOCK_SIZE, meta.BLOCK_SIZE, this.#theme.getTheme().getBlockColorByID(color));
     
@@ -194,11 +208,11 @@ class Renderer{
                 for(let y = 0; y < shape.getShapeHeight(); y++){
                     let color = shape.getElementAt(x, y);
                     if(color == 0){
-                        this.drawRectangle(offsetX + (x * meta.BLOCK_SIZE),
+                        this.#INTERNAL_drawRectangle(offsetX + (x * meta.BLOCK_SIZE),
                                         offsetY + (y * meta.BLOCK_SIZE),
                                         meta.BLOCK_SIZE, meta.BLOCK_SIZE, this.#theme.getTheme().getPreviewBackgroundColor(), false);
                     }
-                    this.drawRectangle(offsetX + (x * meta.BLOCK_SIZE),
+                    this.#INTERNAL_drawRectangle(offsetX + (x * meta.BLOCK_SIZE),
                                         offsetY + (y * meta.BLOCK_SIZE),
                                         meta.BLOCK_SIZE, meta.BLOCK_SIZE, this.#theme.getTheme().getBlockColorByID(color));
     

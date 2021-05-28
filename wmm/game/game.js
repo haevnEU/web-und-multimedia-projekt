@@ -19,13 +19,42 @@ class Game{
     #shapeHandler = new ShapeHandler(); 
     #nextLevel = Math.floor(new Date() / 1000) + 10;
     #gameOver = false;
-    
     constructor(){    
         meta.fieldCanvas.width = window.innerWidth * 0.69;
         meta.fieldCanvas.height = window.innerHeight * 0.9;    
         this.#shapeHandler.createNewShape();
-        this.#shapeHandler.addNewShape([8, 8, 8, 8,  8, 8, 8, 8,  8, 8, 8, 0,  0, 8, 0, 0], 8);
     }
+
+    init(json){
+        let obj = JSON.parse(json);      
+        this.#board.loadFromString(obj.board);
+        this.#level = obj.level;
+        this.#score = obj.score;
+        this.#removedLines = obj.lines;
+        this.#shapeHandler.loadShapesFromJSONArray(obj.shapes[0], obj.shapes[1]);
+    }
+    
+    exportToJson(){
+        return JSON.stringify(
+            {  board: this.#board.toString(),
+                level: this.#level,
+                score: this.#score,
+                lines: this.#removedLines,
+                shapes: [{
+                    posX: this.#shapeHandler.getCurrentShape().getX(),
+                    posY: this.#shapeHandler.getCurrentShape().getY(),
+                    orientation: this.#shapeHandler.getCurrentShape().getOrientation(),
+                    ID: this.#shapeHandler.getCurrentShape().getShapeID()
+                }, {
+                    posX: this.#shapeHandler.getNextShape().getX(),
+                    posY: this.#shapeHandler.getNextShape().getY(),
+                    orientation: this.#shapeHandler.getNextShape().getOrientation(),
+                    ID: this.#shapeHandler.getNextShape().getShapeID()
+                }]
+            });
+    }
+    
+
 
     #currentSeconds(){
         return Math.floor(new Date() / 1000);
@@ -148,7 +177,8 @@ class Game{
         if(this.#gameOver){
             this.#renderer.renderGameOverScreen(this.#score, this.#removedLines, this.#level);
             return;
-        }}
+        }
+    }
 
 }
 

@@ -26,6 +26,29 @@ class Board{
             }
         }
     }
+    
+    /**
+     * This method loads already existing board into this one
+     * @param {Number[]} board Array representing the board
+     */
+    loadFromString(board){
+        for(let i = 0; i < board.length; i++){
+            this.#field[i] = board[i];
+        }
+    }
+
+    /**
+     * This method converts the board into an comma separated string
+     * @returns String representation of the board
+     */
+    toString(){
+        let str = "";
+        for(let i = 0; i < this.#field.length - 1; i++){
+            str += this.#field[i] + ",";
+        }
+        str += this.#field[this.#field.length - 1];
+        return this.#field;
+    }
 
     /**
      * INTERNAL
@@ -62,7 +85,7 @@ class Board{
      * @param {Number} y Y Coordinate of the element
      * @returns State of the element a position (x/y) in range 0 to 9
      */
-     getElementAt(x, y){
+    getElementAt(x, y){
         if(!this.#checkBoundary(x, y)){
          //   return -1;
         }
@@ -85,18 +108,32 @@ class Board{
         return true;
     }
 
+    /**
+     * This method removes a line from the board.
+     * It will fail in two scenarios
+     *  1. The line equals the board height
+     *  2. The line has one empty spot
+     * @param {Number} line Line to remove
+     * @returns nothing
+     */
     removeLine(line){
+        // Height check
         if(line == meta.BOARD_HEIGHT){
             return;
         }
+        // Calculate start and end index for array access
         let start = line * meta.BOARD_WIDTH;
         let end = line * meta.BOARD_WIDTH + meta.BOARD_WIDTH;
+
+        // Check if the line specified by start and is fully filled
         for(let x = start + 1; x < end - 1; x++){
             if(this.#field[line * meta.BOARD_WIDTH + x] == 0){
                 return;
             }
         }
-        let res = this.#field.splice(start, end - start);
+        // This javascript method removes all entries from start to (end - start)
+        this.#field.splice(start, end - start);
+        // insert a new line at top
         for(let x = 0; x < meta.BOARD_WIDTH; x++){
             if(x == 0 || x == (meta.BOARD_WIDTH - 1)){   
                 this.#field.unshift(254);
