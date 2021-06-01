@@ -19,6 +19,7 @@ class Renderer{
         this.#context.fillText('PAUSE', this.#fieldCanvas.width * 0.5, this.#fieldCanvas.height * 0.3);
         this.#context.font = '26px arial';
         this.#context.fillText('HIT ESC TO CONTINUE', this.#fieldCanvas.width * 0.5, this.#fieldCanvas.height * 0.3 + 80);
+        this.#context.fillText('HIT N TO RESTART', this.#fieldCanvas.width * 0.5, this.#fieldCanvas.height * 0.3 + 160);
     }
 
     /**

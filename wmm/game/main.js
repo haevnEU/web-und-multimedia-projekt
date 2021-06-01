@@ -68,10 +68,10 @@ window.onbeforeunload = function(){
 window.onload = function(){
   // If an existing game was found ask the user if he/she wants to resume
   if(document.cookie.indexOf('state=') >= 0){
-      let resume = confirm('An existing game was found do you want to resume?');
-      if(resume){
+    //  let resume = confirm('An existing game was found do you want to resume?');
+     // if(resume){
         game.init(getCookie("state"));
-      }
+     // }
     }
 };
 

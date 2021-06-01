@@ -33,6 +33,7 @@ class Game{
         this.#score = obj.score;
         this.#removedLines = obj.lines;
         this.#shapeHandler.loadShapesFromJSONArray(obj.shapes[0], obj.shapes[1]);
+        this.pause();
     }
     
     exportToJson(){
@@ -128,6 +129,7 @@ class Game{
         this.#score = 0;
         this.#level = 1;
         this.#removedLines = 0;
+        this.start();
     }
 
     #INTERNAL_currentSeconds(){
