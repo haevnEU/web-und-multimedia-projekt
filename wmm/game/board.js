@@ -1,7 +1,7 @@
 import meta from "./constants.js"
 
 class Board{
-    #field = []
+    #field = [];
 
     /**
      * This class defines the game board.
@@ -50,25 +50,7 @@ class Board{
         return this.#field;
     }
 
-    /**
-     * INTERNAL
-     * This internal method is used to verify that a point lies inside the game boundaries
-     * A point is inside the boundaries if booth statements are true.
-     * 1. Neither the x nor the y coordinate is negative
-     * 2. Neither the x nor the y coordinate exceed the width/height of the board
-     * @param {Number} x X coordinate 
-     * @param {Number} y Y coordinate
-     * @returns {Boolean} true if the point is inside the board
-     */
-    #checkBoundary(x, y){
-        if(x < 0 || x >= meta.BOARD_WIDTH){
-            return false;
-        }else if(y < 0 || y >= meta.BOARD_HEIGHT){
-            return false;
-        }
-        return true;
-    }
-
+  
     getWidth(){
         return meta.BOARD_WIDTH;
     }
@@ -86,7 +68,7 @@ class Board{
      * @returns State of the element a position (x/y) in range 0 to 9
      */
     getElementAt(x, y){
-        if(!this.#checkBoundary(x, y)){
+        if(!this.#INTERNAL_checkBoundary(x, y)){
          //   return -1;
         }
         return this.#field[y * meta.BOARD_WIDTH + x];
@@ -141,7 +123,28 @@ class Board{
                 this.#field.unshift(0);
             }
         }
-    }
+    }  
+    
+    
+    /**
+    * INTERNAL
+    * This internal method is used to verify that a point lies inside the game boundaries
+    * A point is inside the boundaries if booth statements are true.
+    * 1. Neither the x nor the y coordinate is negative
+    * 2. Neither the x nor the y coordinate exceed the width/height of the board
+    * @param {Number} x X coordinate 
+    * @param {Number} y Y coordinate
+    * @returns {Boolean} true if the point is inside the board
+    */
+   #INTERNAL_checkBoundary(x, y){
+       if(x < 0 || x >= meta.BOARD_WIDTH){
+           return false;
+       }else if(y < 0 || y >= meta.BOARD_HEIGHT){
+           return false;
+       }
+       return true;
+   }
+
 }
 
 export {Board}

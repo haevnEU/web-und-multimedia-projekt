@@ -1,4 +1,4 @@
-import {Shape, ShapeHandler} from "./shapes.js"
+import {Shape} from "./shapes.js"
 import {Board} from "./board.js"
 import meta from "./constants.js"
 
@@ -98,6 +98,7 @@ class Physics{
         return lines.length;
     }
 
+    
     /**
      * This internal method is used to validate if a shape can move into a certain direction.
      * This method yields true iff the shape can move in this direction

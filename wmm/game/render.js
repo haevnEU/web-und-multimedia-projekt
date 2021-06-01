@@ -3,21 +3,22 @@ import {ThemeHandler, Theme} from "./theme.js"
 
 class Renderer{
     #theme = new ThemeHandler();
-    
+    #fieldCanvas = document.getElementById('fieldCanvas');
+    #context = this.#fieldCanvas.getContext('2d');
+    #previewDimension = Math.floor(meta.BLOCK_SIZE * 1);
     constructor(){ }
-
     
     /**
      * This method renders a pause text on screen
      */
     renderPauseMenu(){
-        meta.context.fillStyle = this.#theme.getTheme().getFontColor();
-        meta.context.font = '62px arial';
-        meta.context.textAlign = 'center';
-        meta.context.textBaseline = 'middle';
-        meta.context.fillText('PAUSE', meta.fieldCanvas.width * 0.5, meta.fieldCanvas.height * 0.3);
-        meta.context.font = '26px arial';
-        meta.context.fillText('HIT ESC TO CONTINUE', meta.fieldCanvas.width * 0.5, meta.fieldCanvas.height * 0.3 + 80);
+        this.#context.fillStyle = this.#theme.getTheme().getFontColor();
+        this.#context.font = '62px arial';
+        this.#context.textAlign = 'center';
+        this.#context.textBaseline = 'middle';
+        this.#context.fillText('PAUSE', this.#fieldCanvas.width * 0.5, this.#fieldCanvas.height * 0.3);
+        this.#context.font = '26px arial';
+        this.#context.fillText('HIT ESC TO CONTINUE', this.#fieldCanvas.width * 0.5, this.#fieldCanvas.height * 0.3 + 80);
     }
 
     /**
@@ -47,22 +48,22 @@ class Renderer{
      * @param {Board} board board of the
      */
     renderShapePreview(shape, board){
-        let previewDimension = Math.floor(meta.BLOCK_SIZE * 1);
-        let offset_x = meta.RENDER_OFFSET +  meta.BLOCK_SIZE * (board.getWidth()) + meta.UI_OFFSET;
+        
+        let offset_x = meta.RENDER_OFFSET +  meta.BLOCK_SIZE * board.getWidth()  + meta.UI_OFFSET;
         let offset_y = meta.UI_OFFSET_Y + 2 * meta.BLOCK_SIZE;
         for(let x = 0; x < shape.getShapeWidth(); x++){
             for(let y = 0; y < shape.getShapeHeight(); y++){
                 let color = shape.getElementAt(x, y);
                 if(color == 0){
-                    this.#INTERNAL_drawRectangle(offset_x +  (x * previewDimension),
-                    offset_y + y * previewDimension,
-                    previewDimension, previewDimension, this.#theme.getTheme().getPreviewBackgroundColor(), false);         
+                    this.#INTERNAL_drawRectangle(offset_x +  (x * this.#previewDimension),
+                    offset_y + y * this.#previewDimension,
+                    this.#previewDimension, this.#previewDimension, this.#theme.getTheme().getPreviewBackgroundColor(), false);         
                     continue;
                 }
 
-                this.#INTERNAL_drawRectangle(offset_x  + (x * previewDimension),
-                                    offset_y + y * previewDimension,
-                                    previewDimension, previewDimension, this.#theme.getTheme().getBlockColorByID(color));         
+                this.#INTERNAL_drawRectangle(offset_x  + (x * this.#previewDimension),
+                                    offset_y + y * this.#previewDimension,
+                                    this.#previewDimension, this.#previewDimension, this.#theme.getTheme().getBlockColorByID(color));         
             }
         }
         
@@ -89,12 +90,14 @@ class Renderer{
      * Clears the screen
      */
     clear(){
+        this.#fieldCanvas.width = meta.BOARD_WIDTH * meta.BLOCK_SIZE + meta.UI_OFFSET_X + this.#previewDimension * 4;
+        this.#fieldCanvas.height = window.innerHeight;
         // Clearing screen
-        meta.context.clearRect(0,0, meta.fieldCanvas.width, meta.fieldCanvas.height);
+        this.#context.clearRect(0,0, this.#fieldCanvas.width, this.#fieldCanvas.height);
         
         // Render Background
-        meta.context.fillStyle = this.#theme.getTheme().getBackgroundColor();
-        meta.context.fillRect(0, 0, meta.fieldCanvas.width, meta.fieldCanvas.height);
+        this.#context.fillStyle = this.#theme.getTheme().getBackgroundColor();
+        this.#context.fillRect(0, 0, this.#fieldCanvas.width, this.#fieldCanvas.height);
 
     }
 
@@ -103,17 +106,17 @@ class Renderer{
      * @param {String} text Text which should be rendered
      */
     renderText(text){
-        meta.context.fillStyle = this.#theme.getTheme().getFontColor();
+        this.#context.fillStyle = this.#theme.getTheme().getFontColor();
         let fontFamily = this.#theme.getTheme().getFontFamily();
         let fontSize = this.#theme.getTheme().getFontSize();
-        meta.context.font = "" + fontSize + " " + fontFamily + "";
+        this.#context.font = "" + fontSize + " " + fontFamily + "";
 
         let offset_x = meta.RENDER_OFFSET +  meta.BLOCK_SIZE * (meta.BOARD_WIDTH) + meta.UI_OFFSET;
         let offset_y = meta.UI_OFFSET_Y + 2 * meta.BLOCK_SIZE + 4 * meta.BLOCK_SIZE + 50;
         let lines = text.split("\n");
         let index = 0;
         lines.forEach(element => {
-            meta.context.fillText(element, offset_x,offset_y + index * 25);
+            this.#context.fillText(element, offset_x,offset_y + index * 25);
             index++;
         });
     }
@@ -125,16 +128,16 @@ class Renderer{
      * @param {Level} level Level which the user was playing 
      */
     renderGameOverScreen(score, removedLines, level){
-        meta.context.fillStyle = this.#theme.getTheme().getFontColor();
-        meta.context.font = '62px arial';
-        meta.context.textAlign = 'center';
-        meta.context.textBaseline = 'middle';
-        meta.context.fillText('GAME OVER', meta.fieldCanvas.width * 0.5, meta.fieldCanvas.height * 0.3);
-        meta.context.font = '26px arial';
-        meta.context.fillText('HIT N TO START A NEW GAME', meta.fieldCanvas.width * 0.5, meta.fieldCanvas.height * 0.3 + 80);
-        meta.context.fillText('Level ' + level, meta.fieldCanvas.width * 0.5, meta.fieldCanvas.height * 0.3 + 160);
-        meta.context.fillText('Score ' + score, meta.fieldCanvas.width * 0.5, meta.fieldCanvas.height * 0.3 + 240);
-        meta.context.fillText('Lines removed ' + removedLines, meta.fieldCanvas.width * 0.5, meta.fieldCanvas.height * 0.3 + 300);
+        this.#context.fillStyle = this.#theme.getTheme().getFontColor();
+        this.#context.font = '62px arial';
+        this.#context.textAlign = 'center';
+        this.#context.textBaseline = 'middle';
+        this.#context.fillText('GAME OVER', this.#fieldCanvas.width * 0.5, this.#fieldCanvas.height * 0.3);
+        this.#context.font = '26px arial';
+        this.#context.fillText('HIT N TO START A NEW GAME', this.#fieldCanvas.width * 0.5, this.#fieldCanvas.height * 0.3 + 80);
+        this.#context.fillText('Level ' + level, this.#fieldCanvas.width * 0.5, this.#fieldCanvas.height * 0.3 + 160);
+        this.#context.fillText('Score ' + score, this.#fieldCanvas.width * 0.5, this.#fieldCanvas.height * 0.3 + 240);
+        this.#context.fillText('Lines removed ' + removedLines, this.#fieldCanvas.width * 0.5, this.#fieldCanvas.height * 0.3 + 300);
         
     }
 
@@ -148,8 +151,8 @@ class Renderer{
          * @param {Number} thickness Thickness of the border, default is 1
          */
     #INTERNAL_drawBorder(xPos, yPos, width, height, thickness = 1){
-        meta.context.fillStyle='#000';
-        meta.context.fillRect(xPos - (thickness), yPos - (thickness), width + (thickness * 2), height + (thickness * 2));
+        this.#context.fillStyle='#000';
+        this.#context.fillRect(xPos - (thickness), yPos - (thickness), width + (thickness * 2), height + (thickness * 2));
     }
 
     /**
@@ -164,8 +167,8 @@ class Renderer{
         if(border){
             this.#INTERNAL_drawBorder(x, y, w, h);
         }
-        meta.context.fillStyle = color;
-        meta.context.fillRect(x, y, w, h);
+        this.#context.fillStyle = color;
+        this.#context.fillRect(x, y, w, h);
     }
 
     /**

@@ -1,5 +1,4 @@
 import {Game} from "./game.js";
-import { ShapeHandler } from "./shapes.js";
 let game = new Game();
 setInterval(loop, 30);
 

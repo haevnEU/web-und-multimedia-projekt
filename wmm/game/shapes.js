@@ -1,16 +1,16 @@
 import meta from "./constants.js"
 
 class Shape{    
-    #orientation = 0;
-    #position_x = 0;
-    #position_y = 0;
-    #shapeID = 0;
     #shape = [];
+
+    #shapeID = 0;
+    #positionX = 0;
+    #positionY = 0;
+    #orientation = 0;
+    #probabilityWeight = 0;
     #amountOccupiedBlocks = 0;
     #boardWidth = meta.BOARD_WIDTH;
-
     #boardHeight = meta.BOARD_HEIGHT;
-    #w = 0;
 
     /**
      * This class provides a complex shape based on an 1D array definition
@@ -27,12 +27,12 @@ class Shape{
      * @param {Number} boardWidth Width of the underlying board
      * @param {Number} boardHeight Height of the underlying board
      */
-    constructor(shape, id, w = 12){
+    constructor(shape, id, probabilityWeight = 12){
         this.#shape = shape;
         this.#shapeID = id;
-        this.#w = w;
-        this.#position_x = Math.floor(this.#boardWidth * 0.5) - 2;
-        this.#position_y = 0;
+        this.#probabilityWeight = probabilityWeight;
+        this.#positionX = Math.floor(this.#boardWidth * 0.5) - 2;
+        this.#positionY = 0;
         for(let i = 0; i < shape.length; i++){
             if(shape[i] != 0){
                 this.#amountOccupiedBlocks++;
@@ -47,8 +47,8 @@ class Shape{
      copy(){
         let tmpShape = new Shape(this.#shape, this.#shapeID);
         // disable for switching
-        //tmpShape.#position_x = this.#position_x;
-        //tmpShape.#position_y = this.#position_y;
+        //tmpShape.#positionX = this.#positionX;
+        //tmpShape.#positionY = this.#positionY;
         tmpShape.#orientation = this.#orientation;
         return tmpShape;
     }
@@ -61,8 +61,8 @@ class Shape{
      * @param {Number} ID ID of the shape
      */
     init(posX, posY, orientation, ID){
-        this.#position_x = posX;
-        this.#position_y = posY;
+        this.#positionX = posX;
+        this.#positionY = posY;
         this.#shapeID = ID;
         this.#orientation = orientation;
     }
@@ -70,11 +70,11 @@ class Shape{
 
  
     getX(){
-        return this.#position_x;
+        return this.#positionX;
     }
 
     getY(){
-        return this.#position_y;
+        return this.#positionY;
     }
 
     getOrientation(){
@@ -98,7 +98,7 @@ class Shape{
     }   
     
     weight(){
-        return this.#w;
+        return this.#probabilityWeight;
     }
 
 
@@ -119,8 +119,8 @@ class Shape{
      * If the position will be less than 0 the operation will abort
      */
     moveLeft(){
-        if(this.#position_x >= 0){
-            this.#position_x--;
+        if(this.#positionX >= 0){
+            this.#positionX--;
         }
     }
 
@@ -129,8 +129,8 @@ class Shape{
      * If the position will be greater than the board width the operation will abort
      */
     moveRight(){
-        if(this.#position_x < this.#boardWidth){
-            this.#position_x++;
+        if(this.#positionX < this.#boardWidth){
+            this.#positionX++;
         }
     }
     
@@ -139,8 +139,8 @@ class Shape{
      * If the position will be greater than the board height the operation will abort
      */
     moveDown(){
-        if(this.#position_y < this.#boardHeight){
-            this.#position_y++;
+        if(this.#positionY < this.#boardHeight){
+            this.#positionY++;
         }
     }
 
@@ -186,10 +186,6 @@ class Shape{
 
 class ShapeHandler{
     
-    #currentShape = this.#shapes[0];
-    #nextShape;
-    #block_memory_switched = false;
-    sum_of_weight = 0;
     #shapes = [   
         new Shape([1, 0, 0, 0,  1, 1, 1, 0,  0, 0, 0, 0,  0, 0, 0, 0], 1, 20),  // blue ricky
         new Shape([0, 0, 2, 0,  2, 2, 2, 0,  0, 0, 0, 0,  0, 0, 0, 0], 2, 20),  // orange ricky
@@ -198,7 +194,13 @@ class ShapeHandler{
         new Shape([0, 5, 0, 0,  0, 5, 0, 0,  0, 5, 0, 0,  0, 5, 0, 0], 5, 10),  // hero
         new Shape([0, 0, 0, 0,  0, 6, 6, 0,  0, 6, 6, 0,  0, 0, 0, 0], 6, 15),  // smashboy
         new Shape([0, 7, 0, 0,  7, 7, 7, 0,  0, 0, 0, 0,  0, 0, 0, 0], 7, 15)   // teewee
-    ];        
+    ];  
+    
+    #nextShape;
+    #sumOfWeight = 0;
+    #currentShape = this.#shapes[0];
+    #blockMemorySwitched = false;
+      
 
    
     /**
@@ -264,7 +266,7 @@ class ShapeHandler{
         }
 
         this.#nextShape = this.#shapes[id].copy();
-        this.#block_memory_switched = false;
+        this.#blockMemorySwitched = false;
     }
 
     /**
@@ -281,22 +283,22 @@ class ShapeHandler{
      * Switches the current shape with the next one
      */
     switchShapes(){
-        if(this.#block_memory_switched){
+        if(this.#blockMemorySwitched){
             return;
         }
         let tmp = this.#nextShape.copy();
         this.#nextShape = this.#currentShape.copy();
         this.#currentShape = tmp.copy();
-        this.#block_memory_switched = true;
+        this.#blockMemorySwitched = true;
     }
    
     /**
      * This internal method refreshes the total sum of possibility for each shape 
      */
     #INTERNAL_refreshWeights(){
-        this.sum_of_weight = 0;
+        this.#sumOfWeight = 0;
         for(let i = 0; i < this.#shapes.length; i++) {
-           this.sum_of_weight += this.#shapes[i].weight();
+           this.#sumOfWeight += this.#shapes[i].weight();
         }
     }
 
@@ -306,7 +308,7 @@ class ShapeHandler{
      * @returns Random ID
      */
     #INTERNAL_nextID(){        
-        let rnd =  (Math.floor(Math.random() * this.sum_of_weight));
+        let rnd =  (Math.floor(Math.random() * this.#sumOfWeight));
         for(let i = 0; i < this.#shapes.length; i++){
             if(rnd < this.#shapes[i].weight()){
                 return i;
