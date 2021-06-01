@@ -1,58 +1,45 @@
 <?php
-    require "utility.php";
-    session_start();
-   
-    function checkCredentials($email, $password){
-        // check cookies
-        if(!isset($_SESSION["user_id"])){
-            $database_server_name = "localhost";
-            $database_user_name = "register";
-            $database_user_password = "1234";
-            $database_table_name = "game";
-
-            $remote_mail = "";
-            $remote_pass = "";  
-            $remote_salt = "";       
-            $remote_USER_ID = "";
-            // Create a database connection
-            $connection = new mysqli($database_server_name, $database_user_name, $database_user_password, $database_table_name);   
-            if ($connection->connect_error) {
-                redirectToError("Database connection failed. " . $conn->connect_error);
-                return;
-            } 
-
-            $sql = "SELECT email, pass, salt, USER_ID FROM player WHERE email='$email';";
-            $result = $connection->query($sql);
-            if($result->num_rows == 1){
-                $row = $result->fetch_assoc();
-                $remote_mail = $row['email'];
-                $remote_pass = $row['pass'];  
-                $remote_salt = $row['salt'];  
-                $remote_USER_ID = $row['USER_ID'];       
-            }else{
-                redirectToError("No user found");
-                return false;
-            }
-
-            $connection->close();
-            
-            
-            if(!verifyPassword($password, $remote_salt, $remote_pass)){
-                redirectToError("Password is wrong<br>" . $password . "<br>". $remote_pass);
-                return false;                
-            }
-        
-            $_SESSION["user_id"] = $remote_USER_ID;
-            return true;
-        }
-
-        return true;
-    }
-
-    $mail = $_POST['email'];
-    $password = $_POST['password'];
+    require "../scripts/links.php";
+    require "../scripts/floating_menu.php";
     
-    if(checkCredentials($mail, $password)){
-        header("Location: ./test.php");
-    }
+  session_start();
+  if(isset($_SESSION["user_id"])){
+    header("Location: $page_home");
+    die;
+  }
+    echo "
+    <!DOCTYPE html>
+    <html lang=\"en\">
+      <head>
+        <meta charset=\"UTF-8\">        
+        <title>Login</title>
+        <link rel=\"stylesheet\" href=\"http://localhost/styles/darkmode/centered.css\">
+        <link rel=\"stylesheet\" href=\"http://localhost/styles/basic_style.css\">
+      </head>
+      <body>
+        <div class=\"root_div root_div_color\" style=\"width: 30%\">
+          <div class=\"sub_div sub_div_color\">
+            <h2 class=\"heading_color\">Login</h2>
+            <br>
+            <form method=\"POST\" action=\"$script_login\">
+              <div class=\"container\">
+                <label class=\"custom_input_heading\">EMail *</label><br> <input class=\"custom_input\" type=\"email\" name=\"email\" placeholder=\"\">
+              </div>
+              <br>
+              <div class=\"container\">
+                <label class=\"custom_input_heading\">Password *</label><br> <input class=\"custom_input\" type=\"password\" name=\"password\" placeholder=\"\" required=\"required\">
+              </div>
+              <br>
+              <div class=\"container\">
+                <input type=\"submit\" class=\"custom_button custom_button_color\" name=\"button_name\" value=\"Login\">
+              </div>
+              <br>
+            </form>
+          </div>
+        </div>
+      </body>
+      <footer class=\"footer\">
+        $floating_menu
+      </footer>
+    </html>"  
 ?>

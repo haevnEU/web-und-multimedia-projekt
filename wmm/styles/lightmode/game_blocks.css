@@ -3,6 +3,8 @@
 */
 .font_{
     color: white;   
+    font-size: 26;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .board{
@@ -13,15 +15,19 @@
     color: #1E1E1F;
 }
 
+.background_preview{
+    color: #38383a;
+}
+
 /*
     Wall and ground Blocks
 */
 .blockID254{
-    color: brown;
+    color: blue;
 }
 
 .blockID255{
-    color: #4EC990;
+    color: red;
 }
 
 
@@ -41,7 +47,7 @@
 }
 
 .blockID4{
-    color: #68CDFE;
+    color: #25309b;
 }
 
 .blockID5{
@@ -53,7 +59,7 @@
 }
 
 .blockID7{
-    color: #C56A77;
+    color: #69135e;
 }
 
 /*

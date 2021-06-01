@@ -7,8 +7,11 @@ body{
 }
 
 .game{
-    height:100%;
-    width:70%;
+    position: absolute;
+    top:  50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+
     float:left;
     background-color:#eee;
 }
@@ -18,10 +21,4 @@ body{
     width:25%;
     float:right;
     background-color:#aaa; 
-}
-
-.menu{
-    height:100%;
-    width:5%;
-    float:left;
 }
