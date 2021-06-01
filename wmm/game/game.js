@@ -178,7 +178,6 @@ class Game{
             }
         }
     }
-    
 }
 
 export {Game}
