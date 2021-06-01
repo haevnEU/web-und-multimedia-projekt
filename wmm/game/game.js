@@ -112,6 +112,7 @@ class Game{
         if(this.#lastTime <= 0){
             this.#moveShapeDown(shape);
             this.#lastTime = 30 - this.#level;
+            this.#level = 10;
         }
         this.#lastTime--;
     }
