@@ -4,7 +4,7 @@
     font-size:16px;
     width: auto;
     height: auto;
-    border-radius: 50px;
+    border-radius: 10px;
     position: absolute;
     left: 50%;
     top: 50%;
@@ -82,8 +82,11 @@ h1,h2{
     border-radius:50%;
     cursor:pointer;
 	font-size:16px;
-	padding:10px 15px;
-    border: none;
+	padding: 10px 10px;
+    border: none; 
+    display: flex;
+    margin-top: 10px;
+    flex-direction: column;
     text-align: center
 }
 
@@ -94,6 +97,6 @@ h1,h2{
 
 .footer {
     position:fixed;
-    right:5%;
+    right:3%;
     bottom:5%;
 }

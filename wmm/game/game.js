@@ -61,7 +61,14 @@ class Game{
         key = key.toLowerCase();
         if(key == "escape" && !this.#gameOver){
             this.#paused ? this.start() : this.pause();
-        }else if(key == "a" && this.#physics.canShapeMoveLeft(this.#shapeHandler.getCurrentShape(), this.#board)){
+        }else if(key == "n"){
+            this.#INTERNAL_reset();
+        }
+        
+        if(this.#gameOver || this.#paused){
+            return;
+        }
+        if(key == "a" && this.#physics.canShapeMoveLeft(this.#shapeHandler.getCurrentShape(), this.#board)){
             this.#shapeHandler.getCurrentShape().moveLeft();   
         }else if(key == "d" && this.#physics.canShapeMoveRight(this.#shapeHandler.getCurrentShape(), this.#board)){
             this.#shapeHandler.getCurrentShape().moveRight();
@@ -73,8 +80,6 @@ class Game{
             this.#shapeHandler.getCurrentShape().rotateRight();
         }else if(key == " "){
             this.#shapeHandler.switchShapes();
-        }else if(key == "n"){
-            this.#INTERNAL_reset();
         }
     }
 
