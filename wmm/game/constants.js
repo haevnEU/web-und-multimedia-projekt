@@ -1,6 +1,6 @@
 
 export default {
-    BOARD_WIDTH: 30,
+    BOARD_WIDTH: 20,
     BOARD_HEIGHT: 30,
     BLOCK_SIZE: 25,
     RENDER_OFFSET: 50,
