@@ -9,7 +9,7 @@ class Game{
 
     #showShapes = false;
     #score = 0;
-    #level = 1;
+    #level = 0;
     #SoftDropScore =0;
     #removedLines = 0;
     #paused = false; 
@@ -20,6 +20,8 @@ class Game{
     #shapeHandler = new ShapeHandler(); 
     #nextLevel = Math.floor(new Date() / 1000) + 10;
     #gameOver = false;
+    #scoreGoal = 400;
+    #scoreGoalIncrement = 400;
     constructor(){    
         meta.fieldCanvas.width = window.innerWidth * 0.7;
         meta.fieldCanvas.height = window.innerHeight * 0.9;    
@@ -46,7 +48,7 @@ class Game{
             this.#SoftDropScore = 0;
         }else if(key == "s" && this.#physics.canShapeMoveDown(this.#shapeHandler.getCurrentShape(), this.#board)){
             this.#moveShapeDown(this.#shapeHandler.getCurrentShape());
-            this.#SoftDropScore += 1*(this.#level+1);
+            this.#SoftDropScore += 1;
         }else if(key == "q" && this.#physics.canShapeRotatedLeft(this.#shapeHandler.getCurrentShape(), this.#board)){
             this.#shapeHandler.getCurrentShape().rotateLeft();
         }else if(key == "e" && this.#physics.canShapeRotatedRight(this.#shapeHandler.getCurrentShape(), this.#board)){
@@ -113,8 +115,11 @@ class Game{
         if(this.#paused || this.#gameOver){
             return;
         }
-
-        this.#level = this.#score /400 - this.#score /400 % 1;
+        if(this.#score >= this.#scoreGoal){
+        this.#level+=1;
+        this.#scoreGoalIncrement += (this.#level+1)*100;
+        this.#scoreGoal += this.#scoreGoalIncrement;
+        }
        
         let shape = this.#shapeHandler.getCurrentShape();
         if(this.#lastTime <= 0){
