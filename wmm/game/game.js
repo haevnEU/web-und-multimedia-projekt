@@ -18,7 +18,6 @@ class Game{
     #renderer = new Renderer();
     #board = new Board(20, 30);    
     #shapeHandler = new ShapeHandler(); 
-    #nextLevel = Math.floor(new Date() / 1000) + 10;
     #gameOver = false;
     #scoreGoal = 400;
     #scoreGoalIncrement = 400;
@@ -30,10 +29,6 @@ class Game{
 
     #currentSeconds(){
         return Math.floor(new Date() / 1000);
-    }
-
-    #nextLevelIn(seconds){
-        return this.#currentSeconds() + seconds;
     }
 
     onKey(key){
