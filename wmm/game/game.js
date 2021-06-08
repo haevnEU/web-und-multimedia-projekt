@@ -11,8 +11,7 @@ class Game{
     #gameOver = false;
     
     #score = 0;
-    #level = 0;
-    #SoftDropScore =0;
+    #level = 1;
     #removedLines = 0;
 
     #timerInterval = 30;
@@ -22,12 +21,8 @@ class Game{
     #renderer = new Renderer();
     #board = new Board(20, 30);    
     #shapeHandler = new ShapeHandler(); 
-    #gameOver = false;
-    #scoreGoal = 400;
-    #scoreGoalIncrement = 400;
-    constructor(){    
-        meta.fieldCanvas.width = window.innerWidth * 0.7;
-        meta.fieldCanvas.height = window.innerHeight * 0.9;    
+
+    constructor(){      
         this.#shapeHandler.createNewShape();
     }
 
@@ -40,7 +35,7 @@ class Game{
         this.#shapeHandler.loadShapesFromJSONArray(obj.shapes[0], obj.shapes[1]);
         this.pause();
     }
-
+    
     exportToJson(){
         return JSON.stringify(
             {  board: this.#board.toString(),
@@ -61,6 +56,7 @@ class Game{
             });
     }
     
+
     onKey(key){
         key = key.toLowerCase();
          if(key == "escape" && !this.#gameOver){
@@ -74,13 +70,10 @@ class Game{
         }
         if(key == "a" && this.#physics.canShapeMoveLeft(this.#shapeHandler.getCurrentShape(), this.#board)){
             this.#shapeHandler.getCurrentShape().moveLeft();   
-            this.#SoftDropScore = 0;   
         }else if(key == "d" && this.#physics.canShapeMoveRight(this.#shapeHandler.getCurrentShape(), this.#board)){
             this.#shapeHandler.getCurrentShape().moveRight();
-            this.#SoftDropScore = 0;
         }else if(key == "s" && this.#physics.canShapeMoveDown(this.#shapeHandler.getCurrentShape(), this.#board)){
             this.#INTERNAL_moveShapeDown(this.#shapeHandler.getCurrentShape());
-            this.#SoftDropScore += 1;
         }else if(key == "q" && this.#physics.canShapeRotatedLeft(this.#shapeHandler.getCurrentShape(), this.#board)){
             this.#shapeHandler.getCurrentShape().rotateLeft();
         }else if(key == "e" && this.#physics.canShapeRotatedRight(this.#shapeHandler.getCurrentShape(), this.#board)){
@@ -97,6 +90,41 @@ class Game{
     pause(){
         this.#paused = true;
     }
+
+
+
+    handleLogic(){
+        if(this.#paused || this.#gameOver){
+            return;
+        }
+       
+        let shape = this.#shapeHandler.getCurrentShape();
+        if(this.#timerInterval <= 0){
+            this.#INTERNAL_moveShapeDown(shape);
+            this.#timerInterval = 30 - this.#level;
+            this.#level = 25;
+        }
+        this.#timerInterval--;
+    }
+
+    render(){          
+        this.#renderer.clear();
+        this.#renderer.renderBoard(this.#board);
+        this.#renderer.renderShape(this.#shapeHandler.getCurrentShape());
+        this.#renderer.renderShapePreview(this.#shapeHandler.getNextShape(), this.#board);  
+        this.#renderer.renderText("Score: " + this.#score + "\n\nLevel: " + this.#level + "\n\nLines: " + this.#removedLines);          
+        
+        if(this.#paused){
+            this.#renderer.renderPauseMenu();
+            return;
+        }
+
+        if(this.#gameOver){
+            this.#renderer.renderGameOverScreen(this.#score, this.#removedLines, this.#level);
+            return;
+        }
+    }
+
 
 
     #INTERNAL_reset(){
@@ -123,13 +151,13 @@ class Game{
 
     #INTERNAL_convertClearedLinesToScore(lines){
         if(lines == 1){
-            return 40* (this.#level+1);
+            return 40 * this.#level;
         }else if(lines == 2){
-            return 100* (this.#level+1);
+            return 100 * this.#level;
         }else if(lines == 3){
-            return 300* (this.#level+1);
+            return 300 * this.#level;
         }else if(lines == 4){
-            return 1200* (this.#level+1);
+            return 1200 * this.#level;
         }else return 0;
     }
 
@@ -137,8 +165,7 @@ class Game{
         if(this.#physics.canShapeMoveDown(this.#shapeHandler.getCurrentShape(), this.#board)){
             shape.moveDown();
         }else{ 
-            this.#score += this.#SoftDropScore;
-            this.#SoftDropScore = 0;
+            this.#score += shape.getAmountOccupiedBlocks();
             for (let x = 0; x < 4; x++){
                 for (let y = 0; y < 4; y++){
                     if (shape.getElementAt(x, y) != 0){
@@ -156,56 +183,6 @@ class Game{
             }
         }
     }
-    
-    handleLogic(){
-        if(this.#paused || this.#gameOver){
-            return;
-        }
-        while(this.#score >= this.#scoreGoal){
-          this.#level+=1;
-          this.#scoreGoalIncrement += (this.#level+1)*100;
-          this.#scoreGoal += this.#scoreGoalIncrement;
-        }
-       
-        let shape = this.#shapeHandler.getCurrentShape();
-        if(this.#lastTime <= 0){
-            this.#moveShapeDown(shape);
-            if(this.#level < 17){
-            this.#lastTime = 20 - this.#level;
-        }else{
-            this.#lastTime = 3
-        }
-        this.#lastTime--;
-    }
-
-    render(){          
-        // This is used to resize the canvas, maybe theres a better solution like an event which is fires if the windows is resized
-        meta.fieldCanvas.width = window.innerWidth * 0.7;
-        meta.fieldCanvas.height = window.innerHeight * 0.9;
-        
-        this.#renderer.clear();
-        if(this.#paused){
-            this.#renderer.renderPauseMenu();
-            return;
-        }
-
-        if(this.#gameOver){
-            this.#renderer.renderGameOverScreen(this.#score, this.#removedLines, this.#level);
-            return;
-        }
-
-        if(this.#showShapes){
-            this.#renderer.renderAllShapes(this.#shapeHandler.getShapes());
-            return;
-        }
-
-        this.#renderer.renderBoard(this.#board);
-        this.#renderer.renderShape(this.#shapeHandler.getCurrentShape());
-        this.#renderer.renderShapePreview(this.#shapeHandler.getNextShape(), this.#board);  
-        this.#renderer.renderText("Score: " + this.#score + "\n\nLevel: " + this.#level + "\n\nLines: " + this.#removedLines);          
-    }
-
-
 }
 
 export {Game}
