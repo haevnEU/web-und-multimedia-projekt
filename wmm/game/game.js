@@ -1,8 +1,7 @@
-import meta from "./constants.js"
 import {Board} from "./board.js"
 import {Physics} from "./physics.js"
 import {Renderer} from "./render.js"
-import {Shape, ShapeHandler} from "./shapes.js"
+import {ShapeHandler} from "./shapes.js"
 
 
 class Game{
@@ -11,16 +10,20 @@ class Game{
     #gameOver = false;
     
     #score = 0;
-    #level = 1;
+    #level = 0;
+    #SoftDropScore =0;
     #removedLines = 0;
 
     #timerInterval = 30;
-    #nextLevel = Math.floor(new Date() / 1000) + 10;
-    
+
     #physics = new Physics();
     #renderer = new Renderer();
     #board = new Board(20, 30);    
-    #shapeHandler = new ShapeHandler(); 
+    #shapeHandler = new ShapeHandler();
+
+    #scoreGoal = 400;
+    #scoreGoalIncrement = 400;
+    #lastTime = 3;
 
     constructor(){      
         this.#shapeHandler.createNewShape();
@@ -59,26 +62,27 @@ class Game{
 
     onKey(key){
         key = key.toLowerCase();
-         if(key == "escape" && !this.#gameOver){
+        if(key === "escape" && !this.#gameOver){
             this.#paused ? this.start() : this.pause();
-        }else if(key == "n"){
+        }else if(key === "n"){
             this.#INTERNAL_reset();
         }
         
         if(this.#gameOver || this.#paused){
             return;
         }
-        if(key == "a" && this.#physics.canShapeMoveLeft(this.#shapeHandler.getCurrentShape(), this.#board)){
+        if(key === "a" && this.#physics.canShapeMoveLeft(this.#shapeHandler.getCurrentShape(), this.#board)){
             this.#shapeHandler.getCurrentShape().moveLeft();   
-        }else if(key == "d" && this.#physics.canShapeMoveRight(this.#shapeHandler.getCurrentShape(), this.#board)){
+        }else if(key === "d" && this.#physics.canShapeMoveRight(this.#shapeHandler.getCurrentShape(), this.#board)){
             this.#shapeHandler.getCurrentShape().moveRight();
-        }else if(key == "s" && this.#physics.canShapeMoveDown(this.#shapeHandler.getCurrentShape(), this.#board)){
+        }else if(key === "s" && this.#physics.canShapeMoveDown(this.#shapeHandler.getCurrentShape(), this.#board)){
+            this.#SoftDropScore += 1;
             this.#INTERNAL_moveShapeDown(this.#shapeHandler.getCurrentShape());
-        }else if(key == "q" && this.#physics.canShapeRotatedLeft(this.#shapeHandler.getCurrentShape(), this.#board)){
+        }else if(key === "q" && this.#physics.canShapeRotatedLeft(this.#shapeHandler.getCurrentShape(), this.#board)){
             this.#shapeHandler.getCurrentShape().rotateLeft();
-        }else if(key == "e" && this.#physics.canShapeRotatedRight(this.#shapeHandler.getCurrentShape(), this.#board)){
+        }else if(key === "e" && this.#physics.canShapeRotatedRight(this.#shapeHandler.getCurrentShape(), this.#board)){
             this.#shapeHandler.getCurrentShape().rotateRight();
-        }else if(key == " "){
+        }else if(key === " "){
             this.#shapeHandler.switchShapes();
         }
     }
@@ -97,13 +101,22 @@ class Game{
         if(this.#paused || this.#gameOver){
             return;
         }
-       
-        let shape = this.#shapeHandler.getCurrentShape();
-        if(this.#timerInterval <= 0){
-            this.#INTERNAL_moveShapeDown(shape);
-            this.#timerInterval = 30 - this.#level;
-            this.#level = 25;
+
+        while(this.#score >= this.#scoreGoal){
+            this.#level+=1;
+            this.#scoreGoalIncrement += (this.#level+1)*100;
+            this.#scoreGoal += this.#scoreGoalIncrement;
         }
+        let shape = this.#shapeHandler.getCurrentShape();
+        if(this.#lastTime <= 0) {
+            this.#INTERNAL_moveShapeDown(shape);
+            if (this.#level < 17) {
+                this.#lastTime = 20 - this.#level;
+            } else {
+                this.#lastTime = 3
+            }
+        }            this.#lastTime--;
+
         this.#timerInterval--;
     }
 
@@ -121,7 +134,7 @@ class Game{
 
         if(this.#gameOver){
             this.#renderer.renderGameOverScreen(this.#score, this.#removedLines, this.#level);
-            return;
+
         }
     }
 
@@ -137,26 +150,18 @@ class Game{
         this.start();
     }
 
-    #INTERNAL_currentSeconds(){
-        return Math.floor(new Date() / 1000);
-    }
-
-    #nextLevelIn(seconds){
-        return this.#INTERNAL_currentSeconds() + seconds;
-    }
-
     #INTERNAL_writeToDataBase(){
         window.location.href = "http://localhost/accounting/usermod.php?score=" + this.#score;
     }
 
     #INTERNAL_convertClearedLinesToScore(lines){
-        if(lines == 1){
+        if(lines === 1){
             return 40 * this.#level;
-        }else if(lines == 2){
+        }else if(lines === 2){
             return 100 * this.#level;
-        }else if(lines == 3){
+        }else if(lines === 3){
             return 300 * this.#level;
-        }else if(lines == 4){
+        }else if(lines === 4){
             return 1200 * this.#level;
         }else return 0;
     }
@@ -168,7 +173,7 @@ class Game{
             this.#score += shape.getAmountOccupiedBlocks();
             for (let x = 0; x < 4; x++){
                 for (let y = 0; y < 4; y++){
-                    if (shape.getElementAt(x, y) != 0){
+                    if (shape.getElementAt(x, y) !== 0){
                         this.#board.setElementAt(shape.getX() + x, shape.getY() + y, shape.getElementAt(x, y));
                     }
                 }

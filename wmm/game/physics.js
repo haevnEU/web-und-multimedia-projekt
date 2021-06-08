@@ -15,7 +15,7 @@ class Physics{
      */
     canShapeRotatedLeft(shape, board){
         shape.rotateLeft();
-        let result = this.#INTERNAL_detectCollision(shape, board);
+        let result = Physics.#INTERNAL_detectCollision(shape, board);
         shape.rotateRight();
         return result;
     }    
@@ -29,7 +29,7 @@ class Physics{
      */
     canShapeRotatedRight(shape, board){ 
         shape.rotateRight();
-        let result = this.#INTERNAL_detectCollision(shape, board);
+        let result = Physics.#INTERNAL_detectCollision(shape, board);
         shape.rotateLeft();
         return result;
     }
@@ -42,7 +42,7 @@ class Physics{
      * @returns true iff the shape can move
      */
     canShapeMoveDown(shape, board){
-        return this.#INTERNAL_detectCollision(shape, board, 0, 1);
+        return Physics.#INTERNAL_detectCollision(shape, board, 0, 1);
     }
     
     /**
@@ -53,7 +53,7 @@ class Physics{
      * @returns true iff the shape can move
      */
     canShapeMoveLeft(shape, board){
-        return this.#INTERNAL_detectCollision(shape, board, -1, 0);
+        return Physics.#INTERNAL_detectCollision(shape, board, -1, 0);
     }
     
     /**
@@ -64,7 +64,7 @@ class Physics{
      * @returns true iff the shape can move
      */
     canShapeMoveRight(shape, board){
-        return this.#INTERNAL_detectCollision(shape, board, 1, 0);
+        return Physics.#INTERNAL_detectCollision(shape, board, 1, 0);
     }
 
     /**
@@ -75,12 +75,12 @@ class Physics{
      */
     canLinesBeRemoved(board){ 
         let lineFound = false;
-        let lines = new Array();
+        let lines = [];
         let y = 0;
         for(; y < meta.BOARD_HEIGHT - 1; y++){
             for(let x = 1; x < meta.BOARD_WIDTH - 1; x++){
                 // The line has one free spot we can skip the remaining checks for this line
-                if(board.getElementAt(x, y) == 0){
+                if(board.getElementAt(x, y) === 0){
                     lineFound = false;
                     break;
                 }
@@ -108,7 +108,7 @@ class Physics{
      * @param {Number} offset_y Y direction in which the validation occurs 
      * @returns true iff the shape can move in the direction specified by offset
      */
-    #INTERNAL_detectCollision(shape, board, offset_x = 0, offset_y = 0){
+    static #INTERNAL_detectCollision(shape, board, offset_x = 0, offset_y = 0){
         // Assign positions with an offset, if offset is 0 the shape is validated on its own position
         let position_x = shape.getX() + offset_x;
         let position_y = shape.getY() + offset_y;
@@ -119,7 +119,7 @@ class Physics{
             for(let y = 0; y < meta.SHAPE_SIZE; y++){  
                 let stateAtField = board.getElementAt(position_x + x, position_y + y);
                 let stateAtShape = shape.getElementAt(x, y);
-                if(stateAtShape != 0 && stateAtField != 0){
+                if(stateAtShape !== 0 && stateAtField !== 0){
                     return false;
                 }
                  

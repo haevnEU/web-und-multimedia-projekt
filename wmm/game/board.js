@@ -14,11 +14,11 @@ class Board{
      * @date Mai 01 2020
      */
     constructor(){     
-        for(var x = 0; x < meta.BOARD_WIDTH; x++){
-            for(var y = 0; y < meta.BOARD_HEIGHT; y++){
-                if(x == 0 || x == (meta.BOARD_WIDTH - 1)){
+        for(let x = 0; x < meta.BOARD_WIDTH; x++){
+            for(let y = 0; y < meta.BOARD_HEIGHT; y++){
+                if(x === 0 || x === (meta.BOARD_WIDTH - 1)){
                     this.#field[y * meta.BOARD_WIDTH + x] = 254;                    
-                }else if(y == (meta.BOARD_HEIGHT - 1)){
+                }else if(y === (meta.BOARD_HEIGHT - 1)){
                     this.#field[y * meta.BOARD_WIDTH + x] = 255;                        
                 }else{
                     this.#field[y * meta.BOARD_WIDTH + x] = 0;
@@ -68,7 +68,7 @@ class Board{
      * @returns State of the element a position (x/y) in range 0 to 9
      */
     getElementAt(x, y){
-        if(!this.#INTERNAL_checkBoundary(x, y)){
+        if(!Board.#INTERNAL_checkBoundary(x, y)){
          //   return -1;
         }
         return this.#field[y * meta.BOARD_WIDTH + x];
@@ -83,7 +83,7 @@ class Board{
      * @returns True iff the field could be set
      */
     setElementAt(x, y, state){
-        if(this.#field[y * meta.BOARD_WIDTH + x] != 0){
+        if(this.#field[y * meta.BOARD_WIDTH + x] !== 0){
           //  return false;
         }
         this.#field[y * meta.BOARD_WIDTH + x] = state;    
@@ -100,7 +100,7 @@ class Board{
      */
     removeLine(line){
         // Height check
-        if(line == meta.BOARD_HEIGHT){
+        if(line === meta.BOARD_HEIGHT){
             return;
         }
         // Calculate start and end index for array access
@@ -109,7 +109,7 @@ class Board{
 
         // Check if the line specified by start and is fully filled
         for(let x = start + 1; x < end - 1; x++){
-            if(this.#field[line * meta.BOARD_WIDTH + x] == 0){
+            if(this.#field[line * meta.BOARD_WIDTH + x] === 0){
                 return;
             }
         }
@@ -117,7 +117,7 @@ class Board{
         this.#field.splice(start, end - start);
         // insert a new line at top
         for(let x = 0; x < meta.BOARD_WIDTH; x++){
-            if(x == 0 || x == (meta.BOARD_WIDTH - 1)){   
+            if(x === 0 || x === (meta.BOARD_WIDTH - 1)){
                 this.#field.unshift(254);
     	    }else{
                 this.#field.unshift(0);
@@ -136,7 +136,7 @@ class Board{
     * @param {Number} y Y coordinate
     * @returns {Boolean} true if the point is inside the board
     */
-   #INTERNAL_checkBoundary(x, y){
+    static #INTERNAL_checkBoundary(x, y){
        if(x < 0 || x >= meta.BOARD_WIDTH){
            return false;
        }else if(y < 0 || y >= meta.BOARD_HEIGHT){

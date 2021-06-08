@@ -1,11 +1,11 @@
 import meta from "./constants.js"
-import {ThemeHandler, Theme} from "./theme.js"
+import {ThemeHandler} from "./theme.js"
 
 class Renderer{
     #theme = new ThemeHandler();
     #fieldCanvas = document.getElementById('fieldCanvas');
     #context = this.#fieldCanvas.getContext('2d');
-    #previewDimension = Math.floor(meta.BLOCK_SIZE * 1);
+    #previewDimension = Math.floor(meta.BLOCK_SIZE);
     constructor(){ }
     
     /**
@@ -30,7 +30,7 @@ class Renderer{
         for(let x = 0; x < shape.getShapeWidth(); x++){
             for(let y = 0; y < shape.getShapeHeight(); y++){
                 let color = shape.getElementAt(x, y);
-                if(color == 0){
+                if(color === 0){
                     continue;
                 }
                 this.#INTERNAL_drawRectangle(meta.RENDER_OFFSET + (shape.getX() * meta.BLOCK_SIZE) + (x * meta.BLOCK_SIZE),
@@ -55,7 +55,7 @@ class Renderer{
         for(let x = 0; x < shape.getShapeWidth(); x++){
             for(let y = 0; y < shape.getShapeHeight(); y++){
                 let color = shape.getElementAt(x, y);
-                if(color == 0){
+                if(color === 0){
                     this.#INTERNAL_drawRectangle(offset_x +  (x * this.#previewDimension),
                     offset_y + y * this.#previewDimension,
                     this.#previewDimension, this.#previewDimension, this.#theme.getTheme().getPreviewBackgroundColor(), false);         
@@ -74,11 +74,11 @@ class Renderer{
      * This methods renders a board on screen
      * @param {Board} board board which shall be rendered on screen
      */
-    renderBoard(board, paused = false){
+    renderBoard(board){
         for(let x = 0; x < board.getWidth(); x++){
             for(let y = 0; y < board.getHeight(); y++){
                 let color = board.getElementAt(x, y);   
-                if(color == 0){
+                if(color === 0){
                     continue;
                 }
                 let color2 = this.#theme.getTheme().getBlockColorByID(color);
@@ -126,7 +126,7 @@ class Renderer{
      * This method renders the game over screen
      * @param {Number} score Score which the user achieved
      * @param {Number} removedLines Lines which the user removed 
-     * @param {Level} level Level which the user was playing 
+     * @param {Number} level Level which the user was playing
      */
     renderGameOverScreen(score, removedLines, level){
         this.#context.fillStyle = this.#theme.getTheme().getFontColor();
@@ -159,10 +159,11 @@ class Renderer{
     /**
      * This method renders a rectangle with a border on the screen
      * @param {Number} x X coordinate where the rectangle shall start
-     * @param {Number} y Y coordiante where the rectangle shall start
+     * @param {Number} y Y coordinate where the rectangle shall start
      * @param {Number} w Width of the rectangle
      * @param {Number} h Height of the rectangle
      * @param {String} color Color of the Rectangle
+     * @param {Boolean} border Determines if a border shall be drawn
      */
     #INTERNAL_drawRectangle(x, y, w, h, color, border = true){
         if(border){
@@ -170,66 +171,6 @@ class Renderer{
         }
         this.#context.fillStyle = color;
         this.#context.fillRect(x, y, w, h);
-    }
-
-    /**
-     * INTERNAL DEBUG VIEW DO NOT USE IN PRODUCTION
-     * @param {*} shapes 
-     */
-    renderAllShapes(shapes){
-        let offsetX = 25;
-        let offsetY = 25;
-        for(let i = 0; i < 7; i++){
-            let shape = shapes[i];
-            for(let x = 0; x < shape.getShapeWidth(); x++){
-                for(let y = 0; y < shape.getShapeHeight(); y++){
-                    let color = shape.getElementAt(x, y);
-                    if(color == 0){  
-                        this.#INTERNAL_drawRectangle(offsetX + (x * meta.BLOCK_SIZE),
-                                        offsetY + (y * meta.BLOCK_SIZE),
-                                        meta.BLOCK_SIZE, meta.BLOCK_SIZE, this.#theme.getTheme().getPreviewBackgroundColor(), false);
-                        
-                    }
-                    this.#INTERNAL_drawRectangle(offsetX + (x * meta.BLOCK_SIZE),
-                                        offsetY + (y * meta.BLOCK_SIZE),
-                                        meta.BLOCK_SIZE, meta.BLOCK_SIZE, this.#theme.getTheme().getBlockColorByID(color));
-    
-             
-                }
-            }
-            offsetX += 5*25;
-            if(i % 2){
-                offsetX = 25;
-                offsetY += 5*25;
-            }
-        }
-
-        offsetY = 25;
-        offsetX = 50 + 2*5 * 25
-        for(let i = 7; i < shapes.length; i++){
-            let shape = shapes[i];
-            for(let x = 0; x < shape.getShapeWidth(); x++){
-                for(let y = 0; y < shape.getShapeHeight(); y++){
-                    let color = shape.getElementAt(x, y);
-                    if(color == 0){
-                        this.#INTERNAL_drawRectangle(offsetX + (x * meta.BLOCK_SIZE),
-                                        offsetY + (y * meta.BLOCK_SIZE),
-                                        meta.BLOCK_SIZE, meta.BLOCK_SIZE, this.#theme.getTheme().getPreviewBackgroundColor(), false);
-                    }
-                    this.#INTERNAL_drawRectangle(offsetX + (x * meta.BLOCK_SIZE),
-                                        offsetY + (y * meta.BLOCK_SIZE),
-                                        meta.BLOCK_SIZE, meta.BLOCK_SIZE, this.#theme.getTheme().getBlockColorByID(color));
-    
-             
-                }
-            }
-            offsetX += 5*25;
-            if(i % 2){
-                offsetX = 50 + 2*5 * 25
-                offsetX = 50 + 2*5 * 25
-                offsetY += 5*25;
-            }
-        }
     }
 }
 

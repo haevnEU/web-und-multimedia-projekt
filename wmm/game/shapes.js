@@ -18,14 +18,13 @@ class Shape{
      * - Left/Right rotation
      * - Moving to the left/right/down
      * - Access to the orientation and position
-     * 
+     *
      * @version 1.1
      * @date Mai 01 2020
-     * 
+     *
      * @param {Number[]} shape 1D Array of the shape
      * @param {Number} id ID of the shape
-     * @param {Number} boardWidth Width of the underlying board
-     * @param {Number} boardHeight Height of the underlying board
+     * @param {Number} probabilityWeight Weight how often the shape should be used
      */
     constructor(shape, id, probabilityWeight = 12){
         this.#shape = shape;
@@ -34,7 +33,7 @@ class Shape{
         this.#positionX = Math.floor(this.#boardWidth * 0.5) - 2;
         this.#positionY = 0;
         for(let i = 0; i < shape.length; i++){
-            if(shape[i] != 0){
+            if(shape[i] !== 0){
                 this.#amountOccupiedBlocks++;
             }
         }
@@ -255,7 +254,7 @@ class ShapeHandler{
      * and creates a new shape into the block memory
      */
     createNewShape(){
-        if(null == this.#nextShape || undefined == this.#nextShape){
+        if(null == this.#nextShape){
             this.#nextShape = this.#shapes[this.#INTERNAL_nextID()];
         }
         this.#currentShape = this.#nextShape.copy();
@@ -315,7 +314,6 @@ class ShapeHandler{
             }
             rnd -= this.#shapes[i].weight();
         }
-        let rng = (Math.floor(Math.random() * 41368) ^ Date.now()) % this.#shapes.length;
         return rnd;
     }
 

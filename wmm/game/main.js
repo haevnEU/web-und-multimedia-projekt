@@ -10,7 +10,7 @@ setInterval(loop, 30);
  * @param {Number} ttl Time how long the cookie exists  
  */
 function setCookie(name, value, ttl = 0) {
-  if(ttl == 0){
+  if(ttl === 0){
     ttl = 365;
   }
   var expire_date = new Date();
@@ -27,13 +27,13 @@ function setCookie(name, value, ttl = 0) {
  */
 function getCookie(name) {
   name = name + "=";
-  var cookie_list = document.cookie.split(';');
-  for(var i = 0; i < cookie_list.length; i++) {
-    var cookie = cookie_list[i];
-    while (cookie.charAt(0) == ' ') {
+    const cookie_list = document.cookie.split(';');
+    for(let i = 0; i < cookie_list.length; i++) {
+        let cookie = cookie_list[i];
+        while (cookie.charAt(0) === ' ') {
       cookie = cookie.substring(1);
     }
-    if (cookie.indexOf(name) == 0) {
+    if (cookie.indexOf(name) === 0) {
       return cookie.substring(name.length, cookie.length);
     }
   }
@@ -51,14 +51,6 @@ function eraseCookie(name) {
 function loop(){
     game.handleLogic();
     game.render();
-}
-
-function start(){
-    game.start();
-}
-
-function pause(){
-    game.pause();
 }
 
 window.onbeforeunload = function(){
