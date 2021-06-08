@@ -1,19 +1,23 @@
-import {Shape, ShapeHandler} from "./shapes.js"
+import meta from "./constants.js"
 import {Board} from "./board.js"
 import {Physics} from "./physics.js"
 import {Renderer} from "./render.js"
-import meta from "./constants.js"
+import {Shape, ShapeHandler} from "./shapes.js"
 
 
 class Game{
 
-    #showShapes = false;
+    #paused = false; 
+    #gameOver = false;
+    
     #score = 0;
     #level = 0;
     #SoftDropScore =0;
     #removedLines = 0;
-    #paused = false; 
-    #lastTime = 30;
+
+    #timerInterval = 30;
+    #nextLevel = Math.floor(new Date() / 1000) + 10;
+    
     #physics = new Physics();
     #renderer = new Renderer();
     #board = new Board(20, 30);    
@@ -27,22 +31,55 @@ class Game{
         this.#shapeHandler.createNewShape();
     }
 
-    #currentSeconds(){
-        return Math.floor(new Date() / 1000);
+    init(json){
+        let obj = JSON.parse(json);      
+        this.#board.loadFromString(obj.board);
+        this.#level = obj.level;
+        this.#score = obj.score;
+        this.#removedLines = obj.lines;
+        this.#shapeHandler.loadShapesFromJSONArray(obj.shapes[0], obj.shapes[1]);
+        this.pause();
     }
 
+    exportToJson(){
+        return JSON.stringify(
+            {  board: this.#board.toString(),
+                level: this.#level,
+                score: this.#score,
+                lines: this.#removedLines,
+                shapes: [{
+                    posX: this.#shapeHandler.getCurrentShape().getX(),
+                    posY: this.#shapeHandler.getCurrentShape().getY(),
+                    orientation: this.#shapeHandler.getCurrentShape().getOrientation(),
+                    ID: this.#shapeHandler.getCurrentShape().getShapeID()
+                }, {
+                    posX: this.#shapeHandler.getNextShape().getX(),
+                    posY: this.#shapeHandler.getNextShape().getY(),
+                    orientation: this.#shapeHandler.getNextShape().getOrientation(),
+                    ID: this.#shapeHandler.getNextShape().getShapeID()
+                }]
+            });
+    }
+    
     onKey(key){
         key = key.toLowerCase();
-        if(key == "escape" && !this.#gameOver){
+         if(key == "escape" && !this.#gameOver){
             this.#paused ? this.start() : this.pause();
-        }else if(key == "a" && this.#physics.canShapeMoveLeft(this.#shapeHandler.getCurrentShape(), this.#board)){
-            this.#shapeHandler.getCurrentShape().moveLeft();
+        }else if(key == "n"){
+            this.#INTERNAL_reset();
+        }
+        
+        if(this.#gameOver || this.#paused){
+            return;
+        }
+        if(key == "a" && this.#physics.canShapeMoveLeft(this.#shapeHandler.getCurrentShape(), this.#board)){
+            this.#shapeHandler.getCurrentShape().moveLeft();   
             this.#SoftDropScore = 0;   
         }else if(key == "d" && this.#physics.canShapeMoveRight(this.#shapeHandler.getCurrentShape(), this.#board)){
             this.#shapeHandler.getCurrentShape().moveRight();
             this.#SoftDropScore = 0;
         }else if(key == "s" && this.#physics.canShapeMoveDown(this.#shapeHandler.getCurrentShape(), this.#board)){
-            this.#moveShapeDown(this.#shapeHandler.getCurrentShape());
+            this.#INTERNAL_moveShapeDown(this.#shapeHandler.getCurrentShape());
             this.#SoftDropScore += 1;
         }else if(key == "q" && this.#physics.canShapeRotatedLeft(this.#shapeHandler.getCurrentShape(), this.#board)){
             this.#shapeHandler.getCurrentShape().rotateLeft();
@@ -50,15 +87,6 @@ class Game{
             this.#shapeHandler.getCurrentShape().rotateRight();
         }else if(key == " "){
             this.#shapeHandler.switchShapes();
-        }else if(key == "g"){
-            this.#showShapes = !this.#showShapes;
-        }else if(key == "n"){
-            this.#board = new Board();
-            this.#shapeHandler.createNewShape();
-            this.#gameOver = false;  
-            this.#score = 0;
-            this.#level = 1;
-            this.#removedLines = 0;
         }
     }
 
@@ -70,7 +98,30 @@ class Game{
         this.#paused = true;
     }
 
-    #convertClearedLinesToScore(lines){
+
+    #INTERNAL_reset(){
+        this.#board = new Board();
+        this.#shapeHandler.createNewShape();
+        this.#gameOver = false;  
+        this.#score = 0;
+        this.#level = 1;
+        this.#removedLines = 0;
+        this.start();
+    }
+
+    #INTERNAL_currentSeconds(){
+        return Math.floor(new Date() / 1000);
+    }
+
+    #nextLevelIn(seconds){
+        return this.#INTERNAL_currentSeconds() + seconds;
+    }
+
+    #INTERNAL_writeToDataBase(){
+        window.location.href = "http://localhost/accounting/usermod.php?score=" + this.#score;
+    }
+
+    #INTERNAL_convertClearedLinesToScore(lines){
         if(lines == 1){
             return 40* (this.#level+1);
         }else if(lines == 2){
@@ -82,8 +133,7 @@ class Game{
         }else return 0;
     }
 
-
-    #moveShapeDown(shape){
+    #INTERNAL_moveShapeDown(shape){
         if(this.#physics.canShapeMoveDown(this.#shapeHandler.getCurrentShape(), this.#board)){
             shape.moveDown();
         }else{ 
@@ -96,12 +146,13 @@ class Game{
                     }
                 }
             }
+
             this.#shapeHandler.createNewShape();   
             this.#gameOver = !this.#physics.canShapeMoveDown(this.#shapeHandler.getCurrentShape(), this.#board);
             let lines = this.#physics.canLinesBeRemoved(this.#board);
             if(lines > 0){
                 this.#removedLines += lines;
-                this.#score += this.#convertClearedLinesToScore(lines);
+                this.#score += this.#INTERNAL_convertClearedLinesToScore(lines);
             }
         }
     }
@@ -110,10 +161,10 @@ class Game{
         if(this.#paused || this.#gameOver){
             return;
         }
-        if(this.#score >= this.#scoreGoal){
-        this.#level+=1;
-        this.#scoreGoalIncrement += (this.#level+1)*100;
-        this.#scoreGoal += this.#scoreGoalIncrement;
+        while(this.#score >= this.#scoreGoal){
+          this.#level+=1;
+          this.#scoreGoalIncrement += (this.#level+1)*100;
+          this.#scoreGoal += this.#scoreGoalIncrement;
         }
        
         let shape = this.#shapeHandler.getCurrentShape();
@@ -124,7 +175,6 @@ class Game{
         }else{
             this.#lastTime = 3
         }
-    }
         this.#lastTime--;
     }
 
@@ -154,6 +204,7 @@ class Game{
         this.#renderer.renderShapePreview(this.#shapeHandler.getNextShape(), this.#board);  
         this.#renderer.renderText("Score: " + this.#score + "\n\nLevel: " + this.#level + "\n\nLines: " + this.#removedLines);          
     }
+
 
 }
 

@@ -1,4 +1,4 @@
-import {Shape, ShapeHandler} from "./shapes.js"
+import {Shape} from "./shapes.js"
 import {Board} from "./board.js"
 import meta from "./constants.js"
 
@@ -67,6 +67,12 @@ class Physics{
         return this.#INTERNAL_detectCollision(shape, board, 1, 0);
     }
 
+    /**
+     * This method checks if a line can be removed. IF a line can be removed 
+     * the line will be removed. Total removed lines will be returned
+     * @param {Board} board Board where the operation should occur
+     * @returns Removed lines
+     */
     canLinesBeRemoved(board){ 
         let lineFound = false;
         let lines = new Array();
@@ -74,7 +80,6 @@ class Physics{
         for(; y < meta.BOARD_HEIGHT - 1; y++){
             for(let x = 1; x < meta.BOARD_WIDTH - 1; x++){
                 // The line has one free spot we can skip the remaining checks for this line
-                
                 if(board.getElementAt(x, y) == 0){
                     lineFound = false;
                     break;
@@ -82,6 +87,7 @@ class Physics{
                 lineFound = true;
                 
             }
+            // A line is found so we can add this line to the array
             if(lineFound)lines.push(y);                
         }
         
@@ -92,6 +98,7 @@ class Physics{
         return lines.length;
     }
 
+    
     /**
      * This internal method is used to validate if a shape can move into a certain direction.
      * This method yields true iff the shape can move in this direction
