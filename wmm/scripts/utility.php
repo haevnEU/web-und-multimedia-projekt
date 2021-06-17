@@ -3,7 +3,7 @@
     
     
     function redirectToError($message){
-        header("Location: ./error.php?error=" . urlencode($message));
+        header("Location: /error.php?error=" . urlencode($message));
     }
 
     function hashPassword($password){

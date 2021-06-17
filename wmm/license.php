@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8">        
     <title>Login</title>
-    <link rel="stylesheet" href="http://localhost/styles/darkmode/centered.css">
-    <link rel="stylesheet" href="http://localhost/styles/basic_style.css">
+    <link rel="stylesheet" href="./styles/darkmode/centered.css">
+    <link rel="stylesheet" href="./styles/basic_style.css">
   </head>
-    <body">
+    <body>
       <div class="root_div root_div_color">
         <div class="sub_div">
           <h1 class="heading_color">Licenses</h1>
@@ -32,16 +32,16 @@
                 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
                 SOFTWARE.
             </code>
-            <p• >This software was produced using HTML5, CSS, Javascript, PHP and mysql</p>
+            <p>• This software was produced using HTML5, CSS, Javascript, PHP and mysql</p>
             <p>• mysql click <a href="https://github.com/mysql/mysql-server/blob/mysql-8.0.3/COPYING">here</a> to visit the license page</p>
             <br><br><br>    
-            <input class="custom_button custom_button_color" type="button" onclick="location.href='./index.php';" value="Home" />
+            <button type="button" class="custom_button custom_button_color" onclick="location.href='/';">  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 5.69l5 4.5V18h-2v-6H9v6H7v-7.81l5-4.5M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z"/></svg></button>
           </div>
         </div>
       </div>
     </body>
     <footer class="footer">
-      <input class="floating_button custom_button_color" type="button" onclick="location.href='http://localhost/support/helpme.html';" value="?" /> 
+    <?php include "./common/floating_menu.php"?>
   </footer>
 </html>
 

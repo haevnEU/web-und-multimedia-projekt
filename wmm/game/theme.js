@@ -4,7 +4,7 @@ class Theme{
      */
     constructor(){}
 
-    #getColorByID(id){
+    static #getColorByID(id){
         try{
             let element = document.querySelector(id);
             let style = getComputedStyle(element);
@@ -21,7 +21,7 @@ class Theme{
      */
     getBlockColorByID(id){
         let block = ".blockID" + id;
-        return this.#getColorByID(block);     
+        return Theme.#getColorByID(block);
     }
 
     /**
@@ -29,12 +29,12 @@ class Theme{
      * @returns Color of the background
      */
     getBackgroundColor(){
-        return this.#getColorByID(".background_");
+        return Theme.#getColorByID(".background_");
     }
 
     
     getPreviewBackgroundColor(){
-        return this.#getColorByID(".background_preview");
+        return Theme.#getColorByID(".background_preview");
     }
     
 
@@ -44,7 +44,7 @@ class Theme{
      * @returns Color of the board
      */
     getBoardColor(){
-      return this.#getColorByID(".board");
+      return Theme.#getColorByID(".board");
     }
 
     /**
@@ -52,7 +52,7 @@ class Theme{
      * @returns Color of the font
      */
     getFontColor(){
-        return this.#getColorByID(".font_");
+        return Theme.#getColorByID(".font_");
     }
     
     getFontFamily(){

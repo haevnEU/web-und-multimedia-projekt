@@ -68,6 +68,20 @@ h1,h2{
     margin-right: 10%;
 }
 
+.center{
+    margin-left: 50%;
+    margin-right: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.centered_container{
+    margin-left:50%;
+    margin-top: 50%;
+    margin-bottom: 50%;
+    margin-right: 50%;
+    transform: translate(-50%, -50%);
+}
+
 .textarea_no_resizable{
     width: 90%;
     height: 300px;

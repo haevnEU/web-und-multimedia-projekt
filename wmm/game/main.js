@@ -10,13 +10,13 @@ setInterval(loop, 30);
  * @param {Number} ttl Time how long the cookie exists  
  */
 function setCookie(name, value, ttl = 0) {
-  if(ttl === 0){
-    ttl = 365;
-  }
-  var expire_date = new Date();
-  expire_date.setTime(expire_date.getTime() + (ttl * 24 * 60 * 60 * 1000));
-  var expires = "expires=" + expire_date.toUTCString();
-  document.cookie = name + "=" + value + ";" + expires + ";path=/";
+      if(ttl === 0){
+        ttl = 365;
+      }
+      let expire_date = new Date();
+      expire_date.setTime(expire_date.getTime() + (ttl * 24 * 60 * 60 * 1000));
+      let expires = "expires=" + expire_date.toUTCString();
+      document.cookie = name + "=" + value + ";" + expires + ";path=/";
 }
 
 /**

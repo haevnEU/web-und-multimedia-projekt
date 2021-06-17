@@ -42,11 +42,6 @@ class Board{
      * @returns String representation of the board
      */
     toString(){
-        let str = "";
-        for(let i = 0; i < this.#field.length - 1; i++){
-            str += this.#field[i] + ",";
-        }
-        str += this.#field[this.#field.length - 1];
         return this.#field;
     }
 
