@@ -1,9 +1,9 @@
 <?php
     session_start();
      $database_server_name = "localhost";
-                $database_user_name = "register";
-                $database_user_password = "1234";
-                $database_table_name = "game";
+    $database_user_name = "register";
+    $database_user_password = "1234";
+    $database_table_name = "game";
 
     $database_connection = new mysqli($database_server_name, $database_user_name, $database_user_password, $database_table_name);
     $remote_USER_ID = $_SESSION["user_id"];

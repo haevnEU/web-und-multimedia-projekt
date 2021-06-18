@@ -23,7 +23,7 @@
 
 
 
-            $select_player_query = "SELECT email, pass, salt, USER_ID FROM player WHERE email = ?";
+            $select_player_query = "SELECT email, pass, salt, style, USER_ID FROM player WHERE email = ?";
             $statement = $database_connection->prepare($select_player_query);
             $statement->bind_param("s", $email);
             $statement->execute();
@@ -33,7 +33,8 @@
                 $row = mysqli_fetch_array($result);
                 $remote_mail = $row['email'];
                 $remote_pass = $row['pass'];  
-                $remote_salt = $row['salt'];  
+                $remote_salt = $row['salt'];
+                $remote_style = $row['style'];
                 $remote_USER_ID = $row['USER_ID'];       
             }else{
                 redirectToError("No user found");
@@ -49,6 +50,7 @@
             }
 
             $_SESSION["user_id"] = $remote_USER_ID;
+            $_SESSION["style"] = $remote_style;
             $update_query = "UPDATE player SET state = 1 WHERE USER_ID = ?";
             $statement = $database_connection->prepare($update_query);
             $statement->bind_param("i", $remote_USER_ID);
