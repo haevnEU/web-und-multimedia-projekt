@@ -8,17 +8,22 @@
         $database_user_name = "register";
         $database_user_password = "1234";
         $database_table_name = "game";
-        $connection = new mysqli($database_server_name, $database_user_name, $database_user_password, $database_table_name);
-        if ($connection->connect_error) {
-            return "Database connection failed. " . $conn->connect_error;
+        $database_connection = new mysqli($database_server_name, $database_user_name, $database_user_password, $database_table_name);
+        if ($database_connection->connect_error) {
+            return "Database connection failed. " . $database_connection->connect_error;
         }
 
-        $sql = "INSERT INTO support_tickets (reporter, problem) VALUES ('$email', '$problem')";
-        if(!($connection->query($sql) === TRUE)){
+        $create_user_query = "INSERT INTO support_tickets (reporter, problem) VALUES (?, ?)";
+        $statement = $database_connection->prepare($create_user_query);
+        $statement->bind_param("ss", $email, $problem);
+
+        if($statement->execute() != TRUE) {
+            $database_connection->close();
             return "Cannot create a ticket, try again in a few minutes " . $connection->error;
         }
 
-        $connection->close();
+        $database_connection->close();
+
         return "
         <p>You are summoning a mighty gamemaster from the Support area</p>
         <p>This ritual takes a couple hours or days, your personal gamemaster will contact you via mail</p>

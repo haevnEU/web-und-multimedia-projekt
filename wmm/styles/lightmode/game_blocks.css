@@ -1,64 +1,64 @@
 /*
     Canvas UI
 */
-.font_{
-    color: white;   
+.font_ {
+    color: white;
     font-size: 26;
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.board{
+.board {
     color: #1E1E1E;
 }
 
-.background_{
+.background_ {
     color: #1E1E1F;
 }
 
-.background_preview{
+.background_preview {
     color: #38383a;
 }
 
 /*
     Wall and ground Blocks
 */
-.blockID254{
+.blockID254 {
     color: blue;
 }
 
-.blockID255{
+.blockID255 {
     color: red;
 }
 
 
 /*
     1 - 7 Are classic tetrominos
-*/                             
-.blockID1{
-    color:#568CA1;
+*/
+.blockID1 {
+    color: #568CA1;
 }
 
-.blockID2{
+.blockID2 {
     color: #DCDC8B;
 }
 
-.blockID3{
+.blockID3 {
     color: #AC4B1E;
 }
 
-.blockID4{
+.blockID4 {
     color: #25309b;
 }
 
-.blockID5{
+.blockID5 {
     color: #E44F26;
 }
 
-.blockID6{
+.blockID6 {
     color: #C09553;
 }
 
-.blockID7{
+.blockID7 {
     color: #69135e;
 }
 
@@ -66,19 +66,19 @@
     Everything above 7 are custom tetrominos
 */
 
-.blockID8{
+.blockID8 {
     color: brown;
 }
 
-.blockID9{
+.blockID9 {
     color: #4EC990;
 }
 
-.blockID10{
+.blockID10 {
     color: #063970;
 }
 
-.blockID11{
+.blockID11 {
     color: #873e23;
 }
 

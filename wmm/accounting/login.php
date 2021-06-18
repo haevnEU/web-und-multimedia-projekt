@@ -8,13 +8,13 @@
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Login</title>
-        <link rel="stylesheet" href="/styles/darkmode/centered.css">
-        <link rel="stylesheet" href="/styles/basic_style.css">
-    </head>
-    <body>
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="/styles/darkmode/centered.css">
+    <link rel="stylesheet" href="/styles/basic_style.css">
+</head>
+<body>
     <div class="root_div root_div_color" style="width: 30%">
         <div class="sub_div sub_div_color">
             <h2 class="heading_color">Login</h2>
@@ -25,7 +25,7 @@
                 </div>
                 <br>
                 <div class="container">
-                    <label class="custom_input_heading">Password *</label><br> <input class="custom_input" type="password" name="password" placeholder=""  required="required">
+                    <label class="custom_input_heading">Password *</label><br> <input class="custom_input" type="password" name="password" placeholder="" required="required">
                 </div>
                 <br>
                 <div class="container">
@@ -35,8 +35,8 @@
             </form>
         </div>
     </div>
-    </body>
-    <footer class="footer">
-        <?php include "../common/floating_menu.php"; ?>
-    </footer>
+</body>
+<footer class="footer">
+    <?php include "../common/floating_menu.php"; ?>
+</footer>
 </html>

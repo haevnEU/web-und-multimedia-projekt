@@ -1,8 +1,8 @@
-.mitte{
+.mitte {
     opacity: 0.8;
     background-color: #333;
     border: 1px solid transparent;
-    font-size:16px;
+    font-size: 16px;
     color: white;
     width: 500px;
     height: auto;
@@ -15,60 +15,64 @@
     transform: translate(-50%, -50%);
 }
 
-.mittig{
+.mittig {
     margin-top: 10%;
     margin-bottom: 10%;
 }
 
-body{   
-    font-family:'Helvetica';
+body {
+    font-family: 'Helvetica';
     background-color: #1e1e1e;
 }
 
-.horizontal_centered {    
-    margin-top:auto;
-    margin-bottom:auto;
-    text-align:center;
+.horizontal_centered {
+    margin-top: auto;
+    margin-bottom: auto;
+    text-align: center;
 }
+
 .customButton {
-    background-color:#206bc2;
-	border-radius:10px;
+    background-color: #206bc2;
+    border-radius: 10px;
     border-color: #206bc2;
     border-width: 0px;
-	cursor:pointer;
-	color:#ffffff;
-	font-size:16px;
-	padding:10px 15px;
+    cursor: pointer;
+    color: #ffffff;
+    font-size: 16px;
+    padding: 10px 15px;
 }
+
 .customButton:hover {
-	background-color:#206cc29f;
+    background-color: #206cc29f;
 }
+
 .customButton:active {
-	position:relative;
-	top:1px;
+    position: relative;
+    top: 1px;
 }
 
 
-h1,h2{
+h1, h2 {
     text-align: center;
-   color: #206bc2;
+    color: #206bc2;
 }
 
-.input_color{
+.input_color {
     width: 100%;
     color: white;
-    border: 1p0x solid #2c2c2c;
+    border: 1 p0x solid #2c2c2c;
 
     background-color: #2c2c2c;
     padding: 3px;
     font-size: 16px;
 }
+
 .input_color:focus {
-    outline:none;
+    outline: none;
 }
 
-.container{  
-    margin-left:10%;
+.container {
+    margin-left: 10%;
     margin-top: 1%;
     margin-bottom: 1%;
     margin-right: 10%;
@@ -79,7 +83,7 @@ h1,h2{
 }
 
 
-.input_heading{
+.input_heading {
     font-size: 16px;
 }
 

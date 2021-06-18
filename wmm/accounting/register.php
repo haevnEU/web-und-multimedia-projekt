@@ -8,13 +8,20 @@
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Register</title>
-        <link href="/styles/darkmode/centered.css" rel="stylesheet">
-        <link href="/styles/basic_style.css" rel="stylesheet">
-    </head>
-    <body>
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link href="/styles/darkmode/centered.css" rel="stylesheet">
+    <link href="/styles/basic_style.css" rel="stylesheet">
+    <script>
+        function pageLoaded() {
+            let names = ["KoalaLean", "MarePlay", "PigStep", "PumaCook", "MuleNotice", "DeerCross", "ToadCommit", "GoatBoost", "ImpalaTry", "DogAssume", "CougarPark", "BurroReveal", "IguanaCopy", "OcelotPoop", "EweMarry", "IbexUse", "BearObey", "NewtTarget", "RamLimit", "LightBrew"];
+            let index = Math.floor(Math.random() * names.length);
+            document.getElementById('gametag').value = names[index];
+        }
+    </script>
+</head>
+<body onload="pageLoaded()">
     <div class="root_div root_div_color" style="width: 30%;">
         <div class="sub_div sub_div_color">
             <h2 class="heading_color">Register</h2>
@@ -43,7 +50,7 @@
                 <div class="container">
                     <label class="custom_input_heading custom_input_heading_color">Gametag *</label><br>
                     <label>
-                        <input class="custom_input custom_input_color" name="gametag" placeholder="WildCow" required="required" type="text">
+                        <input class="custom_input custom_input_color" id="gametag" name="gametag" placeholder="WildCow" type="text">
                     </label>
                 </div>
                 <br>
@@ -68,8 +75,8 @@
             </form>
         </div>
     </div>
-    </body>
-    <footer class="footer">
-        <?php include "../common/floating_menu.php"; ?>
-    </footer>
+</body>
+<footer class="footer">
+    <?php include "../common/floating_menu.php"; ?>
+</footer>
 </html>

@@ -1,5 +1,4 @@
 <?php
-
     $con = mysqli_connect('localhost','register','1234','game');
     if (!$con) {
         header("Location: /error.php?error=" . urlencode("<p>Cannot retrieve user info.</p>"));

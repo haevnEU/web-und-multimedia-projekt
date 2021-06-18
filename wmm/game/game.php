@@ -11,12 +11,13 @@
         $HEAD = file_get_contents("./html_files/dark_mode_header.html");
     }
     $FOOTER_CONTENT = file_get_contents("./html_files/footer.html");
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
     <?php echo $HEAD; ?>
-    <body>
+    <body onload="bodyOnLoad()">
         <div id="canvasDiv" class="game">
             <canvas class="game_canvas" id="fieldCanvas"></canvas>
         </div>
