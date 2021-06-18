@@ -21,7 +21,7 @@ class Theme {
      * @returns Color of the block
      */
     getBlockColorByID(id) {
-        let block = ".blockID" + id;
+        let block = ".game_blockID" + id;
         return Theme.#getColorByID(block);
     }
 
@@ -30,12 +30,12 @@ class Theme {
      * @returns Color of the background
      */
     getBackgroundColor() {
-        return Theme.#getColorByID(".background_");
+        return Theme.#getColorByID(".game_background_");
     }
 
 
     getPreviewBackgroundColor() {
-        return Theme.#getColorByID(".background_preview");
+        return Theme.#getColorByID(".game_background_preview");
     }
 
 
@@ -44,7 +44,7 @@ class Theme {
      * @returns Color of the board
      */
     getBoardColor() {
-        return Theme.#getColorByID(".board");
+        return Theme.#getColorByID(".game_board");
     }
 
     /**
@@ -52,12 +52,12 @@ class Theme {
      * @returns Color of the font
      */
     getFontColor() {
-        return Theme.#getColorByID(".font_");
+        return Theme.#getColorByID(".game_font_");
     }
 
     getFontFamily() {
         try {
-            let element = document.querySelector(".font_");
+            let element = document.querySelector(".game_font_");
             let style = getComputedStyle(element);
             return style.fontFamily;
         } catch (e) {
@@ -67,7 +67,7 @@ class Theme {
 
     getFontSize() {
         try {
-            let element = document.querySelector(".font_");
+            let element = document.querySelector(".game_font_");
             let style = getComputedStyle(element);
             return style.fontSize;
         } catch (e) {

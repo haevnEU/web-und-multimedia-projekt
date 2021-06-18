@@ -11,8 +11,7 @@
 <head>
     <meta charset="UTF-8">
     <title>User Information</title>
-    <link rel="stylesheet" href="/styles/darkmode/centered.css">
-    <link rel="stylesheet" href="/styles/basic_style.css">
+    <?php include "../scripts/styles.php"; ?>
     <script>
         function showMeta() {
             let xmlhttp = new XMLHttpRequest();
@@ -21,7 +20,7 @@
                     document.getElementById("meta").innerHTML = this.responseText;
                 }
             };
-            xmlhttp.open("GET", "getMeta.php", true);
+            xmlhttp.open("GET", "/scripts/getMeta.php", true);
             xmlhttp.send();
         }
 
@@ -44,7 +43,7 @@
                     document.body.removeChild(element);
                 }
             };
-            xmlhttp.open("GET", "getMeta.php?json", true);
+            xmlhttp.open("GET", "/scripts/getMeta.php?json", true);
             xmlhttp.send();
         }
     </script>
@@ -55,9 +54,12 @@
             <h2 class="heading_color">Settings</h2>
             <div class="container" id="meta"></div>
             <br>
-            <div class="container">
-                <button class="center floating_button custom_button_color" onclick="downloadMeta()">
+            <div class="container horizontal_centered">
+                <button class="custom_button custom_button_color" onclick="downloadMeta()">
                     <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF"><g><rect fill="none" height="24" width="24"/></g><g><path d="M18,15v3H6v-3H4v3c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2v-3H18z M17,11l-1.41-1.41L13,12.17V4h-2v8.17L8.41,9.59L7,11l5,5 L17,11z"/></g></svg>
+                </button>
+                <button class="custom_button custom_button_color" onclick="history.back()">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
                 </button>
             </div>
         </div>

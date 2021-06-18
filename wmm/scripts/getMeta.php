@@ -17,13 +17,15 @@
     $result = $statement->get_result();
 
     if(isset($_GET['json'])){
-        while($row = fetch_assoc($result)) {
+        while($row = mysqli_fetch_array($result)) {
             echo "{\"Firstname\":\"" . $row['first_name'] . "\",";
             echo  "\"Surname\":\"" . $row['surname'] . "\",";
             echo  "\"Gametag\":\"" . $row['gametag'] . "\",";
+            echo  "\"Accounttype\":\"" . $row['account_type'] . "\",";
             echo  "\"EMail\":\"" . $row['email'] . "\",";
             echo  "\"State\":\"" . $row['state'] . "\",";
             echo  "\"Motto\":\"" . $row['motto'] . "\",";
+            echo  "\"Style\":\"" . $row['style'] . "\",";
             echo  "\"Score\":\"" . $row['score'] . "\"}";
         }
     }else{
@@ -31,25 +33,30 @@
         while($row = mysqli_fetch_array($result)) {
             echo "<tr>";
             echo "<td>Firstname</td><td>" . $row['first_name'] . "</td>";
-            echo "<tr>";
             echo "</tr>";
+            echo "<tr>";
             echo "<td>Surname</td><td>" . $row['surname'] . "</td>";
-            echo "<tr>";
             echo "</tr>";
+            echo "<tr>";
             echo "<td>Gametag</td><td>" . $row['gametag'] . "</td>";
-            echo "<tr>";
             echo "</tr>";
+            echo "<tr>";
             echo "<td>EMail</td><td>" . $row['email'] . "</td>";
-            echo "<tr>";
             echo "</tr>";
+            echo "<tr>";
+            echo "<td>Accounttype</td><td>" . $row['account_type'] . "</td>";
+            echo "</tr>";
+            echo "<tr>";
             echo "<td>State</td><td>" . $row['state'] . "</td>";
-            echo "<tr>";
             echo "</tr>";
-            echo "<td>Motto</td><td>" . $row['motto'] . "</td>";
             echo "<tr>";
+            echo "<td>Motto</td><td>" . $row['motto'] . "</td>";
             echo "</tr>";
             echo "<tr>";
             echo "<td>Score</td><td>" . $row['score'] . "</td>";
+            echo "</tr>";
+            echo "<tr>";
+            echo "<td>Style</td><td>" . $row['style'] . "</td>";
             echo "</tr>";
         }
         echo "</table>";

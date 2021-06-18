@@ -36,8 +36,7 @@
       <head>
         <meta charset="UTF-8">
         <title>Login</title>
-        <link rel="stylesheet" href="/styles/darkmode/centered.css">
-        <link rel="stylesheet" href="/styles/basic_style.css">
+        <?php include "../scripts/styles.php"; ?>
       </head>
         <body>
           <div class="root_div root_div_color" style="width: 30%">

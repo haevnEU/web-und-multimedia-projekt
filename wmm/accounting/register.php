@@ -11,8 +11,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Register</title>
-    <link href="/styles/darkmode/centered.css" rel="stylesheet">
-    <link href="/styles/basic_style.css" rel="stylesheet">
+    <?php include "../scripts/styles.php"; ?>
     <script>
         function pageLoaded() {
             let names = ["KoalaLean", "MarePlay", "PigStep", "PumaCook", "MuleNotice", "DeerCross", "ToadCommit", "GoatBoost", "ImpalaTry", "DogAssume", "CougarPark", "BurroReveal", "IguanaCopy", "OcelotPoop", "EweMarry", "IbexUse", "BearObey", "NewtTarget", "RamLimit", "LightBrew"];

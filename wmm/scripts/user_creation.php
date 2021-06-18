@@ -15,8 +15,6 @@
     $password_verify = $_POST['password_verify'];
     $gametag = $_POST['gametag'];
 
-        echo "HELLO " . $gametag;
-        die;
     // Validate if passwords are same
     list ($password_encrypt, $salt) = hashPassword($password);
     if($password != $password_verify){
