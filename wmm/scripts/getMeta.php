@@ -1,12 +1,12 @@
 <?php
     session_start();
-    if(!isset($_SESSION["user_id"])){
-        header("Location: /error.php?error=" . urlencode("<p>Oooops...</p><p>Access denied to this page, please login.</p>"));
+    if (!isset($_SESSION["user_id"])) {
+        "<p>Oooops...</p><p>Access denied to this page, please login.</p>";
         die("Access denied, please login");
     }
-    $database_connection = mysqli_connect('localhost','register','1234','game');
+    $database_connection = mysqli_connect('localhost', 'register', '1234', 'game');
     if (!$database_connection) {
-        header("Location: /error.php?error=" . urlencode("<p>Cannot retrieve user info.</p>"));
+        echo "<p>Cannot retrieve user info.</p>";
         die('Could not connect: ' . mysqli_error($database_connection));
     }
 
@@ -16,21 +16,21 @@
     $statement->execute();
     $result = $statement->get_result();
 
-    if(isset($_GET['json'])){
-        while($row = mysqli_fetch_array($result)) {
+    if (isset($_GET['json'])) {
+        while ($row = mysqli_fetch_array($result)) {
             echo "{\"Firstname\":\"" . $row['first_name'] . "\",";
-            echo  "\"Surname\":\"" . $row['surname'] . "\",";
-            echo  "\"Gametag\":\"" . $row['gametag'] . "\",";
-            echo  "\"Accounttype\":\"" . $row['account_type'] . "\",";
-            echo  "\"EMail\":\"" . $row['email'] . "\",";
-            echo  "\"State\":\"" . $row['state'] . "\",";
-            echo  "\"Motto\":\"" . $row['motto'] . "\",";
-            echo  "\"Style\":\"" . $row['style'] . "\",";
-            echo  "\"Score\":\"" . $row['score'] . "\"}";
+            echo "\"Surname\":\"" . $row['surname'] . "\",";
+            echo "\"Gametag\":\"" . $row['gametag'] . "\",";
+            echo "\"Accounttype\":\"" . $row['account_type'] . "\",";
+            echo "\"EMail\":\"" . $row['email'] . "\",";
+            echo "\"State\":\"" . $row['state'] . "\",";
+            echo "\"Motto\":\"" . $row['motto'] . "\",";
+            echo "\"Style\":\"" . $row['style'] . "\",";
+            echo "\"Score\":\"" . $row['score'] . "\"}";
         }
-    }else{
+    } else {
         echo "<table></thead>";
-        while($row = mysqli_fetch_array($result)) {
+        while ($row = mysqli_fetch_array($result)) {
             echo "<tr>";
             echo "<td>Firstname</td><td>" . $row['first_name'] . "</td>";
             echo "</tr>";

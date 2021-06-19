@@ -1,6 +1,5 @@
 <?php
     function create_ticket(){
-
         $email = $_POST['mail'];
         $problem = $_POST['problem'];
 
@@ -17,7 +16,7 @@
         $statement = $database_connection->prepare($create_user_query);
         $statement->bind_param("ss", $email, $problem);
 
-        if($statement->execute() != TRUE) {
+        if ($statement->execute() != TRUE) {
             $database_connection->close();
             return "Cannot create a ticket, try again in a few minutes " . $connection->error;
         }
@@ -25,29 +24,29 @@
         $database_connection->close();
 
         return "
-        <p>You are summoning a mighty gamemaster from the Support area</p>
-        <p>This ritual takes a couple hours or days, your personal gamemaster will contact you via mail</p>
-        <p>Good luck on your journey!</p>";
+            <p>You are summoning a mighty gamemaster from the Support area</p>
+            <p>This ritual takes a couple hours or days, your personal gamemaster will contact you via mail</p>
+            <p>Good luck on your journey!</p>";
     }
 ?>
 
-    <!DOCTYPE html>
-    <html lang="en">
-      <head>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
         <meta charset="UTF-8">
         <title>Login</title>
         <?php include "../scripts/styles.php"; ?>
-      </head>
-        <body>
-          <div class="root_div root_div_color" style="width: 30%">
+    </head>
+    <body>
+        <div class="root_div root_div_color" style="width: 30%">
             <div class="sub_div sub_div_color horizontal_centered">
-            <h2 class="heading_color">Next steps</h2>
-            <br>
-            <?php echo create_ticket() ?>
-            <br><br>
-            <input class="custom_button custom_button_color" type="button" onclick="location.href='/';" value="Home" />
-            <br><br>
-          </div>
-          </div>
-        </body>
-    </html>
+                <h2 class="heading_color">Next steps</h2>
+                <br>
+                <?php echo create_ticket() ?>
+                <br><br>
+                <input class="custom_button custom_button_color" type="button" onclick="location.href='/';" value="Home"/>
+                <br><br>
+            </div>
+        </div>
+    </body>
+</html>

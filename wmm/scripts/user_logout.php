@@ -1,6 +1,6 @@
 <?php
     session_start();
-     $database_server_name = "localhost";
+    $database_server_name = "localhost";
     $database_user_name = "register";
     $database_user_password = "1234";
     $database_table_name = "game";
