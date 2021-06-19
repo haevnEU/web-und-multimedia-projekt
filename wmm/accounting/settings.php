@@ -1,9 +1,9 @@
 <?php
-session_start();
-if (!isset($_SESSION["user_id"])) {
-    header("Location: /error.php?error=" . urlencode("<p>Oooops...</p><p>Access denied to this page, please login.</p>"));
-    die("Access denied, please login");
-}
+    session_start();
+    if (!isset($_SESSION["user_id"])) {
+        header("Location: /error.php?error=" . urlencode("<p>Oooops...</p><p>Access denied to this page, please login.</p>"));
+        die("Access denied, please login");
+    }
 ?>
 
 <!DOCTYPE html>
@@ -20,7 +20,7 @@ if (!isset($_SESSION["user_id"])) {
                         document.getElementById("meta").innerHTML = this.responseText;
                     }
                 };
-                xmlhttp.open("GET", "/scripts/getUserSettings.php", true);
+                xmlhttp.open("GET", "/scripts/user_get_settings.php", true);
                 xmlhttp.send();
             }
 
@@ -34,7 +34,7 @@ if (!isset($_SESSION["user_id"])) {
                 <?php if (isset($_GET["done"])) {
                     echo "<p>Settings updated</p>";
                 } ?>
-                <form method="POST" action="/scripts/update_settings.php">
+                <form method="POST" action="/scripts/user_update_settings.php">
                     <div id="meta"></div>
                     <br>
                     <div class="container horizontal_centered">

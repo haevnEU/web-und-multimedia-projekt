@@ -1,14 +1,13 @@
 <?php
+    require "database_utils.php";
+
     session_start();
     if (!isset($_SESSION["user_id"])) {
-        "<p>Oooops...</p><p>Access denied to this page, please login.</p>";
+        header("Location: /error.php?error=" . urlencode("<p>Oooops...</p><p>Access denied to this page, please login.</p>"));
         die("Access denied, please login");
     }
-    $database_connection = mysqli_connect('localhost', 'register', '1234', 'game');
-    if (!$database_connection) {
-        echo "<p>Cannot retrieve user info.</p>";
-        die('Could not connect: ' . mysqli_error($database_connection));
-    }
+
+    $database_connection = get_connection_to_game_db();
 
     $select_player_query = "SELECT * FROM player WHERE USER_ID = ?";
     $statement = $database_connection->prepare($select_player_query);
@@ -61,5 +60,5 @@
         }
         echo "</table>";
     }
-    mysqli_close($database_connection);
+    $database_connection->close();
 ?>

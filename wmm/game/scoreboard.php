@@ -12,7 +12,7 @@
                     document.getElementById("scoreboard").innerHTML = this.responseText;
                 }
             };
-            xmlhttp.open("GET", "getscoreboard.php", true);
+            xmlhttp.open("GET", "/scripts/game_get_scoreboard.php", true);
             xmlhttp.send();
         }
     </script>

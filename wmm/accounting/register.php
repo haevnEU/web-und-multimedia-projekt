@@ -1,9 +1,9 @@
 <?php
-session_start();
-if (isset($_SESSION["user_id"])) {
-    header("Location: /error.php?error=" . urlencode("<p>Oooops...</p><p>It seems that you already logged in, please logout.</p>"));
-    die("Already logged in, please logout");
-}
+    session_start();
+    if (!isset($_SESSION["user_id"])) {
+        header("Location: /error.php?error=" . urlencode("<p>Oooops...</p><p>Access denied to this page, please login.</p>"));
+        die("Access denied, please login");
+    }
 ?>
 
 <!DOCTYPE html>

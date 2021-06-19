@@ -1,11 +1,14 @@
 <?php
+    require "database_utils.php";
     session_start();
-    if (isset($_SESSION["user_id"])) {
-        $database_connection = mysqli_connect('localhost', 'register', '1234', 'game');
-        if (!$database_connection) {
-            echo "<p>Cannot retrieve settings.</p>";
-            die('Could not connect: ' . mysqli_error($database_connection));
-        }
+
+    session_start();
+    if (!isset($_SESSION["user_id"])) {
+        header("Location: /error.php?error=" . urlencode("<p>Oooops...</p><p>Access denied to this page, please login.</p>"));
+        die("Access denied, please login");
+    }
+
+        $database_connection = get_connection_to_game_db();
 
         $select_player_query = "SELECT * FROM player WHERE USER_ID = ?";
         $statement = $database_connection->prepare($select_player_query);
@@ -21,6 +24,6 @@
             echo "<div class=\"container\"><label class=\"custom_input_heading\">Reenter new Password</label><br> <input class=\"custom_input\" type=\"password\" name=\"password_new_reentered\"></div><br>";
         }
 
-        mysqli_close($database_connection);
-    }
+        $database_connection->close();
+
 ?>

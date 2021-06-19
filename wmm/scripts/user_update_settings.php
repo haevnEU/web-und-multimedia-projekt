@@ -1,24 +1,21 @@
 <?php
     require "./utility.php";
+    require "database_utils.php";
     session_start();
+
+    if (!isset($_SESSION["user_id"])) {
+        header("Location: /error.php?error=" . urlencode("<p>Oooops...</p><p>Access denied to this page, please login.</p>"));
+        die("Access denied, please login");
+    }
 
     function updateTheme($theme){
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
         if ($_SESSION["user_id"]) {
-            $database_server_name = "localhost";
-            $database_user_name = "register";
-            $database_user_password = "1234";
-            $database_table_name = "game";
-
-            $database_connection = new mysqli($database_server_name, $database_user_name, $database_user_password, $database_table_name);
-            if ($database_connection->connect_error) {
-                redirectToError("Database connection failed. " . $database_connection->connect_error);
-                return false;
-            }
-
             $uid = $_SESSION["user_id"];
+
+            $database_connection = get_connection_to_game_db();
             $update_query = "UPDATE player SET style = \"" . $theme . "\" WHERE USER_ID = ?";
             $statement = $database_connection->prepare($update_query);
             $statement->bind_param("i", $uid);
@@ -36,24 +33,14 @@
             session_start();
         }
         if ($_SESSION["user_id"]) {
-            $database_server_name = "localhost";
-            $database_user_name = "register";
-            $database_user_password = "1234";
-            $database_table_name = "game";
-            $database_connection = new mysqli($database_server_name, $database_user_name, $database_user_password, $database_table_name);
-            if ($database_connection->connect_error) {
-                header("Location: /error.php?error=" . urlencode("Database connection failed. " . $database_connection->connect_error));
-                return false;
-            }
-
             $uid = $_SESSION["user_id"];
-
+            $database_connection = get_connection_to_game_db();
             $select_player_query = "SELECT pass, salt, style, USER_ID FROM player WHERE USER_ID = ?";
-
             $statement = $database_connection->prepare($select_player_query);
             $statement->bind_param("i", $uid);
             $statement->execute();
             $result = $statement->get_result();
+
             $remote_password = "";
             $remote_salt = "";
             while ($row = mysqli_fetch_array($result)) {
@@ -64,6 +51,7 @@
                 header("Location: /error.php?error=" . urlencode("Your old password is wrong"));
                 return false;
             }
+
             $update_query = "UPDATE player SET pass = \"" . $password_new . "\" WHERE USER_ID = ?";
             $statement = $database_connection->prepare($update_query);
             $statement->bind_param("i", $uid);

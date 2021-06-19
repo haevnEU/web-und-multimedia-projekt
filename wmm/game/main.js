@@ -60,7 +60,9 @@ window.onbeforeunload = function () {
 };
 
 window.onload = function () {
+    console.log("Onload");
     let urlParams = new URLSearchParams(window.location.search);
+    console.log(urlParams);
     if (urlParams.has('new')) {
         eraseCookie("state");
     }

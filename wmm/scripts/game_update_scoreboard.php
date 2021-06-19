@@ -1,36 +1,29 @@
 <?php
-
+    require "database_utils.php";
     function insertScore($score){
         session_start();
-        // Insert only logged in users
+
         if(isset($_SESSION["user_id"])){
-            // establish a connection
-            $con = mysqli_connect('localhost','register','1234','game');
-            if (!$con) {
-                die('Could not connect: ' . mysqli_error($con));
-            }
+            $database_connection = get_connection_to_game_db();
             $gametag = "";
             $score_remote = 0;
 
-            // Select gametag and score associated with loggedin user
             $sql = "SELECT gametag, score FROM player WHERE USER_ID = '" . $_SESSION["user_id"] . "'";
-            $result = mysqli_query($con,$sql);
+            $result = mysqli_query($database_connection,$sql);
             while($row = mysqli_fetch_array($result)) {
                 $gametag = $row['gametag'];
                 $score_remote = $row['score'];
             }
 
-            // Update the player score if the new score is higher than the current highscore
             if($score > $score_remote){
                 $sql="UPDATE player SET score = " . $score . " WHERE USER_ID = '" . $_SESSION["user_id"] . "'";
                 echo $sql;
-                $con->query($sql);
-                echo  $con->error;
+                $database_connection->query($sql);
+                echo  $database_connection->error;
             }
 
-            // Insert the score into the scoreboard
             $sql = "INSERT INTO scoreboard (gametag,score) VALUES ('$gametag', '$score')";
-            $con->query($sql);
+            $database_connection->query($sql);
         }
 
     }

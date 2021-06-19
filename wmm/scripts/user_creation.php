@@ -1,5 +1,6 @@
 <?php
     require "utility.php";
+    require "database_utils.php";
 
     if (!(isset($_POST['first_name']) && isset($_POST['sur_name'])
         && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['password_verify'])
@@ -20,17 +21,7 @@
         redirectToError("Entered password are different");
         return;
     }
-
-    $database_server_name = "localhost";
-    $database_user_name = "register";
-    $database_user_password = "1234";
-    $database_table_name = "game";
-    // Create a database connection
-    $database_connection = new mysqli($database_server_name, $database_user_name, $database_user_password, $database_table_name);
-    if ($database_connection->connect_error) {
-        redirectToError("Database connection failed. " . $database_connection->connect_error);
-        return;
-    }
+    $database_connection = get_connection_to_game_db();
 
     $select_player_query = "SELECT email FROM player WHERE email = ?";
     $statement = $database_connection->prepare($select_player_query);
@@ -39,12 +30,14 @@
     $result = $statement->get_result();
     if ($result->num_rows > 0) {
         redirectToError("Entered email already exists");
-        return;
+        $database_connection->close();
+        die;
     }
 
     if (strlen($gametag) > 10) {
         redirectToError("Entered gametag is to long, only 10 character are allowed");
-        return;
+        $database_connection->close();
+        die;
     }
 
     $gametag = createGametag($gametag);

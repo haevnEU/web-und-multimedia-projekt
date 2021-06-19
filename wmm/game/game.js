@@ -6,6 +6,7 @@ import {ShapeHandler} from "./shapes.js"
 class Game {
     #paused = false;
     #gameOver = false;
+    #scoreUpdated = false;
 
     #score = 0;
     #level = 0;
@@ -24,6 +25,7 @@ class Game {
     #lastTime = 3;
 
     constructor() {
+        this.#scoreUpdated = false;
         this.#shapeHandler.createNewShape();
         this.pause();
     }
@@ -153,7 +155,10 @@ class Game {
     }
 
     #INTERNAL_writeToDataBase() {
-        window.location.href = "./updatescoreboard.php?score=" + this.#score;
+        if(!this.#scoreUpdated){
+            this.#scoreUpdated = true;
+            window.location.href = "/scripts/game_update_scoreboard.php?score=" + this.#score;
+        }
     }
 
     #INTERNAL_convertClearedLinesToScore(lines) {

@@ -20,7 +20,7 @@
                         document.getElementById("meta").innerHTML = this.responseText;
                     }
                 };
-                xmlhttp.open("GET", "/scripts/getMeta.php", true);
+                xmlhttp.open("GET", "/scripts/user_get_meta_information.php", true);
                 xmlhttp.send();
             }
 
@@ -43,7 +43,7 @@
                         document.body.removeChild(element);
                     }
                 };
-                xmlhttp.open("GET", "/scripts/getMeta.php?json", true);
+                xmlhttp.open("GET", "/scripts/user_get_meta_information.php?json", true);
                 xmlhttp.send();
             }
         </script>
