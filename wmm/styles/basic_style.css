@@ -100,3 +100,10 @@ h1, h2 {
     right: 5%;
     bottom: 5%;
 }
+
+.groupbox{
+    margin: 8px;
+    border: 1px solid silver;
+    padding: 8px;
+    border-radius: 4px;
+}

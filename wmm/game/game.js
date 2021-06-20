@@ -73,6 +73,12 @@ class Game {
         if (this.#gameOver || this.#paused) {
             return;
         }
+
+
+
+
+
+
         if (key === "a" && this.#physics.canShapeMoveLeft(this.#shapeHandler.getCurrentShape(), this.#board)) {
             this.#shapeHandler.getCurrentShape().moveLeft();
         } else if (key === "d" && this.#physics.canShapeMoveRight(this.#shapeHandler.getCurrentShape(), this.#board)) {

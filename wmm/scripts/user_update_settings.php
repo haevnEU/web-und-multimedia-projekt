@@ -35,7 +35,7 @@
         if ($_SESSION["user_id"]) {
             $uid = $_SESSION["user_id"];
             $database_connection = get_connection_to_game_db();
-            $select_player_query = "SELECT pass, salt, style, USER_ID FROM player WHERE USER_ID = ?";
+            $select_player_query = "SELECT pass, salt, style, email, gametag USER_ID FROM player WHERE USER_ID = ?";
             $statement = $database_connection->prepare($select_player_query);
             $statement->bind_param("i", $uid);
             $statement->execute();
@@ -43,9 +43,13 @@
 
             $remote_password = "";
             $remote_salt = "";
+            $email = "";
+            $gametag = "";
             while ($row = mysqli_fetch_array($result)) {
                 $remote_password = $row['pass'];
                 $remote_salt = $row['salt'];
+                $email = $row['email'];
+                $gametag = $row['gametag'];
             }
             if (!verifyPassword($password_old, $remote_salt, $remote_password)) {
                 header("Location: /error.php?error=" . urlencode("Your old password is wrong"));
@@ -57,7 +61,10 @@
             $statement->bind_param("i", $uid);
             $statement->execute();
             $database_connection->close();
-
+            $message = "Hello " . $gametag . ",\n\nWe inform you that someone changed your personal information. Please contact the customer support if you haven't changed your data.\n\nAffected data: password\n\n\nThis is an automated mail please do not answer";
+            $subject = "Account Information";
+            // send mail
+            mail($email, $subject, $message);
             return true;
         }
 

@@ -15,50 +15,35 @@
     $statement->execute();
     $result = $statement->get_result();
 
-    if (isset($_GET['json'])) {
         while ($row = mysqli_fetch_array($result)) {
-            echo "{\"Firstname\":\"" . $row['first_name'] . "\",";
-            echo "\"Surname\":\"" . $row['surname'] . "\",";
-            echo "\"Gametag\":\"" . $row['gametag'] . "\",";
-            echo "\"Accounttype\":\"" . $row['account_type'] . "\",";
-            echo "\"EMail\":\"" . $row['email'] . "\",";
-            echo "\"State\":\"" . $row['state'] . "\",";
-            echo "\"Motto\":\"" . $row['motto'] . "\",";
-            echo "\"Style\":\"" . $row['style'] . "\",";
-            echo "\"Score\":\"" . $row['score'] . "\"}";
-        }
-    } else {
-        echo "<table></thead>";
-        while ($row = mysqli_fetch_array($result)) {
-            echo "<tr>";
-            echo "<td>Firstname</td><td>" . $row['first_name'] . "</td>";
-            echo "</tr>";
-            echo "<tr>";
-            echo "<td>Surname</td><td>" . $row['surname'] . "</td>";
-            echo "</tr>";
-            echo "<tr>";
-            echo "<td>Gametag</td><td>" . $row['gametag'] . "</td>";
-            echo "</tr>";
-            echo "<tr>";
-            echo "<td>EMail</td><td>" . $row['email'] . "</td>";
-            echo "</tr>";
-            echo "<tr>";
-            echo "<td>Accounttype</td><td>" . $row['account_type'] . "</td>";
-            echo "</tr>";
-            echo "<tr>";
-            echo "<td>State</td><td>" . $row['state'] . "</td>";
-            echo "</tr>";
-            echo "<tr>";
-            echo "<td>Motto</td><td>" . $row['motto'] . "</td>";
-            echo "</tr>";
-            echo "<tr>";
-            echo "<td>Score</td><td>" . $row['score'] . "</td>";
-            echo "</tr>";
-            echo "<tr>";
-            echo "<td>Style</td><td>" . $row['style'] . "</td>";
-            echo "</tr>";
-        }
-        echo "</table>";
+
+
+            echo "
+            <form  method=\"POST\" action=\"/scripts/user_update_settings.php\">
+                <fieldset class=\"groupbox\">
+                    <legend>Personal Information</legend>
+                    <p class=\"infotext\">Contact the support to change your Personal information</p>
+                    <p><span style=\"width: 30%; float:left\">Firstname</span>" . $row['first_name'] . " " . $row['surname'] . "</p>
+                    <p><span style=\"width: 30%; float:left\">Gametag</span>" . $row['gametag'] . "</p>
+                </fieldset>
+
+                <fieldset class=\"groupbox\">
+                    <legend>Contact</legend>
+                    <p><span style=\"width: 30%; float:left\">E-Mail</span>" . $row['email'] . "</p>
+                    <p><span style=\"width: 30%; float:left\">Mobile</span>" . $row['telephone'] . "</p>
+                </fieldset>
+
+                <fieldset class=\"groupbox\">
+                    <legend>Styke</legend>
+                    <p><span style=\"width: 30%; float:left\">Style</span></p><select class=\"custom_input\" name=\"theme\"><option selected=\"selected=\">" . $row['style'] . "</option><option>lightmode</option><option>darkmode</option><option>newmode</option></select>
+                </fieldset>
+                <div class=\"horizontal_centered\">
+                    <button class=\"custom_button custom_button_color\"  onclick=\"location.href='/accounting/changepassword.php'\">Change Password</button>
+                    <button type=\"submit\" class=\"custom_button custom_button_color\">Save</button>
+                </div>
+            </form>
+            ";
+
     }
     $database_connection->close();
 ?>

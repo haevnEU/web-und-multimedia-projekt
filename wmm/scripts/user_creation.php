@@ -14,6 +14,11 @@
     $password = $_POST['password'];
     $password_verify = $_POST['password_verify'];
     $gametag = $_POST['gametag'];
+    if(isset($_POST['phone'])){
+        $phone = $_POST['phone'];
+    }else{
+        $phone = "";
+    }
 
     // Validate if passwords are same
     list ($password_encrypt, $salt) = hashPassword($password);
@@ -34,7 +39,7 @@
         die;
     }
 
-    if (strlen($gametag) > 10) {
+    if (strlen($gametag) > 12) {
         redirectToError("Entered gametag is to long, only 10 character are allowed");
         $database_connection->close();
         die;
@@ -43,9 +48,10 @@
     $gametag = createGametag($gametag);
 
     // All fields are entered, valid and the user does not exists so create a new user
-    $create_user_query = "INSERT INTO player (first_name,surname,email,gametag,pass,salt) VALUES (?, ?, ?, ?, ?, ?)";
+    $create_user_query = "INSERT INTO player (first_name,surname,email,gametag,pass,salt, telephone) VALUES (?, ?, ?, ?, ?, ?, ?)";
     $statement = $database_connection->prepare($create_user_query);
-    $statement->bind_param("ssssss", $first_name, $family_name, $email, $gametag, $password_encrypt, $salt);
+
+    $statement->bind_param("sssssss", $first_name, $family_name, $email,$gametag, $password_encrypt, $salt, $phone);
 
     if ($statement->execute() === TRUE) {
         header("Location: /");

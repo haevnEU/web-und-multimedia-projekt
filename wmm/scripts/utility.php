@@ -29,4 +29,5 @@
     function createGametag($gametag){
         return $gametag . "#" . rand(1000, 9999);
     }
+
 ?>

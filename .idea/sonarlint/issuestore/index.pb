@@ -5,8 +5,6 @@ D
 wmm/social/social.js,2\0\2088189607fdb668394c258d43b3672279f53315
 E
 wmm/social/social.php,d\0\d09776a544adc0e59729c4b70b31b84349f63da5
-H
-wmm/zscratch/getuser.php,d\3\d36859471f92b33c402de526267db192aabaf126
 L
 wmm/styles/darkmode/chat.css,c\0\c0c864383752926792a07eea39e0111aa1547351
 :
@@ -20,16 +18,10 @@ L
 database_scripts/support.sql,e\9\e9c7f07fc6179fa0d0f8a275e8987796af429c3a
 I
 wmm/styles/chat_popup.css,f\3\f32e5efa8e3e9f5336b17aad0a8c34edcc98b0a1
-E
-wmm/game/constants.js,3\4\34ff51db4b0ba2cd8df2f51a126a05f212fb4e7e
-C
-wmm/game/physics.js,4\6\469c6318fd9c4d2cba79b8aeeaba5071253b7945
 Q
 !wmm/styles/lightmode/centered.css,6\7\670f865cd5089fbb56c6a78a6845b966343e8349
 B
 wmm/game/shapes.js,9\c\9c7ce6f924ed378814e60ac5ad6854c6045925cb
-P
- wmm/styles/darkmode/centered.css,2\6\26493f6a34c114460b24b544270ef7bbde2b2b45
 K
 database_scripts/player.sql,6\a\6a4693f5f3c35cf23b41346fe5b8d0615d5cc6f9
 S
@@ -40,7 +32,5 @@ Q
 !wmm/styles/darkmode/game_main.css,d\8\d8503c3fffc4951dcc201bb78f1e0c358854fc9d
 R
 "wmm/styles/lightmode/game_main.css,6\d\6df09359f7f47ee617ba68f8fb19588c11e79742
-M
-wmm/scripts/game_settings.txt,d\d\ddcf842d736e605fadcf5f32e6190e2e979fbce0
 A
 wmm/game/theme.js,5\3\53255f76d344ff48e9aa8cfb58e3a30bfd07ada1

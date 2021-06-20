@@ -31,8 +31,6 @@
                         SOFTWARE."
                     </code>
                     <p>• This software was produced using HTML5, CSS, Javascript, PHP and mysql</p>
-                    <p>• mysql click <a href="https://github.com/mysql/mysql-server/blob/mysql-8.0.3/COPYING">here</a> to visit
-                        the license page</p>
                     <br><br><br>
                     <button type="button" class="custom_button custom_button_color" onclick="location.href='/';">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF">
