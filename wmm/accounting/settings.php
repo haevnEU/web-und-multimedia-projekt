@@ -1,8 +1,9 @@
 <?php
+    require "../scripts/utility.php";
     session_start();
     if (!isset($_SESSION["user_id"])) {
-        header("Location: /error.php?error=" . urlencode("<p>Oooops...</p><p>Access denied to this page, please login.</p>"));
-        die("Access denied, please login");
+        print_error("Authentification error", "", "<p>Ooops...</p><p>Access denied to this page, please login.</p>");
+        die;
     }
 ?>
 
@@ -30,6 +31,9 @@
         <div class="root_div root_div_color" style="width: 30%;">
             <div class="sub_div sub_div_color">
                 <h2 class="heading_color">Settings</h2>
+                <div class="container">
+                    <?php if(isset($_GET['done'])){ echo "<p>Settings update</p>"; }?>
+                </div>
                 <div class="container" id="meta"></div>
                 <br>
                 <div class="container horizontal_centered">

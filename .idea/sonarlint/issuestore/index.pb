@@ -14,16 +14,8 @@ L
 	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
 7
 LICENSE,0\3\0398ccd0f49298b10a3d76a47800d2ebecd49859
-L
-database_scripts/support.sql,e\9\e9c7f07fc6179fa0d0f8a275e8987796af429c3a
 I
 wmm/styles/chat_popup.css,f\3\f32e5efa8e3e9f5336b17aad0a8c34edcc98b0a1
-Q
-!wmm/styles/lightmode/centered.css,6\7\670f865cd5089fbb56c6a78a6845b966343e8349
-B
-wmm/game/shapes.js,9\c\9c7ce6f924ed378814e60ac5ad6854c6045925cb
-K
-database_scripts/player.sql,6\a\6a4693f5f3c35cf23b41346fe5b8d0615d5cc6f9
 S
 #wmm/styles/darkmode/game_blocks.css,3\d\3d2dc23dfbf9a26e09ee5f1dad875db670c14b74
 T
@@ -32,5 +24,3 @@ Q
 !wmm/styles/darkmode/game_main.css,d\8\d8503c3fffc4951dcc201bb78f1e0c358854fc9d
 R
 "wmm/styles/lightmode/game_main.css,6\d\6df09359f7f47ee617ba68f8fb19588c11e79742
-A
-wmm/game/theme.js,5\3\53255f76d344ff48e9aa8cfb58e3a30bfd07ada1

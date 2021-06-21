@@ -8,4 +8,9 @@
         return new mysqli('localhost', 'register', '1234', 'game');
     }
 
+    function internal_database_error($database_connection){
+        $database_error = "";
+        $database_connection->close();
+        header("Location: /error.php?error=" . urlencode("<div><h1>Internal Database Server</h1><br><p>". $database_error . "</p><br><p>" . "</div>"));
+    }
 ?>

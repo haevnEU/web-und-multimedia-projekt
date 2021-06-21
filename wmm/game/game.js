@@ -103,7 +103,6 @@ class Game {
         this.#paused = true;
     }
 
-
     handleLogic() {
         if (this.#gameOver) {
             this.#INTERNAL_writeToDataBase();

@@ -12,12 +12,17 @@
     $database_connection = get_connection_to_game_db();
     $gametag = "";
     $score_remote = 0;
-
-    $sql = "SELECT gametag, score FROM player WHERE USER_ID = '" . $user_id . "'";
+    $account_suspended = false;
+    $sql = "SELECT gametag, score, account_suspended FROM player WHERE USER_ID = '" . $user_id . "'";
     $result = mysqli_query($database_connection,$sql);
     while($row = mysqli_fetch_array($result)) {
         $gametag = $row['gametag'];
         $score_remote = $row['score'];
+        $account_suspended = $row['account_suspended'];
+    }
+    if($account_suspended){
+        header("Location: /error.php?error=" . urlencode("Your account is suspended, contact the customer service");
+       die;
     }
 
     if($score > $score_remote){

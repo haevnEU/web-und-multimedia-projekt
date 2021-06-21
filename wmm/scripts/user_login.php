@@ -9,9 +9,9 @@
             $remote_pass = "";
             $remote_salt = "";
             $remote_USER_ID = "";
-
+            $account_suspended = false;
             $database_connection = get_connection_to_game_db();
-            $select_player_query = "SELECT email, pass, salt, style, USER_ID FROM player WHERE email = ?";
+            $select_player_query = "SELECT email, pass, salt, style, account_suspended, USER_ID FROM player WHERE email = ?";
             $statement = $database_connection->prepare($select_player_query);
             $statement->bind_param("s", $email);
             $statement->execute();
@@ -24,9 +24,14 @@
                 $remote_salt = $row['salt'];
                 $remote_style = $row['style'];
                 $remote_USER_ID = $row['USER_ID'];
+                $account_suspended = $row['account_suspended'];
             } else {
                 $database_connection->close();
-                header("Location: /error.php?error=" . urlencode("User " . $email . " not found"));
+                print_error("Login error", "", "User " . $email . " not found");
+                die;
+            }
+            if($account_suspended){
+                print_error("Account error","Suspended Account", "<p>Your account was suspended.</p><br><a href=\"/support/suspended.php\">Contact the customer service for more information</a>");
                 die;
             }
 

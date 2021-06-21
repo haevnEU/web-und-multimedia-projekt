@@ -2,7 +2,7 @@
     session_start();
     if (isset($_SESSION["user_id"])) {
         header("Location: /");
-        die();
+        die;
     }
 ?>
 
@@ -20,14 +20,11 @@
                 <br>
                 <form method="POST" action="/scripts/user_login.php">
                     <div class="container">
-                        <label class="custom_input_heading">EMail *</label><br> <input class="custom_input" type="email"
-                                                                                       name="email" placeholder="">
+                        <label class="custom_input_heading">EMail *</label><br> <input class="custom_input" type="email" name="email" placeholder="">
                     </div>
                     <br>
                     <div class="container">
-                        <label class="custom_input_heading">Password *</label><br> <input class="custom_input" type="password"
-                                                                                          name="password" placeholder=""
-                                                                                          required="required">
+                        <label class="custom_input_heading">Password *</label><br> <input class="custom_input" type="password" name="password" placeholder="" required="required">
                     </div>
                     <br>
                     <div class="container">

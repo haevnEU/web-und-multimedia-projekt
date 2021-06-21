@@ -2,6 +2,7 @@
     session_start();
     if (isset($_SESSION["user_id"])) {
         header("Location: /");
+        die;
     }
 ?>
 
@@ -50,7 +51,7 @@
                     <div class="container">
                         <label class="custom_input_heading custom_input_heading_color">Telephone</label><br>
                         <label>
-                            <input class="custom_input custom_input_color" name="phone" type="tel"  pattern="+49[0-9]{0,2}-[0-9]{2,12}" value="+49">
+                            <p>+49</p><input class="custom_input custom_input_color" name="phone" type="tel"  pattern="[0-9]{0,20}">
                         </label>
                     </div>
                     <br>

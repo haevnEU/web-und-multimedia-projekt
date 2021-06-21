@@ -2,10 +2,11 @@
     require "utility.php";
     require "database_utils.php";
 
-    if (!(isset($_POST['first_name']) && isset($_POST['sur_name'])
-        && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['password_verify'])
-        && isset($_POST['gametag']))) {
-        redirectToError("Please fill out every field");
+    if (!isset($_POST['first_name']) ||  !isset($_POST['sur_name'])
+        || !isset($_POST['email']) || !isset($_POST['password']) || !isset($_POST['password_verify'])
+        || !isset($_POST['gametag'])) {
+        print_error("User creation error", "", "Please fill out every field");
+        die;
     }
 
     $first_name = $_POST['first_name'];
@@ -14,17 +15,14 @@
     $password = $_POST['password'];
     $password_verify = $_POST['password_verify'];
     $gametag = $_POST['gametag'];
-    if(isset($_POST['phone'])){
-        $phone = $_POST['phone'];
-    }else{
-        $phone = "";
-    }
-
+    $phone_number = $_POST['phone'];
+    $phone_country = "+49";
+    $phone = ($phone_number !== "") ? ($phone_country . " " . $phone_number) : "";
     // Validate if passwords are same
     list ($password_encrypt, $salt) = hashPassword($password);
     if ($password != $password_verify) {
-        redirectToError("Entered password are different");
-        return;
+        print_error("User creation error", "", "Given passwords are not equal");
+        die;
     }
     $database_connection = get_connection_to_game_db();
 
@@ -34,14 +32,14 @@
     $statement->execute();
     $result = $statement->get_result();
     if ($result->num_rows > 0) {
-        redirectToError("Entered email already exists");
         $database_connection->close();
+        print_error("User creation error", "", "User already exists.");
         die;
     }
 
     if (strlen($gametag) > 12) {
-        redirectToError("Entered gametag is to long, only 10 character are allowed");
         $database_connection->close();
+        print_error("User creation error", "", "Entered gametag is to long, only 12 character are allowed");
         die;
     }
 
@@ -56,7 +54,8 @@
     if ($statement->execute() === TRUE) {
         header("Location: /");
     } else {
-        redirectToError("database error: " . $connection . error);
+        internal_database_error($database_connection);
+        die;
     }
     $database_connection->close();
 ?>
