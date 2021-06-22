@@ -2,6 +2,7 @@ import {Board} from "./board.js"
 import {Physics} from "./physics.js"
 import {Renderer} from "./render.js"
 import {ShapeHandler} from "./shapes.js"
+import meta from "./constants.js"
 
 class Game {
     #paused = false;
