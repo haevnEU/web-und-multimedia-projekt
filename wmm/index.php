@@ -5,6 +5,7 @@
         <title>Login</title>
         <?php include "./scripts/styles.php"; ?>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     </head>
     <body>
         <div class="root_div root_div_color" style="width: 50%; height: 50%">
@@ -86,7 +87,7 @@
             </div>
         </div>
     </body>
-    <footer class="footer">
+    <footer class="menu">
         <?php include "./common/floating_menu.php"; ?>
     </footer>
 </html>;

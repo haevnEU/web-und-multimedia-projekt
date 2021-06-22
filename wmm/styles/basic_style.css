@@ -95,10 +95,10 @@ h1, h2 {
     top: 1px;
 }
 
-.footer {
+.menu {
     position: fixed;
-    right: 5%;
-    bottom: 5%;
+    right: 3%;
+    top: 5%;
 }
 
 .groupbox{
