@@ -81,8 +81,10 @@ class Game {
 
         if (key === "a" && this.#physics.canShapeMoveLeft(this.#shapeHandler.getCurrentShape(), this.#board)) {
             this.#shapeHandler.getCurrentShape().moveLeft();
+            this.#SoftDropScore = 0;
         } else if (key === "d" && this.#physics.canShapeMoveRight(this.#shapeHandler.getCurrentShape(), this.#board)) {
             this.#shapeHandler.getCurrentShape().moveRight();
+            this.#SoftDropScore = 0;
         } else if (key === "s" && this.#physics.canShapeMoveDown(this.#shapeHandler.getCurrentShape(), this.#board)) {
             this.#SoftDropScore += 1;
             this.#INTERNAL_moveShapeDown(this.#shapeHandler.getCurrentShape());
@@ -104,9 +106,6 @@ class Game {
     }
 
     handleLogic() {
-        if (this.#gameOver) {
-            this.#INTERNAL_writeToDataBase();
-        }
         if (this.#paused || this.#gameOver) {
             return;
         }
@@ -150,6 +149,9 @@ class Game {
 
 
     #INTERNAL_reset() {
+        if(this.#score > 0 && this.#gameOver) {
+            this.#INTERNAL_writeToDataBase();
+        }
         this.#board = new Board();
         this.#shapeHandler.createNewShape();
         this.#gameOver = false;
@@ -182,7 +184,8 @@ class Game {
         if (this.#physics.canShapeMoveDown(this.#shapeHandler.getCurrentShape(), this.#board)) {
             shape.moveDown();
         } else {
-            this.#score += shape.getAmountOccupiedBlocks();
+            this.#score += this.#SoftDropScore;
+            this.#SoftDropScore = 0;
             for (let x = 0; x < 4; x++) {
                 for (let y = 0; y < 4; y++) {
                     if (shape.getElementAt(x, y) !== 0) {
@@ -192,7 +195,7 @@ class Game {
             }
 
             this.#shapeHandler.createNewShape();
-            this.#gameOver = !this.#physics.canShapeMoveDown(this.#shapeHandler.getCurrentShape(), this.#board);
+            this.#gameOver = !this.#physics.detectCollision(this.#shapeHandler.getCurrentShape(), this.#board, -1);
             let lines = this.#physics.canLinesBeRemoved(this.#board);
             if (lines > 0) {
                 this.#removedLines += lines;

@@ -13,7 +13,7 @@
      */
     function writeScoreIntoGameDatabase(int $score){
         session_start();
-        if (!isset($_SESSION["user_id"]) || !isset($_GET['score'])) {
+        if (!isset($_SESSION['user_id']) || !isset($_GET['score'])) {
             header("Location: /game/game.php?new");
             die;
         }
@@ -32,7 +32,6 @@
         $gametag = $remote_data['gametag'];
         $score_remote = $remote_data['score'];
         $account_suspended = $remote_data['account_suspended'];
-
 
 
         if($account_suspended){
@@ -60,8 +59,6 @@
             header("Location: /game/game.php?new");
             die;
         }
-
-
         header("Location: /game/game.php?new");
     }
 

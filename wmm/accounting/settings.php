@@ -21,7 +21,7 @@
                         document.getElementById("meta").innerHTML = this.responseText;
                     }
                 };
-                dataRequest.open("GET", "/scripts/user_get_meta_information.php", true);
+                dataRequest.open("GET", "/scripts/user_get_settings.php", true);
                 dataRequest.send();
             }
 

@@ -3,10 +3,18 @@
     require "database_utils.php";
 
     /**
-     * @param $email
-     * @param $password
+     * Logs the user into his account to enabled extended features.
+     *
+     *  The operation aborts if one of the following events occur
+     * - User is already logged in
+     * - Account does not exists
+     * - Account is suspended
+     * - Password does not match the account password
+     * - Generic database error
+     * @param string $email Email address of the user
+     * @param string $password Password of the user
      */
-    function login($email, $password){
+    function login(string $email, string $password){
         session_start();
         if (isset($_SESSION["user_id"])) {
             header("Location: /");
@@ -49,5 +57,6 @@
         $database_connection->close();
         header("Location: /");
     }
+
     login($_POST['email'],$_POST['password']);
 ?>

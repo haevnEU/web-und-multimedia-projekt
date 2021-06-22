@@ -1,8 +1,21 @@
 <?php
     require "utility.php";
     require "database_utils.php";
-    function updatePassword($password_old, $password_new, $password_new_reentered){
 
+    /**
+     * Updates the user password
+     *
+     *  The operation aborts if one of the following events occur
+     * - User is not logged in
+     * - The old password does not match the current password
+     * - Empty fields are provided
+     * - New password does not match the verfiy password
+     * - Generic database error
+     * @param string $password_old Current password of the user
+     * @param string $password_new Desired new password
+     * @param string $password_new_reentered Desired new password to verify
+     */
+    function updatePassword(string $password_old, string $password_new, string $password_new_reentered){
         session_start();
 
         if (!isset($_SESSION["user_id"])) {
@@ -11,11 +24,11 @@
         }else if (!isset($password_old) || !isset($password_new) || !isset($password_new_reentered)) {
             print_error("Password error", "", "<p>One or more field are empty</p>");
             die;
-        }else if ($_POST['password_new'] != $_POST['password_new_reentered']) {
+        }else if ($password_new != $password_new_reentered) {
             print_error("Password error", "", "<p>Entered passwords are not the same</p>");
             die;
         }
-echo "HELLO";
+
         list ($password, $salt_new) = hashPassword($password_new);
 
         $uid = $_SESSION["user_id"];

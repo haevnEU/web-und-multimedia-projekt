@@ -1,4 +1,7 @@
 <?php
+
+
+// TODO REMOVE
     require "./utility.php";
     require "database_utils.php";
     session_start();

@@ -14,7 +14,7 @@
 
     /**
      * Closes the database connection and redirects to an error page
-     * @param $database_connection MYSQLI Connection which should be closed
+     * @param $database_connection MYSQLI Connection to close
      */
     function internal_database_error($database_connection){
         $database_error = $database_connection->error;

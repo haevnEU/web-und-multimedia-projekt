@@ -30,8 +30,8 @@ class Shape {
         this.#shape = shape;
         this.#shapeID = id;
         this.#probabilityWeight = probabilityWeight;
-        this.#positionX = Math.floor(this.#boardWidth * 0.5) - 2;
-        this.#positionY = 0;
+        this.#positionX = Math.floor(this.#boardWidth * 0.5) - 1;
+        this.#positionY = 1;
         for (let i = 0; i < shape.length; i++) {
             if (shape[i] !== 0) {
                 this.#amountOccupiedBlocks++;
