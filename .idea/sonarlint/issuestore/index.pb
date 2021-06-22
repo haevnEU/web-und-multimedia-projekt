@@ -24,8 +24,6 @@ Q
 !wmm/styles/darkmode/game_main.css,d\8\d8503c3fffc4951dcc201bb78f1e0c358854fc9d
 R
 "wmm/styles/lightmode/game_main.css,6\d\6df09359f7f47ee617ba68f8fb19588c11e79742
-Y
-)database_scripts/create_game_database.sql,f\2\f27b669c1e7d7750f8a66025ad69b23a6a10aba2
 L
 database_scripts/credentials,4\f\4fbfcb2a58fc319e0b42cf91688f529212d8ca1c
 @
