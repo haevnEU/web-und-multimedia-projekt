@@ -18,7 +18,7 @@ CREATE OR REPLACE TABLE game.player(
 	style varchar(30) default 'darkmode' null,
 	account_type int default 0 null,
 	telephone varchar(30) default '' null,
-	isbanned tinyint(1) default 0 null
+	account_suspended tinyint(1) default 0 null
 );
 
 CREATE OR REPLACE TABLE game.scoreboard(
