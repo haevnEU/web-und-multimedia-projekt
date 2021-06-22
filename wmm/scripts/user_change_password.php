@@ -29,12 +29,12 @@
             die;
         }
 
-        list ($password, $salt_new) = hashPassword($password_new);
+        $password = hashPassword($password_new);
 
         $uid = $_SESSION["user_id"];
 
         $database_connection = get_connection_to_game_db();
-        $select_player_query = "SELECT pass, salt, style, email, gametag USER_ID FROM player WHERE USER_ID = ?";
+        $select_player_query = "SELECT pass, style, email, gametag USER_ID FROM player WHERE USER_ID = ?";
         $statement = $database_connection->prepare($select_player_query);
         $statement->bind_param("i", $uid);
         $statement->execute();
@@ -43,7 +43,6 @@
         $query_done = false;
         while ($row = mysqli_fetch_array($result)) {
             $remote_password = $row['pass'];
-            $remote_salt = $row['salt'];
             $email = $row['email'];
             $gametag = $row['gametag'];
             $query_done = true;
@@ -51,7 +50,7 @@
         if(!$query_done){
             print_error("Database error","", "<p>Cannot retrieve information about your account.</p>");
             die;
-        }else if (!verifyPassword($password_old, $remote_salt, $remote_password)) {
+        }else if (!verifyPassword($password_old, $remote_password)) {
             print_error("Password error","Cannot change the password", "<p>Entered password is wrong.</p>");
             die;
         }

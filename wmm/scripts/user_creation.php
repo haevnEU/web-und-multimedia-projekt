@@ -31,7 +31,7 @@
             print_error("User creation error", "", "Given passwords are not equal");
             die;
         }
-        list ($password_encrypt, $salt) = hashPassword($password);
+        $password_encrypt = hashPassword($password);
 
         $database_connection = get_connection_to_game_db();
 
@@ -54,9 +54,9 @@
 
         $gametag = createGametag($gametag);
 
-        $create_user_query = "INSERT INTO player (first_name,surname,email,gametag,pass,salt, telephone) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $create_user_query = "INSERT INTO player (first_name,surname,email,gametag,pass, telephone) VALUES (?, ?, ?, ?, ?, ?)";
         $statement = $database_connection->prepare($create_user_query);
-        $statement->bind_param("sssssss", $firstname, $surname, $email, $gametag, $password_encrypt, $salt, $phone);
+        $statement->bind_param("sssssss", $firstname, $surname, $email, $gametag, $password_encrypt, $phone);
 
         if ($statement->execute() === TRUE) {
             header("Location: /");

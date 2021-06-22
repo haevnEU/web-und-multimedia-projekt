@@ -20,7 +20,7 @@
             header("Location: /");
         }
         $database_connection = get_connection_to_game_db();
-        $select_player_query = "SELECT pass, salt, style, account_suspended, USER_ID FROM player WHERE email = ?";
+        $select_player_query = "SELECT pass, style, account_suspended, USER_ID FROM player WHERE email = ?";
         $statement = $database_connection->prepare($select_player_query);
         $statement->bind_param("s", $email);
         $statement->execute();
@@ -33,7 +33,6 @@
         }
         $row = mysqli_fetch_array($result);
         $remote_pass = $row['pass'];
-        $remote_salt = $row['salt'];
         $remote_style = $row['style'];
         $remote_USER_ID = $row['USER_ID'];
         $account_suspended = $row['account_suspended'];
@@ -42,7 +41,7 @@
             $database_connection->close();
             print_error("Account error","Suspended Account", "<p>Your account was suspended.</p><br><a href=\"/support/suspended.php\">Contact the customer service for more information</a>");
             die;
-        }else if (!verifyPassword($password, $remote_salt, $remote_pass)) {
+        }else if (!verifyPassword($password, $remote_pass)) {
             $database_connection->close();
             print_error("Account error", "Password does not match", "Your entered password is wrong");
             die;
