@@ -1,5 +1,5 @@
 <?php
-    required "../scripts/utility.php";
+
     session_start();
     if (!isset($_SESSION["user_id"])) {
         print_error("Authentication error", "", "<p>Ooops...</p><p>Access denied to this page, please login.</p>");

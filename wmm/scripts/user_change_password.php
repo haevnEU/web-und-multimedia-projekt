@@ -1,13 +1,23 @@
 <?php
     require "utility.php";
     require "database_utils.php";
-    session_start();
+    function updatePassword($password_old, $password_new, $password_new_reentered){
 
-    if (!isset($_SESSION["user_id"])) {
-        header("Location: /error.php?error=" . urlencode("<p>Oooops...</p><p>Access denied to this page, please login.</p>"));
-        die("Access denied, please login");
-    }
-    function updatePassword($password_old, $password_new){
+        session_start();
+
+        if (!isset($_SESSION["user_id"])) {
+            print_error("Account error","Suspended Account", "<p>Your account was suspended.</p><br><a href=\"/support/suspended.php\">Contact the customer service for more information</a>");
+            die;
+        }else if (!isset($password_old) || !isset($password_new) || !isset($password_new_reentered)) {
+            print_error("Password error", "", "<p>One or more field are empty</p>");
+            die;
+        }else if ($_POST['password_new'] != $_POST['password_new_reentered']) {
+            print_error("Password error", "", "<p>Entered passwords are not the same</p>");
+            die;
+        }
+echo "HELLO";
+        list ($password, $salt_new) = hashPassword($password_new);
+
         $uid = $_SESSION["user_id"];
 
         $database_connection = get_connection_to_game_db();
@@ -26,14 +36,14 @@
             $query_done = true;
         }
         if(!$query_done){
-            header("Location: /error.php?error=" . urlencode("Cannot retrieve account information"));
+            print_error("Database error","", "<p>Cannot retrieve information about your account.</p>");
             die;
         }else if (!verifyPassword($password_old, $remote_salt, $remote_password)) {
-            header("Location: /error.php?error=" . urlencode("Your old password is wrong"));
+            print_error("Password error","Cannot change the password", "<p>Entered password is wrong.</p>");
             die;
         }
 
-        $update_query = "UPDATE player SET pass = \"" . $password_new . "\" WHERE USER_ID = ?";
+        $update_query = "UPDATE player SET pass = \"" . $password . "\" WHERE USER_ID = ?";
         $statement = $database_connection->prepare($update_query);
         $statement->bind_param("i", $uid);
         $statement->execute();
@@ -42,19 +52,9 @@
         $subject = "Account Information";
         // send mail
         mail($email, $subject, $message);
+        header("Location: /");
     }
 
-    if (!isset($_POST['password_old']) || !isset($_POST['password_new']) || !isset($_POST['password_new_reentered'])) {
-        header("Location: /error.php?error=" . urlencode("One or more fields are missing"));
-        die;
-    }
-    if ($_POST['password_new'] != $_POST['password_new_reentered']) {
-        header("Location: /error.php?error=" . urlencode("Entered password are different"));
-        die;
-    } else {
-        list ($password_new, $salt_new) = hashPassword($_POST['password_new']);
-        updatePassword($_POST['password_old'], $password_new);
-        header("Location: /accounting/settings.php?done");
-        die;
-    }
+    updatePassword($_POST['password_old'], $_POST['password_new'], $_POST['password_new_reentered']);
+
 ?>

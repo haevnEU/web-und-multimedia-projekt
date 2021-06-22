@@ -1,10 +1,12 @@
 <?php
     require "database_utils.php";
+    require "utility.php";
     session_start();
     if (!isset($_SESSION["user_id"])) {
-        header("Location: /error.php?error=" . urlencode("<p>Oooops...</p><p>Access denied to this page, please login.</p>"));
-        die("Access denied, please login");
+        print_error("Authentication Error", "Access denied", "<p>Ooooops... you are not logged in");
+        die;
     }
+
 
         $database_connection = get_connection_to_game_db();
 

@@ -15,11 +15,10 @@
                     <p>we have invested a lot of time and love in this game to fulfill our commitments</p>
                     <br>
                     <p>This game was created by</p>
-                    <p></p>
-                    <p></p>
                     <p>Nils Milewski (10010480)</p>
+                    <p>Salman Kabak ()</p>
+                    <p>Robin Böllhoff ()</p>
                     <br>
-                    <p>Special Thanks</p>
                     <button type="button" class="custom_button custom_button_color" onclick="location.href='/';">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF">
                             <path d="M0 0h24v24H0V0z" fill="none"/>

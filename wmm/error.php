@@ -8,22 +8,21 @@
         <div class="root_div root_div_color" style="width:50%; height:50%">
             <div class="container">
                 <?php
-                if(!isset($_GET['error'])){
-                echo "NOOOO";
-                    die;
-                }
+                    if(!isset($_GET['error'])){
+                        die;
+                    }
 
-                echo "<div class=\"horizontal_centered\">";
-                if(isset($_GET['header'])){
-                    echo "<h1 class=\"error\">" . $_GET['header'] . "</h1>";
-                }
-                if (isset($_GET['subheader'])) {
-                    echo "<h2>" . $_GET['subheader'] . "</h2>";
-                }
-                if(isset($_GET['error'])){
-                    echo "<p>" . $_GET['error'] . "</p>";
-                }
-                echo "</div";
+                    echo "<div class=\"horizontal_centered\">";
+                    if(isset($_GET['header'])){
+                        echo "<h1 class=\"error\">" . $_GET['header'] . "</h1>";
+                    }
+                    if (isset($_GET['subheader'])) {
+                        echo "<h2>" . $_GET['subheader'] . "</h2>";
+                    }
+                    if(isset($_GET['error'])){
+                        echo "<p>" . $_GET['error'] . "</p>";
+                    }
+                    echo "</div";
                 ?>
                 <br>
                 <div class="horizontal_centered">

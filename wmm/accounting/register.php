@@ -28,16 +28,14 @@
                     <div class="container">
                         <label class="custom_input_heading custom_input_heading_color">Name *</label><br>
                         <label>
-                            <input class="custom_input custom_input_color" name="first_name" placeholder="First name"
-                                   required="required" type="text">
+                            <input class="custom_input custom_input_color" name="first_name" placeholder="First name" required="required" type="text">
                         </label>
                     </div>
                     <br>
                     <div class="container">
                         <label class="custom_input_heading custom_input_heading_color">Surname *</label><br>
                         <label>
-                            <input class="custom_input custom_input_color" name="sur_name" placeholder="Surname"
-                                   required="required" type="text">
+                            <input class="custom_input custom_input_color" name="sur_name" placeholder="Surname" required="required" type="text">
                         </label>
                     </div>
                     <br>
@@ -58,24 +56,21 @@
                     <div class="container">
                         <label class="custom_input_heading custom_input_heading_color">Gametag *</label><br>
                         <label>
-                            <input class="custom_input custom_input_color" id="gametag" name="gametag" placeholder="WildCow"
-                                   type="text">
+                            <input class="custom_input custom_input_color" id="gametag" name="gametag" placeholder="WildCow" type="text">
                         </label>
                     </div>
                     <br>
                     <div class="container">
                         <label class="custom_input_heading custom_input_heading_color">Password *</label><br>
                         <label>
-                            <input class="custom_input custom_input_color" name="password" placeholder="" required="required"
-                                   type="password">
+                            <input class="custom_input custom_input_color" name="password" placeholder="" required="required" type="password">
                         </label>
                     </div>
                     <br>
                     <div class="container">
                         <label class="custom_input_heading custom_input_heading_color">Reenter password *</label><br>
                         <label>
-                            <input class="custom_input custom_input_color" name="password_verify" placeholder=""
-                                   required="required" type="password">
+                            <input class="custom_input custom_input_color" name="password_verify" placeholder="" required="required" type="password">
                         </label>
                     </div>
                     <br>

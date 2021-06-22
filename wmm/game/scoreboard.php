@@ -6,7 +6,7 @@
     <?php include "../scripts/styles.php"; ?>
     <script>
         function loadScoreboard() {
-            let xmlhttp = new XMLHttpRequest();
+            let xmltype = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     document.getElementById("scoreboard").innerHTML = this.responseText;

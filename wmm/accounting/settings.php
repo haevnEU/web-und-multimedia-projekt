@@ -2,7 +2,7 @@
     require "../scripts/utility.php";
     session_start();
     if (!isset($_SESSION["user_id"])) {
-        print_error("Authentification error", "", "<p>Ooops...</p><p>Access denied to this page, please login.</p>");
+        print_error("Authentication error", "", "<p>Ooops...</p><p>Access denied to this page, please login.</p>");
         die;
     }
 ?>
@@ -11,7 +11,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>User Information</title>
+        <title>Settings</title>
         <?php include "../scripts/styles.php"; ?>
         <script>
             function showMeta() {

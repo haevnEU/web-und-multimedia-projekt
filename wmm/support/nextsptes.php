@@ -1,4 +1,6 @@
 <?php
+    require "../scripts/utility.php";
+    session_start();
     function create_ticket(){
         $email = $_POST['mail'];
         $problem = $_POST['problem'];
@@ -9,7 +11,8 @@
         $database_table_name = "game";
         $database_connection = new mysqli($database_server_name, $database_user_name, $database_user_password, $database_table_name);
         if ($database_connection->connect_error) {
-            return "Database connection failed. " . $database_connection->connect_error;
+            print_error("Database error", "Cannot create the ticket", "<p>The connection to the database was faulty");
+            die;
         }
 
         $create_user_query = "INSERT INTO support_tickets (reporter, problem) VALUES (?, ?)";
@@ -18,7 +21,8 @@
 
         if ($statement->execute() != TRUE) {
             $database_connection->close();
-            return "Cannot create a ticket, try again in a few minutes " . $connection->error;
+            print_error("Ticket creation error", "", "<p>Cannot create your ticket please try again in a few minutes");;
+            die;
         }
 
         $database_connection->close();
