@@ -35,11 +35,11 @@
     1 - 7 Are classic tetrominos
 */
 .game_blockID1 {
-    color: #6B8CFF;
+    color: #63A6C2;
 }
 
 .game_blockID2 {
-    color: #DB5C69;
+    color: #C2404F;
 }
 
 .game_blockID3 {
@@ -59,7 +59,7 @@
 }
 
 .game_blockID7 {
-    color: #FFE97A;
+    color: #FFF44A;
 }
 
 /*

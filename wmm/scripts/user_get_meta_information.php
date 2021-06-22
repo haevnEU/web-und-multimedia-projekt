@@ -14,7 +14,7 @@
     $statement->bind_param("s", $_SESSION["user_id"]);
     $statement->execute();
     $result = $statement->get_result();
-    $styles = array('darkmode', 'lightmode', 'newmode');
+    $styles = array('darkmode','lightmode','newmode','colorblindmode');
         while ($row = mysqli_fetch_array($result)) {
 ?>
     <fieldset class="groupbox">

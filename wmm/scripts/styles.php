@@ -4,7 +4,6 @@
     }
     echo "<link rel=\"stylesheet\" href=\"/styles/basic_style.css\">\n";
     echo "<link rel=\"stylesheet\" href=\"/styles/tooltip.css\">\n";
-    echo "<link rel=\"stylesheet\" href=\"/styles/chat_popup.css\">\n";
     echo "<link rel=\"stylesheet\" href=\"/styles/table.css\">\n";
 
     if (isset($_SESSION["style"])) {
