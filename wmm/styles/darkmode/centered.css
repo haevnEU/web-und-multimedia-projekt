@@ -1,28 +1,28 @@
-body{   
+body {
     background-color: #1e1e1e;
-    font-family:'Helvetica';
+    font-family: 'Helvetica';
 }
 
-.root_div_color{
+.root_div_color {
     color: white;
     background-color: #333;
 }
 
-.custom_button_color{
-	color:#ffffff;
-    background-color:#206bc2;
+.custom_button_color {
+    color: #ffffff;
+    background-color: #206bc2;
     border-color: #206bc2;
 }
 
 .customButton:hover {
-	background-color:#206cc29f;
+    background-color: #206cc29f;
 }
 
-.heading_color{
+.heading_color {
     color: #206bc2;
 }
 
-.custom_text_input_color{
+.custom_text_input_color {
     color: white;
     background-color: #2c2c2c;
 }
@@ -31,17 +31,30 @@ body{
     color: red;
 }
 
-a{ 
+a {
     color: #ffffff;
-} 
-a:hover{ 
-    color: #d8d8d8;
-} 
-   
+}
 
-.textarea_no_resizable_color{
+a:hover {
+    color: #d8d8d8;
+}
+
+
+.textarea_no_resizable_color {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 17;
     color: white;
     background-color: #2c2c2c;
+}
+
+
+.groupbox{
+
+    background-color: #0E193D;
+    color: white;
+ }
+
+.infotext{
+    color: #AAAAAA;
+    font-size: 80%;
 }

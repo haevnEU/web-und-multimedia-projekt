@@ -1,7 +1,7 @@
 let openState = false;
 
 function toggleForm(){
-    if(openState == true){
+    if(openState === true){
         openState = false;
         document.getElementById("myForm").style.display = "block";    
     }else{

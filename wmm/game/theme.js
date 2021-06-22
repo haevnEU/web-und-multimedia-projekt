@@ -1,15 +1,16 @@
-class Theme{
+class Theme {
     /**
      * Contains color information
      */
-    constructor(){}
+    constructor() {
+    }
 
-    #getColorByID(id){
-        try{
+    static #getColorByID(id) {
+        try {
             let element = document.querySelector(id);
             let style = getComputedStyle(element);
-            return style.color; 
-        }catch(e){
+            return style.color;
+        } catch (e) {
             return "blue";
         }
     }
@@ -19,67 +20,66 @@ class Theme{
      * @param {Number} id Block ID
      * @returns Color of the block
      */
-    getBlockColorByID(id){
-        let block = ".blockID" + id;
-        return this.#getColorByID(block);     
+    getBlockColorByID(id) {
+        let block = ".game_blockID" + id;
+        return Theme.#getColorByID(block);
     }
 
     /**
      * Access the color information about the background
      * @returns Color of the background
      */
-    getBackgroundColor(){
-        return this.#getColorByID(".background_");
+    getBackgroundColor() {
+        return Theme.#getColorByID(".game_background_");
     }
 
-    
-    getPreviewBackgroundColor(){
-        return this.#getColorByID(".background_preview");
+
+    getPreviewBackgroundColor() {
+        return Theme.#getColorByID(".game_background_preview");
     }
-    
 
 
     /**
      * Access the color information about the board
      * @returns Color of the board
      */
-    getBoardColor(){
-      return this.#getColorByID(".board");
+    getBoardColor() {
+        return Theme.#getColorByID(".game_board");
     }
 
     /**
      * Access the color information about the font
      * @returns Color of the font
      */
-    getFontColor(){
-        return this.#getColorByID(".font_");
+    getFontColor() {
+        return Theme.#getColorByID(".game_font_");
     }
-    
-    getFontFamily(){
-        try{
-            let element = document.querySelector(".font_");
+
+    getFontFamily() {
+        try {
+            let element = document.querySelector(".game_font_");
             let style = getComputedStyle(element);
-            return style.fontFamily; 
-        }catch(e){
+            return style.fontFamily;
+        } catch (e) {
             return "Arial";
         }
     }
-    
-    getFontSize(){
-        try{
-            let element = document.querySelector(".font_");
+
+    getFontSize() {
+        try {
+            let element = document.querySelector(".game_font_");
             let style = getComputedStyle(element);
-            return style.fontSize; 
-        }catch(e){
+            return style.fontSize;
+        } catch (e) {
             return 26;
         }
     }
 }
 
-class ThemeHandler{
+class ThemeHandler {
     #currentTheme = new Theme();
-                                          
-    getTheme(){
+
+    getTheme() {
         return this.#currentTheme;
     }
 

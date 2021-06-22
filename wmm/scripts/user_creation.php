@@ -1,64 +1,79 @@
 <?php
-
     require "utility.php";
-    require "links.php";
+    require "database_utils.php";
+
+    /**
+     *  This method inserts the user data into a database.
+     *  If one of the following cases are not fulfilled the operation aborts
+     *  - User is logged in
+     *  - One argument is not provided
+     *  - Provided password differs
+     *  - The account already exists
+     *  - Provided gametag is to long
+     * @param string $firstname non optional
+     * @param string $surname non optional
+     * @param string $email non optional
+     * @param string $password non optional
+     * @param string $passwordVerify non optional
+     * @param string $gametag non optional
+     * @param string $phone optional
+     */
+    function createUser(string $firstname, string $surname, string $email, string $password, string $passwordVerify, string $gametag, string $phone = ""){
+        session_start();
+
+        if(isset($_SESSION['user_id'])){
+            header("Location: /");
+            die;
+        }else if(!isset($firstname) || !isset($surname) || !isset($email) || !isset($password) || !isset($passwordVerify) || !isset($gametag)){
+            print_error("Account cannot created", "Missing attribute", "One ore more fields are empty");
+            die;
+        }else if ($password !== $passwordVerify) {
+            print_error("User creation error", "", "Given passwords are not equal");
+            die;
+        }
+        list ($password_encrypt, $salt) = hashPassword($password);
+
+        $database_connection = get_connection_to_game_db();
+
+        $select_player_query = "SELECT email FROM player WHERE email = ?";
+        $statement = $database_connection->prepare($select_player_query);
+        $statement->bind_param("s", $email);
+        $statement->execute();
+        $result = $statement->get_result();
+        if ($result->num_rows > 0) {
+            $database_connection->close();
+            print_error("User creation error", "", "User already exists.");
+            die;
+        }
+
+        if (strlen($gametag) > 12) {
+            $database_connection->close();
+            print_error("User creation error", "", "Entered gametag is to long, only 12 character are allowed");
+            die;
+        }
+
+        $gametag = createGametag($gametag);
+
+        // All fields are entered, valid and the user does not exists so create a new user
+        $create_user_query = "INSERT INTO player (first_name,surname,email,gametag,pass,salt, telephone) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $statement = $database_connection->prepare($create_user_query);
+
+        $statement->bind_param("sssssss", $firstname, $surname, $email, $gametag, $password_encrypt, $salt, $phone);
 
 
-    if(!(isset($_POST['first_name']) && isset($_POST['sur_name']) 
-    && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['password_verify']) 
-    && isset($_POST['gametag']))){
-        redirectToError("Please fill out every field");
+        if ($statement->execute() === TRUE) {
+            header("Location: /");
+        } else {
+            internal_database_error($database_connection);
+            die;
+        }
+        $database_connection->close();
     }
 
-    $first_name = $_POST['first_name'];
-    $family_name = $_POST['sur_name'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $password_verify = $_POST['password_verify'];
-    $gametag = $_POST['gametag'];
+    $phone_number = $_POST['phone'];
+    $phone_country = "+49";
+    $phone = ($phone_number !== "") ? ($phone_country . " " . $phone_number) : "";
 
-        
-    // Validate if passwords are same
-    list ($password_encrypt, $salt) = hashPassword($password);
-    if($password != $password_verify){
-        redirectToError("Entered password are different");
-        return;    
-    }
-    
-    $database_server_name = "localhost";
-    $database_user_name = "register";
-    $database_user_password = "1234";
-    $database_table_name = "game";
-    // Create a database connection
-    $connection = new mysqli($database_server_name, $database_user_name, $database_user_password, $database_table_name);   
-    if ($connection->connect_error) {
-        redirectToError("Database connection failed. " . $conn->connect_error);
-        return;
-    } 
-    
-    // Query to verify that the user does not exists.
-    $sql = "SELECT email FROM player WHERE email='$email';";
-    $result = $connection->query($sql);
-    if($result->num_rows > 0){
-        redirectToError("Entered email already exists");
-        return;
-    }
-    
-    if(strlen($gametag) > 10){
-        redirectToError("Entered gametag is to long, only 12 character are allowed");
-        return;
-    }
-    
-    $gametag = createGametag($gametag);
-    
-    // All fields are entered, valid and the user does not exists so create a new user
-    $sql = "INSERT INTO player (first_name,surname,email,gametag,pass,salt) VALUES ('$first_name', '$family_name', '$email', '$gametag', '$password_encrypt', '$salt')";
-    if($connection->query($sql) === TRUE) {    
-        header("Location: $page_login");
-    } else {
-        redirectToError("database error: " . $connection.error);
-    }
-    $connection->close();
-    
+    createUser($_POST['first_name'], $_POST['sur_name'], $_POST['email'], $_POST['password'], $_POST['password_verify'], $_POST['gametag'], $phone);
 
 ?>

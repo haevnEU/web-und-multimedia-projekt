@@ -1,22 +1,24 @@
 import {Game} from "./game.js";
+
 let game = new Game();
 setInterval(loop, 30);
+
 
 /**
  * This method sets an cookie.
  * If the ttl argument is not provided or zero the cookie will exists one year
  * @param {String} name Name of the cookie
  * @param {any} value Value of the cookie
- * @param {Number} ttl Time how long the cookie exists  
+ * @param {Number} ttl Time how long the cookie exists
  */
 function setCookie(name, value, ttl = 0) {
-  if(ttl === 0){
-    ttl = 365;
-  }
-  var expire_date = new Date();
-  expire_date.setTime(expire_date.getTime() + (ttl * 24 * 60 * 60 * 1000));
-  var expires = "expires=" + expire_date.toUTCString();
-  document.cookie = name + "=" + value + ";" + expires + ";path=/";
+    if (ttl === 0) {
+        ttl = 365;
+    }
+    let expire_date = new Date();
+    expire_date.setTime(expire_date.getTime() + (ttl * 24 * 60 * 60 * 1000));
+    let expires = "expires=" + expire_date.toUTCString();
+    document.cookie = name + "=" + value + ";" + expires + ";path=/";
 }
 
 /**
@@ -26,51 +28,52 @@ function setCookie(name, value, ttl = 0) {
  * @returns Cookie as string
  */
 function getCookie(name) {
-  name = name + "=";
+    name = name + "=";
     const cookie_list = document.cookie.split(';');
-    for(let i = 0; i < cookie_list.length; i++) {
+    for (let i = 0; i < cookie_list.length; i++) {
         let cookie = cookie_list[i];
         while (cookie.charAt(0) === ' ') {
-      cookie = cookie.substring(1);
+            cookie = cookie.substring(1);
+        }
+        if (cookie.indexOf(name) === 0) {
+            return cookie.substring(name.length, cookie.length);
+        }
     }
-    if (cookie.indexOf(name) === 0) {
-      return cookie.substring(name.length, cookie.length);
-    }
-  }
-  return "";
+    return "";
 }
 
 /**
  * Deletes a cookie. Deleting is done via setting Expires attribute to UTC 0
  * @param {String} name Name of the cookie
  */
-function eraseCookie(name) {   
-  document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+function eraseCookie(name) {
+    document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
 
-function loop(){
+function loop() {
     game.handleLogic();
     game.render();
 }
 
-window.onbeforeunload = function(){
+window.onbeforeunload = function () {
     setCookie("state", game.exportToJson(), 1);
 };
 
-window.onload = function(){
-  // If an existing game was found ask the user if he/she wants to resume
-  if(document.cookie.indexOf('state=') >= 0){
-    //  let resume = confirm('An existing game was found do you want to resume?');
-     // if(resume){
+window.onload = function () {
+    console.log("Onload");
+    let urlParams = new URLSearchParams(window.location.search);
+    console.log(urlParams);
+    if (urlParams.has('new')) {
+        eraseCookie("state");
+    }
+
+    if (document.cookie.indexOf('state=') >= 0) {
         game.init(getCookie("state"));
-     // }
     }
 };
 
 
-
-
-document.onkeydown = function(event){
+document.onkeydown = function (event) {
     let key = event.key;
     game.onKey(key);
 }

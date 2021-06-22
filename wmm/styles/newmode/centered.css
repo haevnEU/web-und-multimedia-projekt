@@ -1,0 +1,48 @@
+body {
+    background-color: #0E193D;
+    font-family: 'Helvetica';
+}
+
+.root_div_color {
+    color: white;
+    background-color: #404D78;
+}
+
+.custom_button_color {
+    color: #ffffff;
+    background-color: #3965F7;
+    border-color: #3965F7;
+}
+
+.customButton:hover {
+    background-color: #206cc29f;
+}
+
+.heading_color {
+    color: #ffffff;
+}
+
+.custom_text_input_color {
+    color: white;
+    background-color: #404D78;
+}
+
+.error {
+    color: red;
+}
+
+a {
+    color: #ffffff;
+}
+
+a:hover {
+    color: #d8d8d8;
+}
+
+
+.textarea_no_resizable_color {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 17;
+    color: white;
+    background-color: #404D78;
+}

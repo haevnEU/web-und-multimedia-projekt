@@ -1,7 +1,7 @@
-.root_div{
+.root_div {
     opacity: 0.8;
     border: 1px solid transparent;
-    font-size:16px;
+    font-size: 16px;
     width: auto;
     height: auto;
     border-radius: 50px;
@@ -11,89 +11,99 @@
     transform: translate(-50%, -50%);
 }
 
-.sub_div{
+.sub_div {
     margin-top: 10%;
     margin-bottom: 10%;
 }
 
-.horizontal_centered {    
-    margin-top:auto;
-    margin-bottom:auto;
-    text-align:center;
+.horizontal_centered {
+    margin-top: auto;
+    margin-bottom: auto;
+    text-align: center;
 }
 
 
 .custom_button {
     align-items: center;
     justify-content: center;
-    border-radius:10px;
+    border-radius: 10px;
     border-width: 0px;
-    cursor:pointer;
-	font-size:16px;
-	padding:10px 15px;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 10px 15px;
 }
 
 .custom_button:active {
-	position:relative;
-	top:1px;
+    position: relative;
+    top: 1px;
 }
 
 
-h1,h2{
+h1, h2 {
     text-align: center;
 }
 
 
-
-.custom_input_heading{
+.custom_input_heading {
     font-size: 16px;
 }
 
-.custom_input{
+.custom_input {
     width: 100%;
-    border: 1p0x solid transparent;
+    border: 1 p0x solid transparent;
     padding: 3px;
     font-size: 16px;
 }
 
 .custom_input:focus {
-    outline:none;
+    outline: none;
 }
 
 
-.container{  
-    margin-left:10%;
+.container {
+    margin-left: 10%;
     margin-top: 1%;
     margin-bottom: 1%;
     margin-right: 10%;
 }
 
-.textarea_no_resizable{
-    width: 90%;
-    height: 300px;
-    resize: none; 
+.center {
+    margin-left: 50%;
+    margin-right: 50%;
+    transform: translate(-50%, -50%);
 }
 
 
-
+.textarea_no_resizable {
+    width: 90%;
+    height: 300px;
+    resize: none;
+}
 
 
 .floating_button {
-    border-radius:50%;
-    cursor:pointer;
-	font-size:16px;
-	padding:10px 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 10px 15px;
     border: none;
     text-align: center
 }
 
 .floating_button:active {
-	position:relative;
-	top:1px;
+    position: relative;
+    top: 1px;
 }
 
 .footer {
-    position:fixed;
-    right:5%;
-    bottom:5%;
+    position: fixed;
+    right: 5%;
+    bottom: 5%;
+}
+
+.groupbox{
+    margin: 8px;
+    border: 1px solid silver;
+    padding: 8px;
+    border-radius: 4px;
 }

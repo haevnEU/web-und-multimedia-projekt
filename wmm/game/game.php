@@ -1,32 +1,26 @@
-<?php
-// TODO REWORK!
-    require "../scripts/links.php";
-    require "../scripts/floating_menu.php";
-    session_start();
-    $friend_menu = "";
-   
-    if(isset($_SESSION["theme"])){
-        $STYLE = $_SESSION["theme"];
-    }else{
-        $STYLE = "dark";
-    }  
-
-    if(strtolower($STYLE) == "light"){
-        $HEAD = file_get_contents("./html_files/light_mode_header.html");
-    }else{
-        $HEAD = file_get_contents("./html_files/dark_mode_header.html");
-    }
-
-    $FOOTER_CONTENT = file_get_contents("./html_files/footer.html");
-
-    print "<!DOCTYPE html><html lang=\"en\">";
-    print $HEAD;
-    print "<body>
-        <div id=\"canvasDiv\" class=\"game\">    
-            <canvas class=\"game_canvas\" id=\"fieldCanvas\"></canvas>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Tetris</title>
+        <script type="module" src="./constants.js"></script>
+        <script type="module" src="./main.js"></script>
+        <script type="module" src="./board.js"></script>
+        <script type="module" src="./shapes.js"></script>
+        <script type="module" src="./theme.js"></script>
+        <script type="module" src="./game.js"></script>
+        <script type="module" src="./render.js"></script>
+        <?php include "../scripts/styles.php"; ?>
+    </head>
+    <body class="game_body" onload="bodyOnLoad()">
+        <div id="canvasDiv" class="game_game">
+            <canvas class="game_game_canvas" id="fieldCanvas"></canvas>
         </div>
-    </body>";
-
-    print "<footer class=\"footer\">$floating_menu $FOOTER_CONTENT</footer>";
-    print "</html>";
-?>
+    </body>
+    <footer class="footer">
+    <?php
+        include "../common/floating_menu.php";
+        include "./block_ids.html";
+    ?>
+    </footer>
+</html>

@@ -1,37 +1,37 @@
-body{
+.game_body {
     width: 100%;
-    height: 100%; 
-    margin: 0; 
-    background-color:grey;
+    height: 100%;
+    margin: 0;
+    background-color: grey;
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.game{
-    height:100%;
-    width:69%;
+.game_game {
+    height: 100%;
+    width: 69%;
     overflow: hidden;
-    float:left;
-    background-color:#eee;
+    float: left;
+    background-color: #eee;
 }
 
-.game_canvas{
-    height:100%;
-    width:69%;
+.game_game_canvas {
+    height: 100%;
+    width: 69%;
     overflow: hidden;
-    float:left;
+    float: left;
     display: block;
 }
 
-.chat{
-    height:100%;
-    width:25%;
-    float:right;
-    background-color:#aaa; 
+.game_chat {
+    height: 100%;
+    width: 25%;
+    float: right;
+    background-color: #aaa;
 }
 
-.menu{
-    height:100%;
-    width:5%;
+.game_menu {
+    height: 100%;
+    width: 5%;
     margin-left: 1%;
-    float:left;
+    float: left;
 }
