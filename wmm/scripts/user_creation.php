@@ -4,7 +4,7 @@
 
     /**
      *  This method inserts the user data into a database.
-     *  If one of the following cases are not fulfilled the operation aborts
+     *  The operation aborts if one of the following events occur
      *  - User is logged in
      *  - One argument is not provided
      *  - Provided password differs
@@ -54,12 +54,9 @@
 
         $gametag = createGametag($gametag);
 
-        // All fields are entered, valid and the user does not exists so create a new user
         $create_user_query = "INSERT INTO player (first_name,surname,email,gametag,pass,salt, telephone) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $statement = $database_connection->prepare($create_user_query);
-
         $statement->bind_param("sssssss", $firstname, $surname, $email, $gametag, $password_encrypt, $salt, $phone);
-
 
         if ($statement->execute() === TRUE) {
             header("Location: /");

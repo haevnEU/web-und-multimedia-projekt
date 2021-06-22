@@ -65,6 +65,7 @@ window.onload = function () {
     console.log(urlParams);
     if (urlParams.has('new')) {
         eraseCookie("state");
+        game.start();
     }
 
     if (document.cookie.indexOf('state=') >= 0) {

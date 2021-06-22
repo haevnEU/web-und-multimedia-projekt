@@ -99,8 +99,10 @@ class Physics {
         return lines.length;
     }
 
-
-    /**
+    detectCollision(shape, board, offset_y = 0) {
+        return Physics.#INTERNAL_detectCollision(shape, board,0 , offset_y);
+    }
+        /**
      * This internal method is used to validate if a shape can move into a certain direction.
      * This method yields true iff the shape can move in this direction
      * @param {Shape} shape shape which should be validated
