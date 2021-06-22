@@ -5,8 +5,9 @@ export default {
     SHAPE_SIZE: 4,
     LEVEL_UP_AT_LINE: 5,
 
-    UI_OFFSET: 50,
+    UI_OFFSET: 25,
     UI_OFFSET_X: 50,
     UI_OFFSET_Y: 50,
     RENDER_OFFSET: 0,
+    SCALING: 0.5,
 }
