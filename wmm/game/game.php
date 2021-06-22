@@ -13,9 +13,9 @@
         <?php include "../scripts/styles.php"; ?>
     </head>
     <body class="game_body" onload="bodyOnLoad()">
-        <div id="canvasDiv" class="game_game">
-            <canvas class="game_game_canvas" id="fieldCanvas"></canvas>
-        </div>
+    <div>
+            <canvas class="game_game" id="fieldCanvas"></canvas>
+    </div>
     </body>
     <footer class="footer">
     <?php
