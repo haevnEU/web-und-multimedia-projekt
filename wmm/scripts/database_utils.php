@@ -1,7 +1,7 @@
 <?php
     /**
-     * Creates a new MYSQLI database object which operates on  the game database
-     * @return mysqli MYSQLI object which
+     * Creates a new MYSQLI object
+     * @return mysqli
      */
     function get_connection_to_game_db(){
         $database_server_name = "localhost";
@@ -13,8 +13,7 @@
     }
 
     /**
-     * This method redirects the browser to an error page which displays the database error.
-     * The connection will also be closed
+     * Closes the database connection and redirects to an error page
      * @param $database_connection MYSQLI Connection which should be closed
      */
     function internal_database_error($database_connection){

@@ -14,7 +14,6 @@
         $style = "darkmode";
     }
     echo "<link rel=\"stylesheet\" href=\"/styles/" . $style . "/centered.css\">\n";
-    echo "<link rel=\"stylesheet\" href=\"/styles/" . $style . "/chat.css\">\n";
     echo "<link rel=\"stylesheet\" href=\"/styles/" . $style . "/game_blocks.css\">\n";
     echo "<link rel=\"stylesheet\" href=\"/styles/" . $style . "/game_main.css\">\n";
 ?>

@@ -33,7 +33,7 @@
                     </div>
                     <br>
                     <div class="container">
-                        <label class="custom_input_heading custom_input_heading_color">Surname *</label><br>
+                        <label class="custom_input_heading custom_input_heading_color">Family name *</label><br>
                         <label>
                             <input class="custom_input custom_input_color" name="sur_name" placeholder="Surname" required="required" type="text">
                         </label>
