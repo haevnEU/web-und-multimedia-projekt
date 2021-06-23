@@ -10,7 +10,7 @@
 <table class="scoreboard_table"><thead class="scoreboard_head">
     <thead>
         <tr class="scoreboard_tr">
-            <th class="scoreboard_th">gametag</th>
+            <th class="scoreboard_th"><span aria-label="game tag">gametag</span></th>
             <th class="scoreboard_th">score</th>
             <th class="scoreboard_th">Date</th>
         </tr>

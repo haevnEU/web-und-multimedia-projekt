@@ -15,17 +15,17 @@
                         <p>In almost every case our magic support team can help you</p>
                         <p>But be aware you must exchange information below as a summon ritual</p>
                         <label>
-                            <input class="custom_text_input_color custom_text_input_colo" type="email" name="mail"
+                            <input aria-label="Enter your email address" class="custom_text_input_color custom_text_input_colo" type="email" name="mail"
                                    required="required" placeholder="email" style="width: 90%;">
                         </label>
                         <br><br>
                         <label>
-                            <textarea class="textarea_no_resizable textarea_no_resizable_color" name="problem"
+                            <textarea aria-label="Describe your problem as precise as possible" class="textarea_no_resizable textarea_no_resizable_color" name="problem"
                                       required="required" placeholder="Describe your problem as precise as possible"></textarea>
                         </label>
                         <br><br><br>
-                        <input class="custom_button custom_button_color" type="button" onclick="history.back()" value="Close"/>
-                        <input type="submit" class="custom_button custom_button_color" value="Start the ritual">
+                        <input aria-label="Close" class="custom_button custom_button_color" type="button" onclick="history.back()" value="Close"/>
+                        <input aria-label="Start the ritual" type="submit" class="custom_button custom_button_color" value="Start the ritual">
                     </form>
                 </div>
             </div>

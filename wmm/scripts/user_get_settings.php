@@ -19,7 +19,7 @@
     <fieldset class="groupbox">
         <legend>Personal Information</legend>
         <p class="infotext">Contact the support to change your Personal information</p>
-        <p><span style="width: 30%; float:left">Firstname</span> <?php echo $row['first_name'] . " " . $row['surname']; ?> </p>
+        <p><span style="width: 30%; float:left">Name</span> <?php echo $row['first_name'] . " " . $row['surname']; ?> </p>
         <p><span style="width: 30%; float:left">Gametag</span> <?php echo $row['gametag']; ?> </p>
     </fieldset>
 
@@ -30,9 +30,10 @@
         <p><span style="width: 30%; float:left">Mobile</span> <?php echo $row['telephone'];?></p>
     </fieldset>
     <fieldset class="groupbox">
+        <legend>Style</legend>
+
         <form  method="POST" action="/scripts/user_change_theme.php">
-            <legend>Style</legend>
-            <p><span style="width: 30%; float:left">Style</span></p>
+            <p><span style="width: 30%; float:left">Theme</span></p>
             <select class="custom_input" name="theme"  onchange="this.form.submit()">
                 <?php foreach($styles as $style){
                     $selection = ($style == $row['style']) ? "selected=\"selected\"" : "";

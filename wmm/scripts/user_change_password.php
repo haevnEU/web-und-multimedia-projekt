@@ -34,7 +34,7 @@
         $uid = $_SESSION["user_id"];
 
         $database_connection = get_connection_to_game_db();
-        $select_player_query = "SELECT pass, style, email, gametag USER_ID FROM player WHERE USER_ID = ?";
+        $select_player_query = "SELECT pass, email, gametag, USER_ID FROM player WHERE USER_ID = ?";
         $statement = $database_connection->prepare($select_player_query);
         $statement->bind_param("i", $uid);
         $statement->execute();
@@ -42,6 +42,8 @@
 
         $query_done = false;
         while ($row = mysqli_fetch_array($result)) {
+
+            print_r($result);
             $remote_password = $row['pass'];
             $email = $row['email'];
             $gametag = $row['gametag'];
@@ -55,9 +57,9 @@
             die;
         }
 
-        $update_query = "UPDATE player SET pass = \"" . $password . "\" WHERE USER_ID = ?";
+        $update_query = "UPDATE player SET pass = ? WHERE USER_ID = ?";
         $statement = $database_connection->prepare($update_query);
-        $statement->bind_param("i", $uid);
+        $statement->bind_param("si", $password, $uid);
         $statement->execute();
         $database_connection->close();
         $message = "Hello " . $gametag . ",\n\nWe inform you that someone changed your personal information. Please contact the customer support if you haven't changed your data.\n\nAffected data: password\n\n\nThis is an automated mail please do not answer";

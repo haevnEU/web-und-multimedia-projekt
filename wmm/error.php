@@ -14,20 +14,20 @@
 
                     echo "<div class=\"horizontal_centered\">";
                     if(isset($_GET['header'])){
-                        echo "<h1 class=\"error\">" . $_GET['header'] . "</h1>";
+                        echo "<h1 class=\"error\" aria-label=\"" . $_GET['header'] . "\">" . $_GET['header'] . "</h1>";
                     }
                     if (isset($_GET['subheader'])) {
-                        echo "<h2>" . $_GET['subheader'] . "</h2>";
+                        echo "<h2 aria-label=\"" . $_GET['subheader'] . "\">" . $_GET['subheader'] . "</h2>";
                     }
                     if(isset($_GET['error'])){
-                        echo "<p>" . $_GET['error'] . "</p>";
+                        echo "<p aria-label=\"" . $_GET['error'] . "\">" . $_GET['error'] . "</p>";
                     }
                     echo "</div";
                 ?>
                 <br>
                 <div class="horizontal_centered">
-                    <button type="button" class="custom_button custom_button_color" onclick="history.back()">Back</button>
-                    <button type="button" class="custom_button custom_button_color" onclick="location.href='/'";>Home</button>
+                    <button aria-label="Go back" type="button" class="custom_button custom_button_color" onclick="history.back()">Back</button>
+                    <button aria-label="Home" type="button" class="custom_button custom_button_color" onclick="location.href='/'">Home</button>
                 </div>
                 <br>
             </div>

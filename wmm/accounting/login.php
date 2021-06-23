@@ -20,14 +20,15 @@
                 <br>
                 <form method="POST" action="/scripts/user_login.php">
                     <div class="container">
-                        <label class="custom_input_heading">EMail *</label><br> <input class="custom_input" type="email" name="email" placeholder="">
+                        <label class="custom_input_heading" for="email">EMail *</label><br> <input class="custom_input" id="email" type="email" name="email" placeholder="">
                     </div>
                     <br>
                     <div class="container">
-                        <label class="custom_input_heading">Password *</label><br> <input class="custom_input" type="password" name="password" placeholder="" required="required">
+                        <label class="custom_input_heading" for="password">Password *</label><br> <input class="custom_input" id="password" type="password" name="password" placeholder="" required="required">
                     </div>
                     <br>
                     <div class="container">
+                        <label></label>
                         <input type="submit" class="custom_button custom_button_color" name="button_name" value="Login">
                     </div>
                     <br>

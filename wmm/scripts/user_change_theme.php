@@ -21,10 +21,10 @@
         $uid = $_SESSION["user_id"];
 
         $database_connection = get_connection_to_game_db();
-        $update_query = "UPDATE player SET style = \"" . $theme . "\" WHERE USER_ID = ?";
+        $update_query = "UPDATE player SET style = ? WHERE USER_ID = ?";
 
         $statement = $database_connection->prepare($update_query);
-        $statement->bind_param("i", $uid);
+        $statement->bind_param("si", $theme, $uid);
         $statement->execute();
         $database_connection->close();
 
