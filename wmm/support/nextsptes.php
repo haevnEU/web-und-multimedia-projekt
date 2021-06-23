@@ -28,9 +28,11 @@
         $database_connection->close();
 
         return "
-            <p>You are summoning a mighty gamemaster from the Support area</p>
-            <p>This ritual takes a couple hours or days, your personal gamemaster will contact you via mail</p>
-            <p>Good luck on your journey!</p>";
+            <h2 aria-label='Next steps. You are summoning a mighty gamemaster from the Support area. This ritual takes a couple hours or days, your personal gamemaster will contact you via mail. Good luck on your journey!'>Next steps</h2>
+            <br>
+            <p aria-hidden='true'>You are summoning a mighty gamemaster from the Support area</p>
+            <p aria-hidden='true'>This ritual takes a couple hours or days, your personal gamemaster will contact you via mail</p>
+            <p aria-hidden='true'>Good luck on your journey!</p>";
     }
 ?>
 
@@ -44,11 +46,9 @@
     <body>
         <div class="root_div root_div_color" style="width: 30%">
             <div class="sub_div sub_div_color horizontal_centered">
-                <h2 class="heading_color">Next steps</h2>
-                <br>
                 <?php echo create_ticket() ?>
                 <br><br>
-                <input class="custom_button custom_button_color" type="button" onclick="location.href='/';" value="Home"/>
+                <input aria-label="Go Home" class="custom_button custom_button_color" type="button" onclick="location.href='/';" value="Home"/>
                 <br><br>
             </div>
         </div>

@@ -5,7 +5,6 @@
         <title>Login</title>
         <?php include "./scripts/styles.php"; ?>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
     </head>
     <body>
         <div class="root_div root_div_color" style="width: 50%; height: 50%">
@@ -14,9 +13,9 @@
                 <div class="horizontal_centered">
                     <div>
                         <div class="tooltip">
-                            <span class="tooltiptext">Play</span>
+                            <span aria-hidden="true" class="tooltiptext">Play</span>
 
-                            <button class="custom_button custom_button_color" type="button"
+                            <button aria-label="Start the game" class="custom_button custom_button_color" type="button"
                                     onclick="location.href='/game/game.php';">
                                 <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 0 24 24" width="48px"
                                      fill="#FFFFFF">
@@ -29,8 +28,8 @@
                     <br>
                     <div style="margin-bottom: 10%">
                         <div class="tooltip">
-                            <span class="tooltiptext">Leaderboard</span>
-                            <button class="custom_button custom_button_color" type="button"
+                            <span aria-hidden="true" class="tooltiptext">Leaderboard</span>
+                            <button aria-label="Scoreboard" class="custom_button custom_button_color" type="button"
                                     onclick="location.href='/game/scoreboard.php';">
                                 <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px"
                                      viewBox="0 0 24 24" width="24px" fill="#FFFFFF">
@@ -44,8 +43,8 @@
                         }
                         if (!isset($_SESSION["user_id"])) { ?>
                             <div class="tooltip">
-                                <span class="tooltiptext">Login</span>
-                                <button class="custom_button custom_button_color"
+                                <span aria-hidden="true" class="tooltiptext">Login</span>
+                                <button aria-label="Login" class="custom_button custom_button_color"
                                         onclick="location.href='/accounting/login.php';">
                                     <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px"
                                          viewBox="0 0 24 24" width="24px" fill="#FFFFFF">
@@ -55,9 +54,9 @@
                                 </button>
                             </div>
                             <div class="tooltip">
-                                <span class="tooltiptext">Register</span>
+                                <span aria-hidden="true" class="tooltiptext">Register</span>
 
-                                <button class="custom_button custom_button_color"
+                                <button aria-label="Register" class="custom_button custom_button_color"
                                         onclick="location.href='/accounting/register.php';">
                                     <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px"
                                          viewBox="0 0 24 24" width="24px" fill="#FFFFFF">
@@ -68,8 +67,8 @@
                             </div>
                         <?php } else { ?>
                             <div class="tooltip">
-                                <span class="tooltiptext">Logout</span>
-                                <button class="custom_button custom_button_color"
+                                <span aria-hidden="true" class="tooltiptext">Logout</span>
+                                <button aria-label="Logout" class="custom_button custom_button_color"
                                         onclick="location.href='/scripts/user_logout.php';">
                                     <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px"
                                          viewBox="0 0 24 24" width="24px" fill="#FFFFFF">
@@ -80,7 +79,7 @@
                             </div>
                         <?php } ?>
                         <br>
-                        <div class="horizontal_centered"><a href="/credits.php">Credits</a> <a href="/license.php">Licenses</a>
+                        <div aria-label="Credits" class="horizontal_centered"><a href="/credits.php">Credits</a> <a aria-label="License" href="/license.php">Licenses</a>
                         </div>
                     </div>
                 </div>
