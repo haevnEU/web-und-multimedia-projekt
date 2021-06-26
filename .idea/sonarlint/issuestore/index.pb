@@ -66,16 +66,6 @@ M
 wmm/scripts/user_creation.php,0\8\082e636ad85fc3c235b750ec2c2949943d2bb4e1
 Q
 !wmm/scripts/user_get_settings.php,e\0\e0b169995778ed556db9719870ce538f5a466784
-G
-wmm/game/scoreboard.php,0\d\0dd95b5347a7c674193624809b7f719c9cd2f8e1
-H
-wmm/accounting/login.php,5\7\579093b742006fb9e7640134e6d9800721b47963
-N
-wmm/scripts/database_utils.php,1\e\1e4ffe900107264339ba6e94f57d911e6705b7ce
-J
-wmm/scripts/user_login.php,0\7\07f163b217880ad7ade61aad88ba2fdf58f70e55
-Y
-)database_scripts/create_game_database.sql,f\2\f27b669c1e7d7750f8a66025ad69b23a6a10aba2
 C
 wmm/game/physics.js,4\6\469c6318fd9c4d2cba79b8aeeaba5071253b7945
 B

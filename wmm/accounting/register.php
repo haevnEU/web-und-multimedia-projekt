@@ -73,6 +73,21 @@
                             <input aria-label="Retype your password" class="custom_input custom_input_color" name="password_verify" placeholder="" required="required" type="password">
                         </label>
                     </div>
+                    <div class="container">
+                        <label aria-hidden="true" class="custom_input_heading custom_input_heading_color">Secure code</label><br>
+                        <?php include "../scripts/secure_auth_create_code.php";
+                        if (session_status() !== PHP_SESSION_ACTIVE) {session_start();}
+                        if(isset($_SESSION["secret2faCode"])){
+                            show_secret($_SESSION["secret2faCode"]);
+                        }else {
+                            $_SESSION["secret2faCode"] = create_code();
+                        }
+                        ?>
+                        <label aria-hidden="true" class="custom_input_heading custom_input_heading_color">Enter code *</label><br>
+                        <label>
+                            <input aria-label="Enter ..." class="custom_input custom_input_color" name="code" required="required" type="text">
+                        </label>
+                    </div>
                     <br>
                     <div class="container">
                         <input aria-label="Register" class="custom_button custom_button_color" name="button_name" type="submit" value="Register">

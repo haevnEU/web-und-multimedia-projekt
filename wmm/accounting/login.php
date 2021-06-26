@@ -20,11 +20,16 @@
                 <br>
                 <form method="POST" action="/scripts/user_login.php">
                     <div class="container">
-                        <label class="custom_input_heading" for="email">EMail *</label><br> <input class="custom_input" id="email" type="email" name="email" placeholder="">
+                        <label aria-hidden="true" class="custom_input_heading" for="email">EMail *</label><br> <input aria-label="email address" class="custom_input" id="email" type="email" name="email" placeholder="">
                     </div>
                     <br>
                     <div class="container">
-                        <label class="custom_input_heading" for="password">Password *</label><br> <input class="custom_input" id="password" type="password" name="password" placeholder="" required="required">
+                        <label aria-hidden="true" class="custom_input_heading" for="password">Password *</label><br> <input aria-label="password" class="custom_input" id="password" type="password" name="password" placeholder="" required="required">
+                        <a aria-label="Forgot password" href="forgot.php" style="font-size: 14px"> Forgot password</a>
+                    </div>
+                    <br>
+                    <div class="container">
+                        <label aria-hidden="true" class="custom_input_heading" for="code">Authentication code*</label><br> <input aria-label="Two factor authentication code" class="custom_input" id="password" type="code" name="code" placeholder="" required="required">
                     </div>
                     <br>
                     <div class="container">
