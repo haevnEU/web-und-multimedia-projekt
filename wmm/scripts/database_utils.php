@@ -1,7 +1,12 @@
 <?php
     /**
-     * Creates a new MYSQLI object
-     * @return mysqli
+     * @brief Creates a mysqli object
+     * @details The created object is used as a connection object to a mysql database. The database is located at the
+     * local machine therefore the servername is localhost. The used database is game. The default user ist register
+     * with 1234 as password but these can be changed.
+     * @param string $user database user
+     * @param string $password user password
+     * @return mysqli connection object
      */
 function get_connection_to_game_db(string $user = "register", string $password = "1234") : mysqli{
     $database_server_name = "localhost";
@@ -12,18 +17,10 @@ function get_connection_to_game_db(string $user = "register", string $password =
     return new mysqli($database_server_name, $database_user_name, $database_user_password, $database_table_name);
 }
 
-
-    function get_create_connection_to_game_db() : mysqli{
-        return get_connection_to_game_db("create", "1234");
-    }
-
-    function get_update_connection_to_game_db() : mysqli{
-        return get_connection_to_game_db("update", "1234");
-    }
-
-
     /**
-     * Closes the database connection and redirects to an error page
+     * @brief Handles a database error
+     * @details This method is called if a database error occurs. If the method is called the connection to the database
+     * will be terminated and the user is redirected to an error page where the error is shown.
      * @param $database_connection MYSQLI Connection to close
      */
     function internal_database_error($database_connection){

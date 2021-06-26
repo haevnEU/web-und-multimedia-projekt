@@ -3,9 +3,9 @@
     require "database_utils.php";
 
     /**
-     * Updates the user password
-     *
-     *  The operation aborts if one of the following events occur
+     * @brief Updates the password
+     * @details This method updated the user password using the current password
+     * The operation aborts if one of the following cases are fulfilled.
      * - User is not logged in
      * - The old password does not match the current password
      * - Empty fields are provided

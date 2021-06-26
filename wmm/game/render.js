@@ -83,7 +83,6 @@ class Renderer {
      * @param {Board} board board which shall be rendered on screen
      */
     renderBoard(board) {
-        console.log(meta.SCALING);
         let size =  meta.BLOCK_SIZE * meta.SCALING;
         for (let x = 0; x < board.getWidth(); x++) {
             for (let y = 0; y < board.getHeight(); y++) {

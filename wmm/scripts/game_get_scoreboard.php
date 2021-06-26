@@ -1,5 +1,6 @@
 <?php
     require "database_utils.php";
+    require "utility.php";
 
     $database_connection = get_connection_to_game_db();
     $sql = "SELECT * FROM scoreboard ORDER BY score DESC LIMIT 10;";
@@ -12,13 +13,17 @@
         <tr class="scoreboard_tr">
             <th class="scoreboard_th"><span aria-label="game tag">gametag</span></th>
             <th class="scoreboard_th">score</th>
+            <th class="scoreboard_th">Rang</th>
             <th class="scoreboard_th">Date</th>
+
         </tr>
     </thead>
 <?php while($row = mysqli_fetch_array($result)) { ?>
     <tr class="scoreboard_tr">
+
         <td class="scoreboard_td"><?php echo $row['gametag'] ?></td>
         <td class="scoreboard_td"><?php echo $row['score'] ?></td>
+        <td class="scoreboard_td"><?php echo scoreToRang($row['score']); ?></td>
         <td class="scoreboard_td"><?php echo $row['date'] ?></td>
     </tr>
 <?php } ?>

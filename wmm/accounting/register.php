@@ -13,6 +13,10 @@
         <title>Register</title>
         <?php include "../scripts/styles.php"; ?>
         <script>
+            /**
+             * @brief This method is invoked when the page is loaded
+             * @details The method sets a random gametag into the gametag field
+             */
             function pageLoaded() {
                 let names = ["KoalaLean", "MarePlay", "PigStep", "PumaCook", "MuleNotice", "DeerCross", "ToadCommit", "GoatBoost", "ImpalaTry", "DogAssume", "CougarPark", "BurroReveal", "IguanaCopy", "OcelotPoop", "EweMarry", "IbexUse", "BearObey", "NewtTarget", "RamLimit", "LightBrew"];
                 let index = Math.floor(Math.random() * names.length);
@@ -74,7 +78,7 @@
                         </label>
                     </div>
                     <div class="container">
-                        <label aria-hidden="true" class="custom_input_heading custom_input_heading_color">Secure code</label><br>
+                        <label aria-hidden="true" class="custom_input_heading custom_input_heading_color">Scan this code with and authenticator app</label><br>
                         <?php include "../scripts/secure_auth_create_code.php";
                         if (session_status() !== PHP_SESSION_ACTIVE) {session_start();}
                         if(isset($_SESSION["secret2faCode"])){
