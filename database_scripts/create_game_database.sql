@@ -1,3 +1,4 @@
+create database game
 
 create or replace table friendlist
 (
