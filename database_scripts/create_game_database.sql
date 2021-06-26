@@ -12,7 +12,6 @@ create or replace table player
     primary key,
     first_name varchar(30) not null,
     surname varchar(30) not null,
-    surname varchar(30) not null,
     email varchar(30) not null,
     state int not null,
     gametag varchar(20) not null,
