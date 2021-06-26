@@ -1,3 +1,4 @@
+create database gameL;
 
 create or replace table friendlist
 (
@@ -11,7 +12,6 @@ create or replace table player
     USER_ID int auto_increment
     primary key,
     first_name varchar(30) not null,
-    surname varchar(30) not null,
     surname varchar(30) not null,
     email varchar(30) not null,
     state int not null,
