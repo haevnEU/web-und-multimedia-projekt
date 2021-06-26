@@ -1,15 +1,17 @@
-create table friendlist
+
+create or replace table friendlist
 (
     USER_ID int not null
-        primary key,
+    primary key,
     FRIEND_ID text null
 );
 
-create table player
+create or replace table player
 (
     USER_ID int auto_increment
-        primary key,
+    primary key,
     first_name varchar(30) not null,
+    surname varchar(30) not null,
     surname varchar(30) not null,
     email varchar(30) not null,
     state int not null,
@@ -24,25 +26,26 @@ create table player
     secret varchar(30) null
 );
 
-create table scoreboard
+create or replace table scoreboard
 (
     ID int auto_increment
-        primary key,
+    primary key,
     gametag varchar(30) not null,
     score int not null,
     date datetime default curdate() null
 );
 
-create table support_tickets
+create or replace table support_tickets
 (
     TicketID int auto_increment
-        primary key,
+    primary key,
     reporter text not null,
     assignee text null,
     problem text null,
     solution text null,
     state text null
 );
+
 
 
 
