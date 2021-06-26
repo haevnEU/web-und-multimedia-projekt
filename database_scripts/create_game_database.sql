@@ -1,4 +1,4 @@
-create database game
+create database gameL;
 
 create or replace table friendlist
 (
