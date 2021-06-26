@@ -15,7 +15,7 @@ class Renderer {
      */
     renderPauseMenu() {
         let offset_x = (this.#fieldCanvas.width - 6 * this.#previewDimension) * (0.5 * meta.SCALING);
-        let offset_y = this.#fieldCanvas.height * 0.3;
+        let offset_y = (this.#fieldCanvas.height * 0.3) * meta.SCALING;
         this.#context.fillStyle = this.#theme.getTheme().getFontColor();
         this.#context.font = (62 * meta.SCALING) + 'px arial';
         this.#context.textAlign = 'center';
@@ -142,7 +142,7 @@ class Renderer {
     renderGameOverScreen(score, removedLines, level) {
 
         let offset_x = (this.#fieldCanvas.width - 6 * this.#previewDimension) * (0.5 * meta.SCALING);
-        let offset_y = this.#fieldCanvas.height * 0.3;
+        let offset_y = (this.#fieldCanvas.height * 0.3) * meta.SCALING;
 
 
         this.#context.fillStyle = this.#theme.getTheme().getFontColor();
