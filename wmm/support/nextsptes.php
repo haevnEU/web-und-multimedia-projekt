@@ -1,6 +1,15 @@
 <?php
     require "../scripts/utility.php";
     session_start();
+
+    /**
+     * @brief Creates a new support ticket
+     * @details This method retrieves the ticket details from the post attribute and inserts it into the ticket database
+     * The operation will abort if one of the following cases occurs.
+     * - No database connection
+     * - Ticket cannot be created
+     * @return string
+     */
     function create_ticket(){
         $email = $_POST['mail'];
         $problem = $_POST['problem'];

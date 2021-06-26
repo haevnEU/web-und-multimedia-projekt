@@ -55,6 +55,9 @@ class Theme {
         return Theme.#getColorByID(".game_font_");
     }
 
+    /**
+     *
+     */
     getFontFamily() {
         try {
             let element = document.querySelector(".game_font_");

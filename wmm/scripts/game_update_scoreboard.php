@@ -3,12 +3,13 @@
     require "utility.php";
 
     /**
-     *  This method updates the server saved scores
-     *  The operation aborts if one of the following events occur
+     * @brief Writes the score into the database
+     * @details This method retrieves the current highscore from the user, compares it with the reached one and updates,
+     * if the reached score is higher. The reached score is also written to the general highscore table.
+     * The operation aborts if one of the following cases are fulfilled.
      *  - User is not logged in
      *  - User is suspended
      *  - Generic database error
-     * The personal score will be updated if the reached score exceeds the previous highscore
      * @param int $score Reached score
      */
     function writeScoreIntoGameDatabase(int $score){

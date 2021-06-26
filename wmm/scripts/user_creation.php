@@ -4,8 +4,9 @@
     require "sercure_auth_check_code.php";
 
     /**
-     *  This method inserts the user data into a database.
-     *  The operation aborts if one of the following events occur
+     * @brief Creates a new user account
+     * @details This method creates a new user account .
+     * The operation aborts if one of the following cases are fulfilled.
      *  - User is logged in
      *  - One argument is not provided
      *  - Provided password differs
@@ -25,15 +26,19 @@
         session_start();
 
         if(isset($_SESSION['user_id'])){
+            // User is logged in redirect to an error page
             header("Location: /");
             die;
         }else if(!isset($firstname) || !isset($surname) || !isset($email) || !isset($password) || !isset($passwordVerify) || !isset($gametag)){
+            // One attribute is missing redirect to an error page
             print_error("Account cannot created", "Missing attribute", "One ore more fields are empty");
             die;
         }else if ($password !== $passwordVerify) {
+            // Passwords arent the same redirect to an error page
             print_error("User creation error", "", "Given passwords are not equal");
             die;
         }else if(!check_code($code, $secret)){
+            // The 2FA code isn't valid redirect to an error page
             print_error("User creation error", $code . " " . $secret, "Two Factor code not entered or wrong");
             die;
         }
@@ -42,6 +47,7 @@
 
         $database_connection = get_connection_to_game_db();
 
+        // Check if a mial exists
         $select_player_query = "SELECT email FROM player WHERE email = ?";
         $statement = $database_connection->prepare($select_player_query);
         $statement->bind_param("s", $email);
@@ -54,6 +60,7 @@
         }
 
         if (strlen($gametag) > 12) {
+            // The gametag is to long redirect to an error page
             $database_connection->close();
             print_error("User creation error", "", "Entered gametag is to long, only 12 character are allowed");
             die;
@@ -66,12 +73,14 @@
         $statement->bind_param("sssssss", $firstname, $surname, $email, $gametag, $password_encrypt, $secret, $phone);
 
         if ($statement->execute() === TRUE) {
-            header("Location: /");
+            // User was created redirect to login
+            $database_connection->close();
+            header("Location: /accounting/login.php");
         } else {
+            // Generic database error
             internal_database_error($database_connection);
             die;
         }
-        $database_connection->close();
         unset($_SESSION['secret2faCode']);
     }
 

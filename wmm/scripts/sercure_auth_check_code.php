@@ -2,14 +2,14 @@
     require_once "libs/GoogleAuthenticator.php";
 
     /**
-     * This method verifies if the entered 2FA code is valid
+     * @brief Verifies that the provided code is correct
+     * @details This method is a wrapper for the used 2FA library
      * @param string $code Code to check
      * @param string $secret Secret code
      * @return bool True if the entered code is valid
      */
     function check_code(string $code, string $secret) : bool{
         $ga = new PHPGangsta_GoogleAuthenticator();
-        echo $code . " " . $secret;
         return $ga->verifyCode($secret, $code, 8);
     }
 ?>
