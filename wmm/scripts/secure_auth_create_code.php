@@ -18,7 +18,7 @@ function create_code(string $name = "Betraum tris") : string{
 
     $ga = new PHPGangsta_GoogleAuthenticator();
     $secret = $ga->createSecret();
-    $qrCodeUrl = $ga->getQRCodeGoogleUrl($$name, $secret);
+    $qrCodeUrl = $ga->getQRCodeGoogleUrl($name, $secret);
 
 
     echo '<img style="width:30%; height:auto" src="' . $qrCodeUrl . '" alt="' . $secret . '">

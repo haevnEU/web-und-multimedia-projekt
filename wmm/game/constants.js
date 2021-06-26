@@ -9,5 +9,5 @@ export default {
     UI_OFFSET_X: 50,
     UI_OFFSET_Y: 50,
     RENDER_OFFSET: 0,
-    SCALING: 0.5,
+    SCALING: 1,
 }

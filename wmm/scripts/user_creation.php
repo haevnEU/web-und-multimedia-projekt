@@ -72,7 +72,7 @@
             die;
         }
         $database_connection->close();
-        $_SESSION["secret2faCode"] = "";
+        unset($_SESSION['secret2faCode']);
     }
 
     $phone_number = $_POST['phone'];
