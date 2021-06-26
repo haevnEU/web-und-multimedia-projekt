@@ -1,7 +1,7 @@
 <?php
     require "utility.php";
     require "database_utils.php";
-
+    require "sercure_auth_check_code.php";
     /**
      * Logs the user into his account to enabled extended features.
      *
@@ -14,14 +14,15 @@
      * @param string $email Email address of the user
      * @param string $password Password of the user
      */
-    function login(string $email, string $password){
+    function login(string $email, string $password, string $code){
         session_start();
         if (isset($_SESSION["user_id"])) {
             header("Location: /");
         }
         $database_connection = get_connection_to_game_db();
-        $select_player_query = "SELECT pass, style, account_suspended, USER_ID FROM player WHERE email = ?";
+        $select_player_query = "SELECT pass, style, account_suspended, secret, USER_ID FROM player WHERE email = ?";
         $statement = $database_connection->prepare($select_player_query);
+        echo $database_connection->error;
         $statement->bind_param("s", $email);
         $statement->execute();
         $result = $statement->get_result();
@@ -33,6 +34,7 @@
         }
         $row = mysqli_fetch_array($result);
         $remote_pass = $row['pass'];
+        $secret = $row['secret'];
         $remote_style = $row['style'];
         $remote_USER_ID = $row['USER_ID'];
         $account_suspended = $row['account_suspended'];
@@ -44,6 +46,10 @@
         }else if (!verifyPassword($password, $remote_pass)) {
             $database_connection->close();
             print_error("Account error", "Password does not match", "Your entered password is wrong");
+            die;
+        }else if(!check_code($code, $secret)){
+            $database_connection->close();
+            print_error("Account error", "Entere Secure code does not match", "Your entered a wrong secure code, please use the recent generated one");
             die;
         }
 
@@ -57,5 +63,5 @@
         header("Location: /");
     }
 
-    login($_POST['email'],$_POST['password']);
+    login($_POST['email'],$_POST['password'], $_POST['code']);
 ?>
