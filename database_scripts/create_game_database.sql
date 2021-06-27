@@ -10,7 +10,7 @@ CREATE OR REPLACE TABLE player(
     USER_ID int auto_increment primary key,
     first_name varchar(30) not null,
     surname varchar(30) not null,
-    email varchar(30) not null,
+    email varchar(60) not null,
     state int not null,
     gametag varchar(20) not null,
     score int not null,
