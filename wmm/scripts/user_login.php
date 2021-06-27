@@ -31,7 +31,6 @@
         $database_connection = get_connection_to_game_db();
         $select_player_query = "SELECT pass, style, account_suspended, secret, USER_ID FROM player WHERE email = ?";
         $statement = $database_connection->prepare($select_player_query);
-        echo $database_connection->error;
         $statement->bind_param("s", $email);
         $statement->execute();
         $result = $statement->get_result();

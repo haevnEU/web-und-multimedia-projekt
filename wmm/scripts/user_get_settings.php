@@ -58,7 +58,7 @@
         </form>
         </fieldset>
             <fieldset class="groupbox">
-                <legend>Contact</legend>
+                <legend>Security</legend>
                 <p class="infotext">Contact the support to request the full 2FA code</p>
                 <p><span style="width: 30%; float:left">Recovery code</span><?php echo "*************" . substr($row['secret'],13);?></p>
                 <button type="button" class="custom_button custom_button_color"  onclick="location.href='/accounting/changepassword.php'">Change Password</button>

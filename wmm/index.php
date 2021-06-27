@@ -8,8 +8,10 @@
     </head>
     <body>
         <div class="root_div root_div_color" style="width: 50%; height: 50%">
+            <div class="horizontal_centered">
+                <img src="/styles/naLogo.png" alt="Logo" style="margin-top: 1%">
+            </div>
             <div class="sub_div">
-                <h1 class="heading_color">Tetris</h1>
                 <div class="horizontal_centered">
                     <div>
                         <div class="tooltip">

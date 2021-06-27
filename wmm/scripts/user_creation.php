@@ -83,6 +83,11 @@
             die;
         }
         unset($_SESSION['secret2faCode']);
+
+        $message = "Hello " . $gametag . ",\n\nWelcome to Betraum Tris. Your account was succesfull created.\nHere is your recovery token for the 2FA authentication: " . $secret;
+        $subject = "Account Creation";
+        // send mail
+        mail($email, $subject, $message);
     }
 
     /// Entered telephone number without country code
