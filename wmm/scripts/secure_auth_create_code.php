@@ -7,6 +7,7 @@ require_once "libs/GoogleAuthenticator.php";
  * @details This method wraps the showing of the 2FA recovery doe
  * @param string $secret Secret of the 2FA code
  * @param string $name Name of the 2FA code, default Betraum tris
+ * @since v1.0.0.0
  */
 function show_secret(string $secret, string $name = "Betraum tris"){
     $ga = new PHPGangsta_GoogleAuthenticator();
@@ -23,6 +24,7 @@ function show_secret(string $secret, string $name = "Betraum tris"){
  * @details This method wraps the creation and displaying a 2FA recovery code.
  * @param string $name Name of the code
  * @return string 2FA recovery code
+ * @since v1.0.0.0
  */
 function create_code(string $name = "Betraum tris") : string{
     $ga = new PHPGangsta_GoogleAuthenticator();

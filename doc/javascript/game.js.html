@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: game.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: game.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import {Board} from "./board.js"
+import {Physics} from "./physics.js"
+import {Renderer} from "./render.js"
+import {ShapeHandler} from "./shapes.js"
+import meta from "./constants.js"
+
+/**
+ * This class is the Gamehandler
+ */
+class Game {
+    /**
+     * Determines whether the game is paused or not
+     * @type {boolean} 
+     */
+    #paused = false;
+
+    /**
+     * When the game is over this should be true
+     * @type {boolean}
+     */
+    #gameOver = false;
+
+    /**
+     * This attributes locks the database insertion&lt;br>If this is not updated to true multiple entries will be sent to the database
+     * @type {boolean}
+     */
+    #scoreUpdated = false;
+
+    /**
+     * Tracks the score
+     * @type {Number}
+     */
+    #score = 0;
+
+    /**
+     * Tracks the level
+     * @type {Number}
+     */
+    #level = 0;
+
+    /**
+     * Score for the softdrop, should be updated during the game
+     * @type {Number}
+     */
+    #SoftDropScore = 0;
+
+    /**
+     * Tracks the removed lines
+     * @type {Number}
+     */
+    #removedLines = 0;
+
+    /**
+     * Interval between each logic call
+     * @type {Number}
+     */
+    #timerInterval = 30;
+
+    /**
+     * Physics object&lt;br>Contains all physic interaction
+     * @type {Physics}
+    */
+    #physics = new Physics();
+
+    /**
+     * Render object&lt;br>Handles screen rendering for shapes, text and the board
+     * @type {Renderer}
+     */
+    #renderer = new Renderer();
+
+    /**
+     * Board object&lt;br>Represents the game state
+     * @type {Board}
+     */
+    #board = new Board(20, 30);
+    
+    /**
+     * Shapehandler object&lt;br>Handles the creation, destroying, switching, rotation of a shape
+     * @type {ShapeHandler}
+     */
+    #shapeHandler = new ShapeHandler();
+
+    /**
+     * Score to reach
+     * @type {Number}
+     */
+    #scoreGoal = 400;
+
+    /**
+     * Increment the score by this amount
+     * @type {Number}
+     */
+    #scoreGoalIncrement = 400;
+    
+    #lastTime = 3;
+
+    /**
+     * Instantiates a new game object 
+     */
+    constructor() {    }
+
+    /**
+     * Loads a previous game from the provided json string
+     * @param {String} json Json object
+     */
+    init(json) {}
+
+    /**
+     * Converts the game to a json string
+     * @return {String} Json string
+     */
+    exportToJson() {}
+
+
+    /**
+     * Handles the key pressed event&lt;br>This should be called by document.onKeyDown event 
+     * @param {Key} key Pressed key
+     */
+    onKey(key) { }
+
+    /**
+     * Starts the game
+     */
+    start() {}
+
+    /**
+     * Pause the game
+     */
+    pause() {}
+
+    /**
+     * Handles the logic
+     * &lt;br>- Aborts if the game is over or paused
+     * &lt;br>- Increases the score
+     * &lt;br>- Calls a method which moves the shape one row down
+     */
+    handleLogic() {}
+
+    /**
+     * Call to the screen renderer
+     * &lt;br>Clears the screen
+     * &lt;br>Render the board at the lowest level
+     * &lt;br>Render the current shape at the middle level
+     * &lt;br>Render the UI element at the topmost level
+     */
+    render() {}
+
+    /**
+     * &lt;b>INTERNAL / PRIVATE&lt;/b>
+     * &lt;br>Resets the game
+     * &lt;br>Every game relevant attribute is set to a equivalent fresh start state
+     */
+    INTERNAL_reset() {}
+
+    /**
+     * &lt;b>INTERNAL / PRIVATE&lt;/b>
+     * &lt;br>Calls a php script to update the game database
+     */
+    INTERNAL_writeToDataBase() {}
+
+    /**
+     * &lt;b>INTERNAL / PRIVATE&lt;/b>
+     * &lt;br>This method takes an amount of cleared lines and maps them to their equivalent score
+     * @param {Number} lines cleared lines
+     * @return Mapped score
+     */
+    INTERNAL_convertClearedLinesToScore(lines) {}
+
+    /**
+     * &lt;b>INTERNAL / PRIVATE&lt;/b>
+     * &lt;br>This method uses the physics object to determine if a move downwards is possible.
+     * &lt;br>If the move is possible the shape y coordinate is updated.
+     * &lt;br>Otherwise four events will occur
+     * &lt;br>1. Shape is locked inside the board object
+     * &lt;br>2. The current shape is switched with the saved one and a new one is generated
+     * &lt;br>3. A gameover check is done
+     * &lt;br>4. The score is updated
+     * @param {Shape} shape shape which should be moved down
+     */
+    INTERNAL_moveShapeDown(shape) {}
+}
+
+export {Game}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Board.html">Board</a></li><li><a href="Game.html">Game</a></li><li><a href="Physics.html">Physics</a></li><li><a href="Renderer.html">Renderer</a></li><li><a href="Shape.html">Shape</a></li><li><a href="ShapeHandler.html">ShapeHandler</a></li><li><a href="Theme.html">Theme</a></li><li><a href="ThemeHandler.html">ThemeHandler</a></li></ul><h3>Global</h3><ul><li><a href="global.html#eraseCookie">eraseCookie</a></li><li><a href="global.html#getCookie">getCookie</a></li><li><a href="global.html#loop">loop</a></li><li><a href="global.html#onLoad">onLoad</a></li><li><a href="global.html#onUnload">onUnload</a></li><li><a href="global.html#rescale">rescale</a></li><li><a href="global.html#setCookie">setCookie</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Sun Jun 27 2021 15:49:15 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

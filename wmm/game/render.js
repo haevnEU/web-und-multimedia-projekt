@@ -7,6 +7,9 @@ class Renderer {
     #context = this.#fieldCanvas.getContext('2d');
     #previewDimension = Math.floor(meta.BLOCK_SIZE);
 
+    /**
+     * Creates the renderer
+     */
     constructor() {
     }
 
@@ -29,7 +32,7 @@ class Renderer {
 
     /**
      * This methods renders a shape on the screen
-     * @param {Shape} shape Shape which shall be rendered
+     * @param shape
      */
     renderShape(shape) {
         let size =  meta.BLOCK_SIZE * meta.SCALING;

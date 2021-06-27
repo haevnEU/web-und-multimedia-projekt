@@ -11,11 +11,13 @@
      *  - User is suspended
      *  - Generic database error
      * @param int $score Reached score
+     * @since v1.0.0.0
      */
     function writeScoreIntoGameDatabase(int $score){
         session_start();
+        $game_redirect = "Location: /game/game.php?new";
         if (!isset($_SESSION['user_id']) || !isset($_GET['score'])) {
-            header("Location: /game/game.php?new");
+            header($game_redirect);
             die;
         }
         $user_id =  $_SESSION["user_id"];
@@ -25,7 +27,7 @@
         $statement->bind_param("s", $user_id);
         if ($statement->execute() !== TRUE) {
             $database_connection->close();
-            header("Location: /game/game.php?new");
+            header($game_redirect);
             die;
         }
 
@@ -47,7 +49,7 @@
             $statement->bind_param("is", $score, $user_id);
             if ($statement->execute() !== TRUE) {
                 $database_connection->close();
-                header("Location: /game/game.php?new");
+                header($game_redirect);
                 die;
             }
         }
@@ -57,10 +59,10 @@
         $statement->bind_param("si", $gametag, $score);
         if ($statement->execute() !== TRUE) {
             $database_connection->close();
-            header("Location: /game/game.php?new");
+            header($game_redirect);
             die;
         }
-        header("Location: /game/game.php?new");
+        header($game_redirect);
     }
 
     writeScoreIntoGameDatabase($_GET['score']);

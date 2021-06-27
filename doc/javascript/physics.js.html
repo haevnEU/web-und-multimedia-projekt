@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: physics.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: physics.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import {Shape} from "./shapes.js"
+import {Board} from "./board.js"
+import meta from "./constants.js"
+
+/**
+ * Handles the Tetris physics
+ * &lt;br>Tetris physic is a quite simple one.
+ * &lt;br>It comes down to test if the coming move is legit.
+ */
+class Physics {
+    /**
+     * Instantiate the physics object
+     */
+    constructor() {    }
+
+    /**
+     * Validates if the shape is allowed to rotate left.
+     * &lt;br>This method yield true iff the shape is able to rotate left.
+     * @param {Shape} shape shape which should be validated
+     * @param {Board} board board object where the shape shall be validated
+     * @returns true iff the shape can rotate
+     */
+    canShapeRotatedLeft(shape, board) {}
+
+    /**
+     * Validates if the shape is allowed to rotate right.
+     * &lt;br>This method yield true iff the shape is able to rotate right.
+     * @param {Shape} shape shape which should be validated
+     * @param {Board} board board object where the shape shall be validated
+     * @returns true iff the shape can rotate
+     */
+    canShapeRotatedRight(shape, board) { }
+
+    /**
+     * Validates if the shape is allowed to move one block down.
+     * &lt;br>This method yield true iff the shape is able to move a block.
+     * @param {Shape} shape shape which should be validated
+     * @param {Board} board board object where the shape shall be validated
+     * @returns true iff the shape can move
+     */
+    canShapeMoveDown(shape, board) { }
+
+    /**
+     * Validates if the shape is allowed to move one block to the left side.
+     * &lt;br>This method yield true iff the shape is able move a block.
+     * @param {Shape} shape shape which should be validated
+     * @param {Board} board board object where the shape shall be validated
+     * @returns true iff the shape can move
+     */
+    canShapeMoveLeft(shape, board) { }
+
+    /**
+     * Validates if the shape is allowed to move one block to the right side.
+     * &lt;br>This method yield true iff the shape is able move a block.
+     * @param {Shape} shape shape which should be validated
+     * @param {Board} board board object where the shape shall be validated
+     * @returns true iff the shape can move
+     */
+    canShapeMoveRight(shape, board) {  }
+
+    /**
+     * This method checks if a line can be removed. IF a line can be removed
+     * the line will be removed. Total removed lines will be returned
+     * @param {Board} board Board where the operation should occur
+     * @returns Removed lines
+     */
+    canLinesBeRemoved(board) { }
+
+    /**
+     * This method is used to validate if a shape can move into a certain direction.
+     * &lt;br>This method yields true iff the shape can move in this direction
+     * @param {Shape} shape shape which should be validated
+     * @param {Board} board board object where the shape shall be validated
+     * @param {Number} offset_y Y direction in which the validation occurs
+     * @returns true iff the shape can move in the direction specified by offset
+     */
+    detectCollision(shape, board, offset_y = 0) {
+    }
+    
+    /**
+     * &lt;b>INTERNAL / PRIVATE&lt;/b>
+     * &lt;br>This internal method is used to validate if a shape can move into a certain direction.
+     * &lt;br>This method yields true iff the shape can move in this direction
+     * @param {Shape} shape shape which should be validated
+     * @param {Board} board board object where the shape shall be validated
+     * @param {Number} offset_x X direction in which the validation occurs
+     * @param {Number} offset_y Y direction in which the validation occurs
+     * @returns true iff the shape can move in the direction specified by offset
+     */
+    INTERNAL_detectCollision(shape, board, offset_x = 0, offset_y = 0) {   }
+
+}
+
+export {Physics};</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Board.html">Board</a></li><li><a href="Game.html">Game</a></li><li><a href="Physics.html">Physics</a></li><li><a href="Renderer.html">Renderer</a></li><li><a href="Shape.html">Shape</a></li><li><a href="ShapeHandler.html">ShapeHandler</a></li><li><a href="Theme.html">Theme</a></li><li><a href="ThemeHandler.html">ThemeHandler</a></li></ul><h3>Global</h3><ul><li><a href="global.html#eraseCookie">eraseCookie</a></li><li><a href="global.html#getCookie">getCookie</a></li><li><a href="global.html#loop">loop</a></li><li><a href="global.html#onLoad">onLoad</a></li><li><a href="global.html#onUnload">onUnload</a></li><li><a href="global.html#rescale">rescale</a></li><li><a href="global.html#setCookie">setCookie</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Sun Jun 27 2021 15:49:15 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

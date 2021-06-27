@@ -9,6 +9,7 @@
      *  - Provided theme name is empty
      *  - Generic database error
      * @param string $theme Theme name
+     * @since v1.0.0.0
      */
     function updateTheme(string $theme){
         session_start();

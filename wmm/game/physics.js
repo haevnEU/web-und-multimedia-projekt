@@ -4,6 +4,9 @@ import meta from "./constants.js"
 
 
 class Physics {
+    /**
+     * Creates the physics
+     */
     constructor() {
     }
 

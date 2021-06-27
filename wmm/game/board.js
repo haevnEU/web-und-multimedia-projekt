@@ -3,6 +3,7 @@ import meta from "./constants.js"
 class Board {
     #field = [];
 
+
     /**
      * This class defines the game board.
      * The board contains
@@ -143,3 +144,20 @@ class Board {
 }
 
 export {Board}
+
+
+
+
+/*! \class Fn_Test
+ * \brief Fn_Test class.
+ *
+ * Details about Fn_Test.
+ */
+
+/*! \fn const char *Fn_Test::member(char c,int n)
+ *  \brief A member function.
+ *  \param c a character.
+ *  \param n an integer.
+ *  \exception std::out_of_range parameter is out of range.
+ *  \return a character pointer.
+ */

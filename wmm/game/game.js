@@ -25,6 +25,9 @@ class Game {
     #scoreGoalIncrement = 400;
     #lastTime = 3;
 
+    /**
+     * Creates the game
+     */
     constructor() {
         this.#scoreUpdated = false;
         this.#shapeHandler.createNewShape();
@@ -37,7 +40,7 @@ class Game {
         this.#level = obj.level;
         this.#score = obj.score;
         this.#removedLines = obj.lines;
-        this.#shapeHandler.loadShapesFromJSONArray(obj.shapes[0], obj.shapes[1]);
+        this.#shapeHandler.loadShapes(obj.shapes[0], obj.shapes[1]);
         this.pause();
     }
 

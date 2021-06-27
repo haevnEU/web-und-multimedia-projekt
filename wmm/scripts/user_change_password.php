@@ -14,18 +14,19 @@
      * @param string $password_old Current password of the user
      * @param string $password_new Desired new password
      * @param string $password_new_reentered Desired new password to verify
+     * @since v1.0.0.0
      */
     function updatePassword(string $password_old, string $password_new, string $password_new_reentered){
         session_start();
-
+        $error_type = "Update password error";
         if (!isset($_SESSION["user_id"])) {
-            print_error("Account error","Suspended Account", "<p>Your account was suspended.</p><br><a href=\"/support/suspended.php\">Contact the customer service for more information</a>");
+            print_error($error_type,"Suspended Account", "<p>Your account was suspended.</p><br><a href=\"/support/suspended.php\">Contact the customer service for more information</a>");
             die;
         }else if (!isset($password_old) || !isset($password_new) || !isset($password_new_reentered)) {
-            print_error("Password error", "", "<p>One or more field are empty</p>");
+            print_error($error_type, "", "<p>One or more field are empty</p>");
             die;
         }else if ($password_new != $password_new_reentered) {
-            print_error("Password error", "", "<p>Entered passwords are not the same</p>");
+            print_error($error_type, "", "<p>Entered passwords are not the same</p>");
             die;
         }
 
@@ -53,7 +54,7 @@
             print_error("Database error","", "<p>Cannot retrieve information about your account.</p>");
             die;
         }else if (!verifyPassword($password_old, $remote_password)) {
-            print_error("Password error","Cannot change the password", "<p>Entered password is wrong.</p>");
+            print_error($error_type,"Cannot change the password", "<p>Entered password is wrong.</p>");
             die;
         }
 

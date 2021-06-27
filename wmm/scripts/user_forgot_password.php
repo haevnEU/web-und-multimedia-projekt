@@ -30,12 +30,17 @@ function updatePassword(string $email, string $code, string $password_new, strin
 
     $password = hashPassword($password_new);
 
-    // Retrieve account information from database
+    /// Connection to the game database
     $database_connection = get_connection_to_game_db();
+    /// Select statement containing the 2FA recovery code, email, gametag and the user id
     $select_player_query = "SELECT secret, email, gametag, USER_ID FROM player WHERE email = ?";
+
+    /// Prepared query statement to retrieve data from the database
     $statement = $database_connection->prepare($select_player_query);
     $statement->bind_param("s", $email);
     $statement->execute();
+
+    /// Query result
     $result = $statement->get_result();
 
     $query_done = false;

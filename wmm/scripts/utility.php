@@ -52,6 +52,7 @@
      * @details This method takes a score and maps it to a rang
      * @param int $score Score to be mapped
      * @return string Rangname
+     * @since v1.0.0.0
      */
     function scoreToRang(int $score) : string{
         $rang = "Noob";
