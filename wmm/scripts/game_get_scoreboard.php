@@ -2,19 +2,22 @@
     require "database_utils.php";
     require "utility.php";
 
+    /// Database connection
     $database_connection = get_connection_to_game_db();
+    /// Scoreboard select statement
     $sql = "SELECT * FROM scoreboard ORDER BY score DESC LIMIT 10;";
+    /// Result of the SQL query
     $result = mysqli_query($database_connection, $sql);
     mysqli_close($database_connection);
 ?>
 
-<table class="scoreboard_table"><thead class="scoreboard_head">
+<table aria-label="Score board" class="scoreboard_table"><thead class="scoreboard_head">
     <thead>
         <tr class="scoreboard_tr">
-            <th class="scoreboard_th"><span aria-label="game tag">gametag</span></th>
-            <th class="scoreboard_th">score</th>
-            <th class="scoreboard_th">Rang</th>
-            <th class="scoreboard_th">Date</th>
+            <th id="gametag" class="scoreboard_th"><span aria-label="game tag">gametag</span></th>
+            <th id="score" class="scoreboard_th">score</th>
+            <th id="rang" class="scoreboard_th">Rang</th>
+            <th id="date" class="scoreboard_th">Date</th>
 
         </tr>
     </thead>

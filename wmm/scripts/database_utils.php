@@ -7,6 +7,7 @@
      * @param string $user database user
      * @param string $password user password
      * @return mysqli connection object
+     * @since v1.0.0.0
      */
 function get_connection_to_game_db(string $user = "register", string $password = "1234") : mysqli{
     $database_server_name = "localhost";
@@ -22,6 +23,7 @@ function get_connection_to_game_db(string $user = "register", string $password =
      * @details This method is called if a database error occurs. If the method is called the connection to the database
      * will be terminated and the user is redirected to an error page where the error is shown.
      * @param $database_connection MYSQLI Connection to close
+     * @since v1.0.0.0
      */
     function internal_database_error($database_connection){
         $database_error = $database_connection->error;

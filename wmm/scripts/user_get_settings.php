@@ -7,12 +7,18 @@
         die;
     }
 
+    /// Connection to the database
     $database_connection = get_connection_to_game_db();
+    /// SQL Select code which is used to retrieve user information from the database
     $select_player_query = "SELECT * FROM player WHERE USER_ID = ?";
+    /// Prepared SQL statement
     $statement = $database_connection->prepare($select_player_query);
     $statement->bind_param("s", $_SESSION["user_id"]);
     $statement->execute();
+    /// Result of the SQL query
     $result = $statement->get_result();
+
+    /// Possible styles, in a future release they should be read in from the styles directory
     $styles = array('darkmode','lightmode','newmode','colorblindmode');
         while ($row = mysqli_fetch_array($result)) {
             $name = $row['first_name'] . " " . $row['surname'];
@@ -41,13 +47,15 @@
         <legend>Style</legend>
         <form  method="POST" action="/scripts/user_change_theme.php">
             <p><span style="width: 30%; float:left">Theme</span></p>
-            <select class="custom_input" name="theme"  onchange="this.form.submit()">
-                <?php foreach($styles as $style){
-                    $selection = ($style == $row['style']) ? "selected=\"selected\"" : "";
-                    echo "<option value=\"" . $style . "\"" . $selection . ">" . $style . "</option>";
-                }?>
-            </select>
-            </form>
+            <label>
+                <select class="custom_input" name="theme"  onchange="this.form.submit()">
+                    <?php foreach($styles as $style){
+                        $selection = ($style == $row['style']) ? "selected=\"selected\"" : "";
+                        echo "<option value=\"" . $style . "\" " . $selection . " >" . $style . "</option>";
+                    }?>
+                </select>
+            </label>
+        </form>
         </fieldset>
             <fieldset class="groupbox">
                 <legend>Contact</legend>

@@ -220,7 +220,7 @@ class ShapeHandler {
     /**
      * This method will load the current and next shape from a json array
      */
-    loadShapesFromJSONArray(shape, nextShape) {
+    loadShapes(shape, nextShape) {
         let ID = shape.ID;
         let posX = shape.posX;
         let posY = shape.posY;
