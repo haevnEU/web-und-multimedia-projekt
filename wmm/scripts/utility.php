@@ -56,12 +56,12 @@
      */
     function scoreToRang(int $score) : string{
         $rang = "Noob";
-        if($score > 100){
-            $rang = "Grandmaster";
-        }else if($score > 50){
-
-        }else if($score > 25){
-
+        if($score > 1000000){
+            $rang = "Elite";
+        }else if($score > 100000){
+            $rang = "Master"; 
+        }else if($score > 10000){
+            $rang = "Average"; 
         }
 
         return $rang;
