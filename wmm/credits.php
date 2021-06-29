@@ -16,7 +16,7 @@
                     <br>
                     <p>This game was created by</p>
                     <p>Nils Milewski (10010480)</p>
-                    <p>Salman Kabak ()</p>
+                    <p>Salman Kabak (10006633)</p>
                     <p>Robin Böllhoff (10011241)</p>
                     <br>
                     <button aria-label="Home" type="button" class="custom_button custom_button_color" onclick="location.href='/';">
